@@ -1,6 +1,6 @@
 body, html
 {
-    background-color: #EDEDED !important;
+    background-color: #eeeeee !important;
 }
 
 nav {
@@ -38,7 +38,7 @@ nav .brand-logo
 		height: 80%;
 		width: 100%;
     text-align: center;
-		margin-bottom: 5%;
+		margin-bottom: 3%;
 }
 
 
@@ -49,21 +49,29 @@ nav .brand-logo
 
 .intro-background {
 		height: 75%;
-/*		background-color: yellow;*/
+		background-color: #e0e0e0;
 }
 
-.start-draw {
+.start-draw, .start-draw-other {
 		margin-top: 2.5%;
-		color: #42a5f5;
 		font-family: Nunito;
+		font-weight: bold;
 		border-radius: 3px;
 }
 
-.intro h2, h3, h4, h5 {
+.intro h3, .intro h5 {
 	margin: 1%;
 	text-align: left;
 	color: #e0e0e0;
 	font-family: 'Bree Serif';
+}
+
+.info {
+		height: 33%;
+}
+
+.info-description {
+		height: 90%;
 }
 
 .about .col
@@ -71,35 +79,59 @@ nav .brand-logo
     margin-bottom: 24px;
 }
 
-.about h5
-{
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-
-.about h6 {
-    text-align: center;
-		font-size: 25px;
-		font-style: italic;
-		font-family: Bitter;
-    margin-bottom: 35px;
+.about h4, .about h5 {
 		color: #42a5f5;
 }
 
-.about hr
-{
-    width: 40px;
-    margin-bottom: 45px;
+.about h4 {
+		margin-bottom: 40px;
+		font-style: italic;
+		font-family: Nunito;
+}
+
+.about h5, .about p {
+		margin: 1%;
+		font-family: Bitter;
 }
 
 .creation, .interaction, .revision {
 	margin-left: 10%;
+	height: 100%;
+/*
 	height: 35%;
 	width: 80%;
+*/
+}
+
+.other-about {
+		margin-top: 3%;
+		height: 35%;
+}
+
+.other-about-inside {
+		height: 80%;
+		position: relative;
+		top: 10%;
+}
+
+.other-about h2 {
+		font-family: Nunito;
+		margin-bottom: 0px;
+}
+
+.start-draw-other {
+		margin-top: 2%;
 }
 
 footer
 {
+		text-align: center;
     padding-top: 0px;
+}
+
+/* TEMPORARY CSS PANG WIREFRAME LANG */
+
+.intro h2 {
+		font-family: Nunito;
+		color: #42a5f5;
 }

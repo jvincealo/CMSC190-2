@@ -1,0 +1,175 @@
+body, html
+{
+    background-color: #EDEDED !important;
+}
+
+.input-field {
+		height: 100%;
+}
+
+.nav-login {
+		width: 15%;
+}
+
+.nav-wrapper {
+    padding-left: 5%;
+    padding-right: 5%;   
+    height: 100%;
+}
+
+nav ul a,
+nav .brand-logo
+{
+    color: white;
+    font-size: 20px;
+}
+
+.intro
+{
+		height: 100%;
+		width: 100%;
+    text-align: center;
+    padding-bottom: 5%;
+
+}
+
+.app-name {
+	color: #42a5f5;
+	font-family: fantasy;
+}
+
+.bg-button {
+	width: 100%;
+	position: absolute;
+	top: 55%;
+}
+
+
+.intro h1
+{
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.about .col
+{
+    margin-bottom: 24px;
+}
+
+.about h5
+{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.about h6 {
+    text-align: center;
+		font-size: 25px;
+		font-style: italic;
+		font-family: fantasy;
+    margin-bottom: 35px;
+}
+
+.about hr
+{
+    width: 40px;
+    margin-bottom: 45px;
+}
+
+.creation, .interaction, .revision {
+	margin-left: 10%;
+	height: 35%;
+	width: 80%;
+}
+
+.about .card
+{
+    text-align: center;
+}
+
+.portfolio .col
+{
+    margin-bottom: 24px;
+}
+
+.portfolio h5
+{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.portfolio h6
+{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 45px;
+}
+
+.portfolio hr
+{
+    width: 40px;
+    margin-bottom: 45px;
+}
+
+.portfolio .portfolio-holder
+{
+    clear: both;
+    text-align: center;
+}
+
+.portfolio img
+{
+    height: 33%;
+    width: 33%;
+    display: inline-block;
+    float: left;
+}
+
+.contact .col
+{
+    margin-bottom: 24px;
+}
+
+.contact h5
+{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.contact h6
+{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 45px;
+}
+
+.contact hr
+{
+    width: 40px;
+    margin-bottom: 45px;
+}
+
+.contact .contact-holder
+{
+    padding-left: 40px;
+    text-align: left;
+}
+
+.contact .contact-holder h6
+{
+    margin-bottom: -5px;
+    text-align: left;
+}
+
+.contact .contact-holder p
+{
+    margin-bottom: 60px;
+}
+
+footer
+{
+    padding-top: 0px;
+}

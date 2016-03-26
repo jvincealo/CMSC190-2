@@ -3,12 +3,16 @@ body, html
     background-color: #EDEDED !important;
 }
 
-.input-field {
-		height: 100%;
+nav {
+		background-color: #EDEDED;
 }
 
-.nav-login {
-		width: 15%;
+.search-login-container {
+		width: 30%
+}
+
+.input-field {
+		height: 100%;
 }
 
 .nav-wrapper {
@@ -20,35 +24,46 @@ body, html
 nav ul a,
 nav .brand-logo
 {
-    color: white;
+    color: #42a5f5;
     font-size: 20px;
+		font-family: 'Bree Serif';
+}
+
+.blue-search {
+	color: #42a5f5 !important;
 }
 
 .intro
 {
-		height: 100%;
+		height: 80%;
 		width: 100%;
     text-align: center;
-    padding-bottom: 5%;
-
-}
-
-.app-name {
-	color: #42a5f5;
-	font-family: fantasy;
-}
-
-.bg-button {
-	width: 100%;
-	position: absolute;
-	top: 55%;
+		margin-bottom: 5%;
 }
 
 
-.intro h1
-{
-    font-weight: 900;
-    text-transform: uppercase;
+.intro-info {
+		height: 40%;
+/*		background-color: red;*/
+}
+
+.intro-background {
+		height: 75%;
+/*		background-color: yellow;*/
+}
+
+.start-draw {
+		margin-top: 2.5%;
+		color: #42a5f5;
+		font-family: Nunito;
+		border-radius: 3px;
+}
+
+.intro h2, h3, h4, h5 {
+	margin: 1%;
+	text-align: left;
+	color: #e0e0e0;
+	font-family: 'Bree Serif';
 }
 
 .about .col
@@ -67,8 +82,9 @@ nav .brand-logo
     text-align: center;
 		font-size: 25px;
 		font-style: italic;
-		font-family: fantasy;
+		font-family: Bitter;
     margin-bottom: 35px;
+		color: #42a5f5;
 }
 
 .about hr
@@ -81,92 +97,6 @@ nav .brand-logo
 	margin-left: 10%;
 	height: 35%;
 	width: 80%;
-}
-
-.about .card
-{
-    text-align: center;
-}
-
-.portfolio .col
-{
-    margin-bottom: 24px;
-}
-
-.portfolio h5
-{
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-
-.portfolio h6
-{
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 45px;
-}
-
-.portfolio hr
-{
-    width: 40px;
-    margin-bottom: 45px;
-}
-
-.portfolio .portfolio-holder
-{
-    clear: both;
-    text-align: center;
-}
-
-.portfolio img
-{
-    height: 33%;
-    width: 33%;
-    display: inline-block;
-    float: left;
-}
-
-.contact .col
-{
-    margin-bottom: 24px;
-}
-
-.contact h5
-{
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-
-.contact h6
-{
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 45px;
-}
-
-.contact hr
-{
-    width: 40px;
-    margin-bottom: 45px;
-}
-
-.contact .contact-holder
-{
-    padding-left: 40px;
-    text-align: left;
-}
-
-.contact .contact-holder h6
-{
-    margin-bottom: -5px;
-    text-align: left;
-}
-
-.contact .contact-holder p
-{
-    margin-bottom: 60px;
 }
 
 footer

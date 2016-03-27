@@ -7,7 +7,7 @@ body, html
 		width: 30%
 }
 
-.input-field {
+.search-input {
 		height: 100%;
 }
 
@@ -31,10 +31,10 @@ nav .brand-logo
 
 .intro
 {
-		height: 80%;
+		height: 75%;
 		width: 100%;
     text-align: center;
-		margin-bottom: 3%;
+		margin-bottom: 5%;
 }
 
 
@@ -100,14 +100,13 @@ nav .brand-logo
 }
 
 .other-about {
-		margin-top: 3%;
 		height: 35%;
 }
 
 .other-about-inside {
-		height: 80%;
+		height: 60%;
 		position: relative;
-		top: 10%;
+		top: 20%;
 }
 
 .other-about h2 {
@@ -124,6 +123,49 @@ footer
 		text-align: center;
     padding-top: 0px;
 }
+
+.login {
+		margin-top: 7.5%;
+		height: 50%;
+		width: 35%;
+		border-radius: 7px;
+}
+
+.login-nav {
+		height: 10%;
+		width: 100%;
+}
+
+.login h6 {
+		width: 100%;
+		font-family: Bitter;
+}
+
+.login-div {
+		height: 75%;
+}
+
+.login-form {
+		height: 80%;
+		position: relative;
+		top: 10%;
+}
+
+#email, #password {
+		height: 20%;
+}
+
+.login-icon {
+		position: relative;
+		top: 10%;
+		left: 1%;
+		color: #42a5f5;
+}
+
+.login-footer {
+		height: 10%;
+}
+
 
 /* TEMPORARY CSS PANG WIREFRAME LANG */
 

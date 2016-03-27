@@ -18,14 +18,14 @@
            <ul id="nav-mobile" class="row">
             <li class="col s8 offset-s1">
               <form>
-                <div class="input-field col s12">
+                <div class="search-input input-field col s12">
 <!--                  <input class="blue-search grey lighten-2 col s9" placeholder="Search Course" type="search">-->
                   <a class="col s3 offset-s10"><i class="material-icons blue-search ">search</i></a>
 <!--                  <i class="material-icons col s1">close</i>-->
                 </div>
               </form>
             </li>
-            <li><a href="#">Login</a></li>
+            <li><a class="modal-trigger valign-wrapper" href="#modal-login">Login</a></li>
           </ul>       
       </div>
     </div>
@@ -50,25 +50,8 @@
 	</div>
 
 </div>
-    
-<!--<div class="intro">-->
-<!--	<div class="intro">-->
-<!--<div class="intro deep-orange lighten-2 z-depth-1">-->
-<!--  <h1 class="grey-text text-lighten-5">IMAGE HERE</h1>-->
-<!--
-	<div class="bg-button row">
-		<h3 class="app-name col s6 offset-s6">Curriculum Visualization Tool</h3>
-		<div class="col s4 offset-s8">
-			<a class="start-draw waves-effect waves-light btn-large col">Start Drawing</a>
-		</div>
-	</div>
-	<div><img src="images/background.jpg" width="100%" height="100%"></div>
-  
-</div>
--->
 
 <div class="container about">
-<!--  <h5>about me</h5>-->
 	<br>
   <h4 class="center-align grey-text text-darken-3">Creating a curriculum had never been this easy.</h4>
 	<br>
@@ -128,7 +111,7 @@
 
 <br>
 <div class="other-about row">
-	<div class="other-about-i">
+	<div class="other-about-inside">
 		<h2 class="center-align grey-text text-darken-3">Make Your Own</h2>
 		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s2 offset-s5">Start Drawing</a>	
 	</div>
@@ -145,21 +128,43 @@
     © 2016 Institute of Computer Science, UPLB
   </div>
 </footer>
-
-    
+	
+<!-- ----------------------------------- MODALS ------------------------------------ -->
+<div id="modal-login" class="login modal grey lighten-3">
+	<nav class="login-nav valign-wrapper grey lighten-2">
+			<h6 class="center-align grey-text text-darken-1">Login with e-UP Account</h6>
+	</nav>
+	<div class="login-div container">
+		<div class="login-form">
+			<form>
+				<div class="input-field">
+					<i class="login-icon material-icons prefix">email</i>
+          <input id="email" type="email" class="validate">
+          <label for="email">Email (@up.edu.ph)</label>
+				</div>
+				<div class="input-field">
+					<i class="login-icon material-icons prefix">lock</i>
+          <input id="password" type="password" class="validate">
+          <label for="password">Password</label>
+				</div>
+				<div class="input-field row">
+          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Submit
+					<i class="material-icons right">send</i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="login-footer grey lighten-2 valign-wrapper">
+			<h6 class="center-align grey-text text-darken-1">Find out how to get your e-UP account <a href="https://www.uplbosa.org">here</a></h6>
+			
+	</div>
+</div>
+<!-- -------------------------------- END OF MODALS -------------------------------- -->
+	
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript">
-    //custom JS code
-    $(document).ready(function(){               
-      $('.materialboxed').materialbox();
-    });
-    $(document).ready(function(){
-      $('.materialboxed').materialbox();
-    });
-      
-  </script>
+  <script type="text/javascript" src="js/modal.js"></script>
 
 </body>
 </html>

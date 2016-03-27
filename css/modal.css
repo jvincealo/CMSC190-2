@@ -1,0 +1,62 @@
+.login {
+		margin-top: 5%;
+		height: 50%;
+		width: 35%;
+		border-radius: 7px;
+}
+
+.login-nav, .feedback-nav {
+		height: 10%;
+		width: 100%;
+}
+
+.login h6, .feedback h6 {
+		width: 100%;
+		font-family: Bitter;
+}
+
+.login-div, .feedback-div {
+		height: 75%;
+}
+
+.login-form, .feedback-form {
+		height: 80%;
+		position: relative;
+		top: 10%;
+}
+
+#email, #password {
+		height: 20%;
+}
+
+.login-icon {
+		position: relative;
+		top: 10%;
+		left: 1%;
+		color: #42a5f5;
+}
+
+.login-footer {
+		height: 10%;
+}
+
+.feedback {
+		margin-top: 5%;
+		height: 55%;
+		width: 50%;
+		border-radius: 7px;
+}
+
+.feedback-sem {
+		width: 100%;
+}
+
+.feedback-comment {
+		margin-top: 0px;
+}
+
+.materialize-textarea {
+		padding: 1% !important;
+		height: 40% !important;
+		width: 98% !important;
+}

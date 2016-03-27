@@ -40,7 +40,6 @@ nav .brand-logo
 
 .intro-info {
 		height: 40%;
-/*		background-color: red;*/
 }
 
 .intro-background {
@@ -70,6 +69,10 @@ nav .brand-logo
 		height: 90%;
 }
 
+.about {
+/*		height: 80%;*/
+}
+
 .about .col
 {
     margin-bottom: 24px;
@@ -82,20 +85,21 @@ nav .brand-logo
 .about h4 {
 		margin-bottom: 40px;
 		font-style: italic;
-		font-family: Nunito;
+		font-family: 'Crete Round';
 }
 
 .about h5, .about p {
 		margin: 1%;
+/*		margin: 2.5%;*/
 		font-family: Bitter;
 }
 
 .creation, .interaction, .revision {
 	margin-left: 10%;
-	height: 100%;
+	margin-bottom: 5%;
 /*
-	height: 35%;
-	width: 80%;
+	height: 100%;
+	width: 70%;
 */
 }
 
@@ -109,13 +113,14 @@ nav .brand-logo
 		top: 20%;
 }
 
-.other-about h2 {
-		font-family: Nunito;
+.other-about h3 {
+		font-family: 'Crete Round';
 		margin-bottom: 0px;
 }
 
 .start-draw-other {
 		margin-top: 2%;
+		font-family: 
 }
 
 footer
@@ -124,47 +129,7 @@ footer
     padding-top: 0px;
 }
 
-.login {
-		margin-top: 7.5%;
-		height: 50%;
-		width: 35%;
-		border-radius: 7px;
-}
 
-.login-nav {
-		height: 10%;
-		width: 100%;
-}
-
-.login h6 {
-		width: 100%;
-		font-family: Bitter;
-}
-
-.login-div {
-		height: 75%;
-}
-
-.login-form {
-		height: 80%;
-		position: relative;
-		top: 10%;
-}
-
-#email, #password {
-		height: 20%;
-}
-
-.login-icon {
-		position: relative;
-		top: 10%;
-		left: 1%;
-		color: #42a5f5;
-}
-
-.login-footer {
-		height: 10%;
-}
 
 
 /* TEMPORARY CSS PANG WIREFRAME LANG */

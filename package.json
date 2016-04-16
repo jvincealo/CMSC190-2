@@ -1,10 +1,23 @@
 {
   "name": "cmsc190-2",
   "version": "1.0.0",
-  "description": "a curriculum visualization and manipulation tool",
+  "description": "Curriculum Visualization Tool",
   "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.10",
+    "passport-google-oauth": "^1.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,14 +28,5 @@
   "bugs": {
     "url": "https://github.com/jvincealo/CMSC190-2/issues"
   },
-  "homepage": "https://github.com/jvincealo/CMSC190-2#readme",
-  "dependencies": {
-    "body-parser": "^1.15.0",
-    "cookie-parser": "^1.4.1",
-    "ejs": "^2.4.1",
-    "express": "^4.13.4",
-    "express-session": "^1.13.0",
-    "mongoose": "^4.4.10",
-    "path": "^0.12.7"
-  }
+  "homepage": "https://github.com/jvincealo/CMSC190-2#readme"
 }

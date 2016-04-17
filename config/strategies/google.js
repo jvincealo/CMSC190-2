@@ -1,8 +1,8 @@
 var passport = require('passport'),
     url      = require('url'),
-    GoogleStrategy = require('passport-google-oath').OAuth2Strategy,
+    GoogleStrategy = require( 'passport-google-oauth2' ).Strategy,
     config   = require('../config'),
-    users    = require('../../controllers/users.server.controller.js');
+    User = require('mongoose').model('User');
 
 module.exports = function() {
     passport.use(new GoogleStrategy({
@@ -11,10 +11,8 @@ module.exports = function() {
         callbackURL  : config.google.callbackURL,
         passReqToCallback: true
     },
-    function(token, refreshToken, profile, done) {
-        process.nextTick(function() {
-            User.findOne({'google.id' : profile.id})
-        })
+    function(request, accessToken, refreshToken, profile, done) {
+
     }
-    ))
+  ));
 }

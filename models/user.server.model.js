@@ -3,18 +3,18 @@ var mongoose     = require('mongoose'),
     Schema       = mongoose.Schema;
 
 var UserSchema = new Schema({
-    name: String,
-    email: {
-                type: String,
-                unique: true,
-                trim: true
-            },
-    username: String,
-    password: String,
-    provider: String,
-    providerId: String,
-    providerData: {},
-    todos: {}
+    local   :  {
+        username: {
+                        type: String,
+                    },
+        password: String
+    },
+    google  : {
+        id      : String,
+        token   : String,
+        name    : String,
+        email   : String
+    }
 });
 
 UserSchema.pre('save', function(next) {

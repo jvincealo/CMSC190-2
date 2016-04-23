@@ -1,7 +1,7 @@
 <html>
 <head>
 
-  <title><%= title%></title>
+  <title>awts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Bitter|Signika|Bree+Serif|Nunito' rel='stylesheet' type='text/css'>
@@ -42,7 +42,7 @@
 		<div class="intro-info valign col s11 offset-s1 row">
 			<h3 class="white-text">Unravel the best routes.</h3>
 			<h5 class="white-text">Design, Acquire Feedback, Evaluate.</h5>
-			<a class="start-draw waves-effect waves-light btn-large grey lighten-2 blue-text col s4 offset-s2" href="canvas.html">Start Drawing</a>
+			<a class="start-draw waves-effect waves-light btn-large grey lighten-2 blue-text col s4 offset-s2 modal-trigger" href="#modal-curriculum">Start Drawing</a>
 <!--			<h2>Evaluate.</h2>-->
 		</div>
 	</div>
@@ -179,6 +179,32 @@
         </div>
 				<div class="input-field row">
           <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action" onClick="switchModal()">Submit
+					<i class="material-icons right">send</i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- CURRICULUM MODAL -->
+<div id="modal-curriculum" class="curriculum modal grey lighten-3">
+	<nav class="curriculum-nav valign-wrapper grey lighten-2">
+			<h6 class="center-align grey-text text-darken-1">Create New Curriculum</h6>
+	</nav>
+	<div class="login-div container">
+		<div class="login-form">
+			<form action="canvas.html">
+				<div class="input-field">
+					<i class="login-icon material-icons prefix">email</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">Degree Program</label>
+				</div>
+				<div class="input-field">
+					<i class="login-icon material-icons prefix">lock</i>
+          <input id="icon_prefix" type="number" class="validate">
+					<label for="icon_prefix">Years</label>
+				</div>
+				<div class="input-field row">
+          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Create
 					<i class="material-icons right">send</i></button>
 				</div>
 			</form>

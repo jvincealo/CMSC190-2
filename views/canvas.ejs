@@ -39,33 +39,105 @@
   </nav>
 </div>
 
-<div class="base-div">
-	<div id="diagram-container">
+<div class="base-div row">
+		<div id="diagram-container" class="col s9" >
 
-	</div>
+		</div>
+		<div class="diagram-options col s3 row grey lighten-3">
+			<div class="diagram-tab">
+				<ul class="tabs blue-text">
+					<li class="tab col s4 blue-text z-depth-1"><a class="active blue-text" href="#tab-option">
+							<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon center-align">settings</i></div>
+						</a></li>
+					<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-info">
+							<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon center-align">description</i></div>
+						</a></li>
+					<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-comment">
+							<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon center-align">comment</i></div>
+						</a></li>
+				</ul>
+			</div>
+			<!--	TAB-OPTIONS DIV	-->
+			<div class="tab-div" id="tab-option">
+				<div>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 dropdown-button" data-beloworigin="true" data-activates='add-subject-drop' id="add-subject-btn">Add Subject<i class="material-icons right">add</i></a>
+					<div class="col s8 offset-s2">
+						<ul id="add-subject-drop" class="dropdown-content"> 
+							<li><a href="#!" onClick="addSubject(this)">CMSC21</a></li>
+							<li><a href="#!" onClick="addSubject(this)">CMSC123</a></li>
+							<li><a href="#!" onClick="addSubject(this)">CMSC141</a></li>
+						</ul>
+					</div>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 ">Import<i class="material-icons right">file_upload</i></a>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
+					<div class="col s8 offset-s2">
+						<ul id="export-drop" class="dropdown-content"> 
+							<li><a href="#!">Image<i class="material-icons right">photo</i></a></li>
+							<li><a href="#!">PDF<i class="material-icons right">picture_as_pdf</i></a></li>
+							<li><a href="#!">CSV File<i class="material-icons right">insert_drive_file</i></a></li>
+						</ul>
+					</div>
+
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
+				</div>
+						
+			</div>
+			<!--	TAB-INFO DIV	-->
+			<div id="tab-info">
+					<form>
+						<div class="input-field">
+							<input id="courseCode" type="text" class="validate">
+							<label for="courseCode">Course Code</label>
+						</div>
+						<div class="input-field">
+							<input id="courseTitle" type="text" class="validate">
+							<label for="courseTitle">Course Title</label>
+						</div>
+						<div class="input-field">
+							<input id="prerequisite" type="text" class="validate">
+							<label for="prerequisite">Prerequisite</label>
+						</div>
+						<div class="input-field">
+							<input id="units" type="number" class="validate">
+							<label for="units">Units</label>
+						</div>
+						<div class="input-field">
+							<textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
+							<label for="course-info">Course Description</label>
+						</div>
+					</form>
+		</div>
+
 <!--
 	<div id="cmsc11" class="item" >CMSC 11</div>
 	<div id="cmsc21" class="item">CMSC 21</div>
 	<div id="cmsc123" class="item">CMSC 123</div>
 -->
+<!--
 	<div class="diagram-option">
 		<a class="waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add Course<i class="material-icons right">add</i></a>
 	</div>
+-->
 
+	
 </div>
+	
 
 
-
-
+	
 <!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout" class="logout-drop dropdown-content ">
 	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
 	<li class="divider"></li>
 	<li><a href="#!" class="center-align">Logout</a></li>
-</ul>
-<!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
+</ul>	
+<!--  EXPORT DROPDOWN -->
 
+<!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
+	
 <!-- ----------------------------------- MODALS ------------------------------------ -->
 <!--	ADD COURSE MODAL -->
 <div id="modal-add-course" class="add-course modal grey lighten-3">
@@ -80,6 +152,7 @@
           <input id="courseCode" type="text" class="validate">
           <label for="courseCode">Course Code</label>
 				</div>
+<!--
 				<div class="input-field">
 					<i class="login-icon material-icons prefix">lock</i>
           <input id="icon_prefix" type="text" class="validate">
@@ -103,8 +176,9 @@
           <textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
           <label for="course-info">Course Description</label>
         </div>
+-->
 				<div class="input-field row">
-          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="button" name="action" onClick="addCourse()">Submit
+          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="button" name="action" onClick="addSubject(courseCode)">Submit
 					<i class="material-icons right">send</i></button>
 				</div>
 			</form>
@@ -115,17 +189,14 @@
 	</div>
 </div>
 <!-- -------------------------------- END OF MODALS -------------------------------- -->
-
+	
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<!--	<script type="text/javascript" src="js/jquery-ui.min.js"></script>-->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script>
 	<script type="text/javascript" src="js/lodash.min.js"></script>
 	<script type="text/javascript" src="js/backbone-min.js"></script>
 	<script type="text/javascript" src="js/joint.min.js"></script>
-<!--	<script type="text/javascript" src="js/jsPlumb-2.0.7-min.js"></script>-->
-  <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/diagram.js"></script>
-	<script type="text/javascript" src="js/modal.js"></script>
-
+  <script type="text/javascript" src="js/diagram.js"></script>	
 </body>
 </html>

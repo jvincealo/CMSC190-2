@@ -5,12 +5,12 @@
 		border-radius: 7px;
 }
 
-.login-nav, .feedback-nav {
+.login-nav, .feedback-nav, .add-course-nav, .curriculum-nav {
 		height: 10%;
 		width: 100%;
 }
 
-.login h6, .feedback h6 {
+.login h6, .feedback h6, .add-course-nav h6, .curriculum-nav h6 {
 		width: 100%;
 		font-family: Bitter;
 }
@@ -59,4 +59,31 @@
 		padding: 1% !important;
 		height: 40% !important;
 		width: 98% !important;
+}
+
+.add-course {
+		height: 80%;
+		width: 40%;
+}
+
+.add-course-div {
+		width: 90% !important;
+}
+
+.prereq-units {
+		margin: 0px !important;
+}
+
+.units-icon {
+		position: relative;
+		top: 10%;
+		left: 61%;
+		color: #42a5f5;
+}
+
+.curriculum {
+		margin-top: 5%;
+		height: 50%;
+		width: 30%;
+		border-radius: 7px;
 }

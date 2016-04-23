@@ -25,8 +25,8 @@ nav .brand-logo
 		font-family: 'Bree Serif';
 }
 
-.blue-search {
-	color: #42a5f5 !important;
+.login-logout {
+		margin-left: 5%;
 }
 
 .intro
@@ -44,7 +44,7 @@ nav .brand-logo
 
 .intro-background {
 		height: 75%;
-		background-color: #e0e0e0;
+/*		background-color: #e0e0e0;*/
 }
 
 .start-draw, .start-draw-other {
@@ -97,10 +97,8 @@ nav .brand-logo
 .creation, .interaction, .revision {
 	margin-left: 10%;
 	margin-bottom: 5%;
-/*
 	height: 100%;
 	width: 70%;
-*/
 }
 
 .other-about {
@@ -137,4 +135,8 @@ footer
 .intro h2 {
 		font-family: Nunito;
 		color: #42a5f5;
+}
+
+.bg-image {
+		border-radius: 10px;
 }

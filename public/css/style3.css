@@ -1,6 +1,6 @@
 body, html
 {
-    background-color: #eeeeee !important;
+    background-color: white !important;
 }
 
 .search-login-container {
@@ -43,8 +43,61 @@ nav .brand-logo
 		height: 90%;
 }
 
-.diagram-option {
-		margin-left: 0.5%;
-		margin-top: 0.5%;
+.row {
+		margin-bottom: 0px !important;
 }
 
+.diagram-options {
+/*		margin: 1% !important;*/
+		height: 100%;
+		padding: 0px !important;
+}
+
+.diagram-tab {
+		width: 100%;
+		height: 10%;
+}
+
+.tab a div {
+		height: 100%;
+}
+
+.tab-icon {
+		width: 100%;
+}
+
+.indicator { /* TAB LINE INDICATOR  */ 
+		background-color: #42a5f5 !important;
+}
+
+.tab-div {
+		height: 90%;
+}
+
+.tab-div-inside {
+		height: 100%;
+}
+
+.tab-option-btn {
+		width: 75%;
+		margin-left: 12.5%;
+		margin-bottom: 5%;
+}
+
+#export-drop, #add-subject-drop {
+		margin-left: 3.125%;
+}
+
+#save-btn {
+		margin-top: 45%;
+}
+
+#tab-info {
+		height: 88%;
+		padding: 5%;
+}
+
+#course-info {
+		margin-top: 1% !important;
+		height: 33% !important;
+}

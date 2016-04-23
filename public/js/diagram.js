@@ -1,45 +1,150 @@
-var graph = new joint.dia.Graph;
+var curriculum = {}; //json for the curriculum
 
+var yearCount = 4; //default no. of years
+var xMax = $('#diagram-container').width();
+var yMax = $('#diagram-container').height();
+var semDivider = xMax/(yearCount*2);
+var dragFlag = false; //scroll paper on mouse drag
+var graph = new joint.dia.Graph;
 var paper = new joint.dia.Paper({
 		el: $('#diagram-container'),
-		width: $('#diagram-container').width(),
-		height: $('#diagram-container').height(),
+		width: xMax*2,
+		height: yMax*2,
 		model: graph,
-		gridSize: 1
+		gridSize: semDivider/(yearCount*2),
+		defaultLink: new joint.dia.Link({
+				attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
+		}),
+//		snapLinks: { radius: 75 }
 });
 
-//var rect = new joint.shapes.basic.Rect({
-//		position: { x: 100, y: 30 },
-//		size: { width: 100, height: 30 },
-//		attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }
-//});
-//
-//var rect2 = rect.clone();
-//rect2.translate(300);
-//
-//var link = new joint.dia.Link({
-//		source: { id: rect.id },
-//		target: { id: rect2.id }
-//});
-//
-//graph.addCells([rect, rect2, link]);
+for (i = 1; i < yearCount*4; i++) { 
+	var line = V('line', { x1: semDivider*i, y1: 0, x2: semDivider*i, y2: yMax*2, stroke: 'black' });
+	V(paper.viewport).append(line);
+}	
 
+//var cell = new joint.shapes.devs.Atomic({
+//    position: { x: 400, y: 150 },
+//    size: { width: 100, height: 100 }
+//});
+//graph.addCells([cell]);
 
-// CREATE NEW CUSTOM ELEMENT
-joint.shapes.html = {};
-joint.shapes.html.Element = joint.shapes.basic.Rect.extend({
-		defaults: joint.util.deepSupplement({
-				type: 'html.Element',
-		}, joint.shapes.basic.Rect.prototype.defaults)
+paper.on('blank:pointerdown', function(evt, x, y){ //drag paper on press
+		dragFlag = true;
+		dragStartPosition = { x: x, y: y};
 });
 
-joint.shapes.html.ElementView = joint.dia.ElementView.extend({
-	template: [
-			'<div class="html-element">',
-			'<button class="delete">x</button>',
-			'<label></label>',
-			'</div>'
-	].join(''),
+paper.on('blank:pointerup', function(evt, x, y){ //stop drag paper after press
+		dragFlag = false;
+		delete dragStartPosition;
+});
+
+paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
+     $(document).ready(function(){
+			$('ul.tabs').tabs('select_tab', 'tab-info');
+		});
+});
+
+graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
+    if (link.get('source').id && link.get('target').id) { //if 2 subjects are connected
+			var sourceId = link.get('source').id;
+			var targetId = link.get('target').id;
+			if(curriculum[sourceId] == null) curriculum[sourceId] = targetId;
+			else curriculum[sourceId] += "," + targetId;
+			console.log(curriculum);
+			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+				link.attr({
+					'.connection': { stroke: 'red' },
+					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
+				console.log("error");
+			} 
+    }
+});
+
+graph.on('change:position', function(cell) { //constantly checks for conflicts based on source and target positions
+		var outSubj = graph.getConnectedLinks(cell, { outbound: true });
+//		console.log(outSubj);
+		outSubj.forEach(function(link) {
+		if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+			link.attr({
+				'.connection': { stroke: 'red' },
+				'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
+			});
+			console.log("error");
+		} else {
+			link.attr({
+				'.connection': { stroke: 'black' },
+				'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
+			});
+		}
+	});
+});
+				 
+function dragPaper(){
+	if(dragFlag){
+		paper.setOrigin(
+			event.offsetX - dragStartPosition.x, 
+			event.offsetY - dragStartPosition.y);
+	}
+}
+
+
+
+function addCourse(course){
+	if(course.value != null){
+	 	var courseName = course.value;	
+		$('#modal-add-course').closeModal();
+	} else{
+		var courseName = course.innerHTML;
+	} 
+	
+	// Create a custom element.
+	// ------------------------
+	joint.shapes.html = {};
+	joint.shapes.html.Element = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
+			markup: '<g class="rotatable"><g class="scalable"><rect/></g><g class="inPorts"/><g class="outPorts"/></g>',
+			portMarkup: '<g class="port<%= id %>"><circle/></g>',
+			defaults: joint.util.deepSupplement({
+					type: 'html.Element',
+					size: { width: 100, height: 80 },
+					inPorts: [],
+					outPorts: [],
+					attrs: {
+							'.': { magnet: false },
+							rect: {
+									stroke: 'none', 'fill-opacity': 0, width: 150, height: 250,
+							},
+							circle: {
+									r: 6, //circle radius
+									magnet: true,
+									stroke: 'black'
+							},
+
+							'.inPorts circle': { fill: 'green', magnet: 'passive', type: 'input'},
+							'.outPorts circle': { fill: 'red', type: 'output'}
+					}
+			}, joint.shapes.basic.Generic.prototype.defaults),
+			getPortAttrs: function (portName, index, total, selector, type) {
+
+					var attrs = {};
+					var portClass = 'port' + index;
+					var portSelector = selector + '>.' + portClass;
+					var portCircleSelector = portSelector + '>circle';
+					attrs[portCircleSelector] = { port: { id: portName || _.uniqueId(type), type: type } };
+					attrs[portSelector] = { ref: 'rect', 'ref-y': (index + 0.5) * (1 / total) };
+					if (selector === '.outPorts') { attrs[portSelector]['ref-dx'] = 0; }
+					return attrs;
+			}
+	}));
+
+	joint.shapes.html.ElementView = joint.dia.ElementView.extend({
+		template: [
+				'<div class="html-element valign-wrapper" id="'+courseName.replace(" ","")+'" onmouseover="">',
+				'<button class="delete">x</button>',
+				'<label class="valign center-align"></label>',
+				'</div>'
+		].join(''),
 
 		initialize: function() {
 			_.bindAll(this, 'updateBox');
@@ -53,13 +158,39 @@ joint.shapes.html.ElementView = joint.dia.ElementView.extend({
 			this.model.on('remove', this.removeBox, this);
 
 			this.updateBox();
-			},
-		render: function() {
-			joint.dia.ElementView.prototype.render.apply(this, arguments);
-			this.paper.$el.prepend(this.$box);
-			this.updateBox();
-			return this;
-		},
+       this.listenTo(this.model, 'process:ports', this.update);
+        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+    },
+
+
+     render: function() {
+        joint.dia.ElementView.prototype.render.apply(this, arguments);
+        this.paper.$el.prepend(this.$box);
+        // this.paper.$el.mousemove(this.onMouseMove.bind(this)), this.paper.$el.mouseup(this.onMouseUp.bind(this));
+        this.updateBox();
+        return this;
+    },
+
+    renderPorts: function () {
+        var $inPorts = this.$('.inPorts').empty();
+        var $outPorts = this.$('.outPorts').empty();
+
+        var portTemplate = _.template(this.model.portMarkup);
+
+        _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
+            $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+        });
+        _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
+            $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+        });
+    }, 
+
+    update: function () {
+        // First render ports so that `attrs` can be applied to those newly created DOM elements
+        // in `ElementView.prototype.update()`.
+        this.renderPorts();
+        joint.dia.ElementView.prototype.update.apply(this, arguments);
+    },
 		updateBox: function() {
 			// Set the position and dimension of the box so that it covers the JointJS element.
 			var bbox = this.model.getBBox();
@@ -73,23 +204,41 @@ joint.shapes.html.ElementView = joint.dia.ElementView.extend({
 		}
 	});
 
-function addCourse(){
 	// Create JointJS elements and add them to the graph as usual.
-	// -----------------------------------------------------------
-	var courseName = document.getElementById("courseCode").value;
-	var subject = new joint.shapes.html.Element({ position: { x: 80, y: 80 }, size: { width: 100, height: 50 }, label: courseName });
-//	var subject2 = new joint.shapes.html.Element({ position: { x: 370, y: 160 }, size: { width: 100, height: 50 }, label: 'CMSC 141'});
-//	var l = new joint.dia.Link({
-//			source: { id: subject.id },
-//			target: { id: subject2.id },
-//			attrs: {
-//				'.connection': { stroke: 'black' },
-//				'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
-//			}
-//	});
-graph.addCells([subject]);
+	var subject = new joint.shapes.html.Element({ 
+		position: { x: 80, y: 80 }, 
+		size: { width: 100, height: 50 }, 
+		inPorts: ['in'],
+    outPorts: ['out'],
+		label: courseName
+	});
+
+	graph.addCells([subject]);
+//	document.getElementById("courseCode").value = null; //remove value
 //	graph.addCells([subject, subject2, l]);
 }
 
-
-
+function addSubject(course){
+	if(course.value != null){
+		var courseName = course.value;	
+		$('#modal-add-course').closeModal();
+	} else{
+		var courseName = course.innerHTML;
+	} 
+	
+	var subject = new joint.shapes.devs.Model({
+		id: courseName.replace(" ",""),
+		position: { x: 50, y: 50 },
+		size: { width: 100, height: 50 },
+		inPorts: [''],
+		outPorts: [''],
+		attrs: {
+        '.label': { text: courseName, 'ref-x': .5, 'ref-y': .33 },
+				rect: { fill: '#42a5f5' },
+				'.inPorts circle': { fill: '#E74C3C' },
+				'.outPorts circle': { fill: '#16A085' }
+		}
+	});
+	graph.addCell(subject);
+//	document.getElementById("courseCode").value = ""; //remove value
+}

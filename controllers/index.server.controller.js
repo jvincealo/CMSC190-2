@@ -10,7 +10,7 @@ exports.create = function(req, res) {
     res.render('canvas');
 };
 
-exports.render = function(req, res) {
+exports.home = function(req, res) {
     res.render('home');
 };
 
@@ -42,4 +42,8 @@ exports.create = function(req, res) {
             });
         }
     });
+
+exports.logout = function() {
+    req.logout();
+    res.redirect('/');
 }

@@ -3,18 +3,17 @@ var mongoose     = require('mongoose'),
     Schema       = mongoose.Schema;
 
 var UserSchema = new Schema({
-    local   :  {
-        username: {
-                        type: String,
-                    },
-        password: String
-    },
-    google  : {
-        id      : String,
-        token   : String,
-        name    : String,
-        email   : String
-    }
+    name: String,
+    email: String,
+    username: {
+                type: String,
+                trim: true,
+                unique: true
+            },
+    password: String,
+    provider: String,
+    providerId: String,
+    providerData: {}
 });
 
 UserSchema.pre('save', function(next) {
@@ -54,4 +53,4 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
     );
 };
 
-mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -93,27 +93,38 @@ exports.logout = function(req, res, next) {
     res.redirect('/');
 };
 
-exports.saveGoogleProfile = function(req, profile, done) {
-    User.findOne({ 'google.id' : profile.id },
-    function(err, user) {
-        if(err)
+exports.saveOAuthUserProfile = function(req, profile, done) {
+    User.findOne({
+            provider: profile.provider,
+            providerId: profile.providerId
+        },
+        function(err, user) {
+            if (err) {
             return done(err);
+            }
+            else {
+                if (!user) {
+                    var possibleUsername = profile.username || ((profile.email) ? profile.email.split('@')[0] : '');
+                    User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
+                        profile.username = availableUsername;
+                        user = new User(profile);
 
-        if(user) {
-            return done(null, user);
-        } else {
-            var new_user    = new User();
+                        user.save(function(err) {
+                            // if (err) {
+                            //     var message = _this.getErrorMessage(err);
+                            //     req.flash('error', message);
+                            //     return res.redirect('/signup');
+                            // }
 
-            new_user.google.id      = profile.id;
-            new_user.google.token   = profile.token;
-            new_user.google.email   = profile.email;
-            new_user.google.name    = profile.name;
-
-            new_user.save(function(err) {
-                if(err)
-                    throw err;
-                return done(null, new_user);
-            });
+                            return done(err, user);
+                        });
+                    });
+                    return user;
+                }
+                else {
+                    return done(err, user);
+                }
+            }
         }
-    });
+    );
 };

@@ -189,7 +189,6 @@ function dragPaper(){
 	}
 }
 
-
 function addCourse(course){
 	if(course.value != null){
 	 	var courseName = course.value;

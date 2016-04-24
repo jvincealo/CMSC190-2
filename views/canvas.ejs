@@ -11,7 +11,6 @@
 	<link type="text/css" rel="stylesheet" href="css/modal.css">
 	<link type="text/css" rel="stylesheet" href="css/diagram.css">
 	<link type="text/css" rel="stylesheet" href="css/joint.min.css">
-
 </head>
 <body>
 <div class="navbar-fixed">
@@ -62,17 +61,18 @@
 				<div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 dropdown-button" data-beloworigin="true" data-activates='add-subject-drop' id="add-subject-btn">Add Subject<i class="material-icons right">add</i></a>
 					<div class="col s8 offset-s2">
-						<ul id="add-subject-drop" class="dropdown-content"> 
+						<ul id="add-subject-drop" class="dropdown-content">
 							<li><a href="#!" onClick="addSubject(this)">CMSC21</a></li>
 							<li><a href="#!" onClick="addSubject(this)">CMSC123</a></li>
 							<li><a href="#!" onClick="addSubject(this)">CMSC141</a></li>
 						</ul>
 					</div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 ">Import<i class="material-icons right">file_upload</i></a>
+					<input id="upload" type="file" style="display:none" />
+                    <a id='upload_link' class="tab-option-btn waves-effect waves-light btn blue lighten-1">Import<i id class="material-icons right">file_upload</i></a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
 					<div class="col s8 offset-s2">
-						<ul id="export-drop" class="dropdown-content"> 
+						<ul id="export-drop" class="dropdown-content">
 							<li><a href="#!">Image<i class="material-icons right">photo</i></a></li>
 							<li><a href="#!">PDF<i class="material-icons right">picture_as_pdf</i></a></li>
 							<li><a href="#!">CSV File<i class="material-icons right">insert_drive_file</i></a></li>
@@ -82,7 +82,7 @@
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
-						
+
 			</div>
 			<!--	TAB-INFO DIV	-->
 			<div id="tab-info">
@@ -121,23 +121,23 @@
 	</div>
 -->
 
-	
+
 </div>
-	
 
 
-	
+
+
 <!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout" class="logout-drop dropdown-content ">
 	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
 	<li class="divider"></li>
 	<li><a href="#!" class="center-align">Logout</a></li>
-</ul>	
+</ul>
 <!--  EXPORT DROPDOWN -->
 
 <!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
-	
+
 <!-- ----------------------------------- MODALS ------------------------------------ -->
 <!--	ADD COURSE MODAL -->
 <div id="modal-add-course" class="add-course modal grey lighten-3">
@@ -189,7 +189,7 @@
 	</div>
 </div>
 <!-- -------------------------------- END OF MODALS -------------------------------- -->
-	
+
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -197,6 +197,6 @@
 	<script type="text/javascript" src="js/lodash.min.js"></script>
 	<script type="text/javascript" src="js/backbone-min.js"></script>
 	<script type="text/javascript" src="js/joint.min.js"></script>
-  <script type="text/javascript" src="js/diagram.js"></script>	
+  <script type="text/javascript" src="js/diagram.js"></script>
 </body>
 </html>

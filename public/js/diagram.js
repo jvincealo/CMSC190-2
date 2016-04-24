@@ -18,10 +18,10 @@ var paper = new joint.dia.Paper({
 //		snapLinks: { radius: 75 }
 });
 
-for (i = 1; i < yearCount*4; i++) { 
+for (i = 1; i < yearCount*4; i++) {
 	var line = V('line', { x1: semDivider*i, y1: 0, x2: semDivider*i, y2: yMax*2, stroke: 'black' });
 	V(paper.viewport).append(line);
-}	
+}
 
 //var cell = new joint.shapes.devs.Atomic({
 //    position: { x: 400, y: 150 },
@@ -58,7 +58,7 @@ graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT -
 					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
 				});
 				console.log("error");
-			} 
+			}
     }
 });
 
@@ -80,11 +80,11 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 		}
 	});
 });
-				 
+
 function dragPaper(){
 	if(dragFlag){
 		paper.setOrigin(
-			event.offsetX - dragStartPosition.x, 
+			event.offsetX - dragStartPosition.x,
 			event.offsetY - dragStartPosition.y);
 	}
 }
@@ -93,12 +93,12 @@ function dragPaper(){
 
 function addCourse(course){
 	if(course.value != null){
-	 	var courseName = course.value;	
+	 	var courseName = course.value;
 		$('#modal-add-course').closeModal();
 	} else{
 		var courseName = course.innerHTML;
-	} 
-	
+	}
+
 	// Create a custom element.
 	// ------------------------
 	joint.shapes.html = {};
@@ -183,7 +183,7 @@ function addCourse(course){
         _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
             $outPorts.append(V(portTemplate({ id: index, port: port })).node);
         });
-    }, 
+    },
 
     update: function () {
         // First render ports so that `attrs` can be applied to those newly created DOM elements
@@ -205,9 +205,9 @@ function addCourse(course){
 	});
 
 	// Create JointJS elements and add them to the graph as usual.
-	var subject = new joint.shapes.html.Element({ 
-		position: { x: 80, y: 80 }, 
-		size: { width: 100, height: 50 }, 
+	var subject = new joint.shapes.html.Element({
+		position: { x: 80, y: 80 },
+		size: { width: 100, height: 50 },
 		inPorts: ['in'],
     outPorts: ['out'],
 		label: courseName
@@ -220,12 +220,12 @@ function addCourse(course){
 
 function addSubject(course){
 	if(course.value != null){
-		var courseName = course.value;	
+		var courseName = course.value;
 		$('#modal-add-course').closeModal();
 	} else{
 		var courseName = course.innerHTML;
-	} 
-	
+	}
+
 	var subject = new joint.shapes.devs.Model({
 		id: courseName.replace(" ",""),
 		position: { x: 50, y: 50 },
@@ -241,4 +241,45 @@ function addSubject(course){
 	});
 	graph.addCell(subject);
 //	document.getElementById("courseCode").value = ""; //remove value
+}
+
+//File IO
+var upload = document.getElementById('upload');
+upload.addEventListener('change', fileSelect, false);
+
+$(function(){
+    $("#upload_link").on('click', function(e){
+        e.preventDefault();
+        $("#upload:hidden").trigger('click');
+    });
+});
+
+function fileSelect(evt) {
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+  		// Great success! All the File APIs are supported.
+	} else {
+  		alert('The File APIs are not fully supported in this browser.');
+	}
+
+	var files = document.getElementById('upload').files;
+	var file = files[0];
+
+	var reader = new FileReader();
+
+	reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+      	var data = evt.target.result;
+      	var lines = data.split('\n');
+      	var tokens;
+
+      	for(var line = 0; line < lines.length ; line++) {
+      		tokens = lines[line].split(',');
+      		for(var token = 0; token < tokens.length; token++) {
+      			curriculum[tokens[token]] = tokens[token+1];
+      		}
+      	}
+      }
+      alert(JSON.stringify(curriculum,null,2));
+    };
+    reader.readAsText(file);
 }

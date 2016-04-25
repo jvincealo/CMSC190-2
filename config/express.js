@@ -9,6 +9,7 @@ module.exports = function() {
 
     //routes
     require('../routes/index.server.routes.js')(app);
+    require('../routes/course.server.routes.js')(app);
 
     //use static files
     app.use(express.static('./public'));

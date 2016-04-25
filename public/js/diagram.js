@@ -178,6 +178,16 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 	});
 });
 
+function dragPaper(){
+	if(dragFlag){
+		paper.setOrigin(
+			event.offsetX - dragStartPosition.x,
+			event.offsetY - dragStartPosition.y);
+	}
+}
+
+
+
 function addCourse(course){
 	if(course.value != null){
 	 	var courseName = course.value;
@@ -312,6 +322,24 @@ function addSubject(course){
 	} else{
 		var courseName = course.innerHTML;
 	}
+    //	var courseName = course; /
+
+	var subject = new joint.shapes.devs.Model({
+		id: courseName.replace(" ",""),
+		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },
+		size: { width: semDivider, height: yMax/12 },
+		inPorts: [''],
+		outPorts: [''],
+		attrs: {
+        '.label': { text: courseName, 'ref-x': .5, 'ref-y': .33 },
+				rect: { fill: '#42a5f5' },
+				'.inPorts circle': { fill: '#E74C3C', r: 10, magnet: 'passive', type: 'input' },
+				'.outPorts circle': { fill: '#16A085',r: 10, type: 'output' }
+		}
+	});
+//	subject.attr({ rect: { fill: 'red' } });
+	graph.addCell(subject);
+//	document.getElementById("courseCode").value = ""; //remove value
 	colCount += 1;
 	if(colCount%6 == 0){
 		rowCount += 1;
@@ -349,7 +377,6 @@ function addSubject(course){
 //addSubject("CMSC 127");
 //addSubject("CMSC 170");
 //addSubject("CMSC 150");
-}
 
 //File IO
 var upload = document.getElementById('upload');

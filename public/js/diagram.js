@@ -324,11 +324,6 @@ function addSubject(course){
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	}
-<<<<<<< 18bfee4f8bf3fd9eaf18fbbfa9fe679e91678d53
-=======
-    //	var courseName = course; /
-
->>>>>>> rebase
 	var subject = new joint.shapes.devs.Model({
 		id: courseName.replace(" ",""),
 		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },

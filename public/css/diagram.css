@@ -3,7 +3,7 @@
 	height: 100%;
  	position: relative;
 	padding: 0px !important;
-	overflow: auto;
+	overflow: hidden;
 }
 
 #diagram-container svg {

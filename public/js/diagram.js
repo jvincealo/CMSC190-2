@@ -1,9 +1,15 @@
 var curriculum = {}; //json for the curriculum
+var coursePos = {}; //save positions
+var colCount = 0;
+var rowCount = 0;
+var graphScale = 1;
+var selectedSubject = null;
 
 var yearCount = 4; //default no. of years
 var xMax = $('#diagram-container').width();
 var yMax = $('#diagram-container').height();
 var semDivider = xMax/(yearCount*2);
+var gridWidth = ((semDivider/2) + (semDivider/4))*2;
 var dragFlag = false; //scroll paper on mouse drag
 var graph = new joint.dia.Graph;
 var paper = new joint.dia.Paper({
@@ -11,34 +17,110 @@ var paper = new joint.dia.Paper({
 		width: xMax*2,
 		height: yMax*2,
 		model: graph,
-		gridSize: semDivider/(yearCount*2),
+		gridSize: gridWidth/2,
 		defaultLink: new joint.dia.Link({
-				attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
+				router: { name: 'manhattan' },
+//    		connector: { name: 'rounded' },
+				attrs: { 
+					'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
+					'.connection': { 'stroke-width': 4 }
+				}
 		}),
-//		snapLinks: { radius: 75 }
+		validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+        // Prevent linking from input ports.
+        if (magnetS && magnetS.getAttribute('type') === 'input') return false;
+        // Prevent linking from output ports to input ports within one element.
+        if (cellViewS === cellViewT) return false;
+        // Prevent linking to input ports.
+        return magnetT && magnetT.getAttribute('type') === 'input';
+    },
+		validateMagnet: function(cellView, magnet) {
+        // Note that this is the default behaviour. Just showing it here for reference.
+        // Disable linking interaction for magnets marked as passive (see below `.inPorts circle`).
+        return magnet.getAttribute('magnet') !== 'passive';
+    },
+		restrictTranslate: true,
+		snapLinks: { radius: 75 },
+		multiLinks: false
+});
+paper.setOrigin(xMax/7.5, yMax/20);
+zoomPaper(-0.5);
+
+//grid columns for years and semesters
+for (i = 0; i <= yearCount*2; i++) { 
+	var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0, x2: gridWidth*i-(semDivider/4), y2: yMax*2, stroke: 'black' });
+	V(paper.viewport).append(line);
+}
+var line = V('line', { x1: 0-(semDivider/4), y1: 0, x2: (xMax*3)/2-(semDivider/4), y2: 0, stroke: 'black' });
+V(paper.viewport).append(line);
+var line2 = V('line', { x1: 0-(semDivider/4), y1: yMax*2, x2: (xMax*3)/2-(semDivider/4), y2: yMax*2, stroke: 'black' });
+V(paper.viewport).append(line2);
+
+
+$('#diagram-container').bind('mousewheel', function(event) {
+		event.preventDefault(); //disable scroll through mousewheel
+    if (event.originalEvent.wheelDelta >= 0) {
+        console.log('Scroll up');
+				zoomPaper(0.05);
+    }
+    else {
+        console.log('Scroll down');
+				zoomPaper(-0.05);
+    }
+});
+$(document).on('keyup',function(e){ //deletes selected subject
+	if(e.keyCode == 46) removeSubject();
+	console.log(e.keyCode);
 });
 
-for (i = 1; i < yearCount*4; i++) { 
-	var line = V('line', { x1: semDivider*i, y1: 0, x2: semDivider*i, y2: yMax*2, stroke: 'black' });
-	V(paper.viewport).append(line);
-}	
+function removeSubject(){
+	if(selectedSubject != null){
+		selectedSubject.attr({ rect: { 'stroke-width': 0 } });
+		selectedSubject.remove();
+		selectedSubject = null;
+	}
+}
 
-//var cell = new joint.shapes.devs.Atomic({
-//    position: { x: 400, y: 150 },
-//    size: { width: 100, height: 100 }
-//});
-//graph.addCells([cell]);
+function dragPaper(){ //scrolls paper on drag
+	if(dragFlag){
+//		var canvasDiv = document.getElementById("diagram-container"); 
+//		canvasDiv.scrollLeft += dragStartPosition.x - event.offsetX;
+//		canvasDiv.scrollTop += dragStartPosition.y - event.offsetY;
+			paper.setOrigin(
+				event.offsetX - dragStartPosition.x, 
+				event.offsetY - dragStartPosition.y);
+	}
+}
+
+function zoomPaper(value){
+		graphScale += value;
+		paper.scale(graphScale);
+}
 
 paper.on('blank:pointerdown', function(evt, x, y){ //drag paper on press
 		dragFlag = true;
-		dragStartPosition = { x: x, y: y};
+		var scale = V(paper.viewport).scale();
+		dragStartPosition = { x: x * scale.sx, y: y * scale.sy};
 });
-
 paper.on('blank:pointerup', function(evt, x, y){ //stop drag paper after press
 		dragFlag = false;
-		delete dragStartPosition;
+//		delete dragStartPosition;
+});
+paper.on('blank:pointerclick', function(evt, x, y){
+	if(selectedSubject != null){
+		selectedSubject.attr({ rect: { 'stroke-width': 1 } });
+		selectedSubject = null;
+	}
 });
 
+paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights clicked subject
+	if(selectedSubject != null){
+		selectedSubject.attr({ rect: { 'stroke-width': 1 } });
+		selectedSubject = null;
+	}
+	selectedSubject = evt.model;
+	evt.model.attr({ rect: { stroke: 'black', 'stroke-width': 3 } });
+});
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
      $(document).ready(function(){
 			$('ul.tabs').tabs('select_tab', 'tab-info');
@@ -61,33 +143,42 @@ graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT -
 			} 
     }
 });
-
 graph.on('change:position', function(cell) { //constantly checks for conflicts based on source and target positions
 		var outSubj = graph.getConnectedLinks(cell, { outbound: true });
-//		console.log(outSubj);
-		outSubj.forEach(function(link) {
-		if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
-			link.attr({
-				'.connection': { stroke: 'red' },
-				'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
-			});
-			console.log("error");
-		} else {
-			link.attr({
-				'.connection': { stroke: 'black' },
-				'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
-			});
+		var inSubj = graph.getConnectedLinks(cell, { inbound: true });
+		outSubj.forEach(function(link) { //CONFLICT CHECKING FOR OUTWARD LINKS
+			if(link.getTargetElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
+				if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+					link.attr({
+						'.connection': { stroke: 'red' },
+						'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
+					});
+				} else {
+					link.attr({
+						'.connection': { stroke: 'black' },
+						'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
+					});
+				}
+			}
+	});
+	inSubj.forEach(function(link) { //CONFLICT CHECKING FOR INWARD LINKS
+		if(link.getSourceElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
+			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+				link.attr({
+					'.connection': { stroke: 'red' },
+					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
+			} else {
+				link.attr({
+					'.connection': { stroke: 'black' },
+					'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
+			}
 		}
 	});
 });
 				 
-function dragPaper(){
-	if(dragFlag){
-		paper.setOrigin(
-			event.offsetX - dragStartPosition.x, 
-			event.offsetY - dragStartPosition.y);
-	}
-}
+
 
 
 
@@ -225,20 +316,57 @@ function addSubject(course){
 	} else{
 		var courseName = course.innerHTML;
 	} 
-	
+//	var courseName = course; /
 	var subject = new joint.shapes.devs.Model({
 		id: courseName.replace(" ",""),
-		position: { x: 50, y: 50 },
-		size: { width: 100, height: 50 },
+		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },
+		size: { width: semDivider, height: yMax/12 },
 		inPorts: [''],
 		outPorts: [''],
 		attrs: {
         '.label': { text: courseName, 'ref-x': .5, 'ref-y': .33 },
 				rect: { fill: '#42a5f5' },
-				'.inPorts circle': { fill: '#E74C3C' },
-				'.outPorts circle': { fill: '#16A085' }
+				'.inPorts circle': { fill: '#E74C3C', r: 10, magnet: 'passive', type: 'input' },
+				'.outPorts circle': { fill: '#16A085',r: 10, type: 'output' }
 		}
 	});
+//	subject.attr({ rect: { fill: 'red' } });
 	graph.addCell(subject);
 //	document.getElementById("courseCode").value = ""; //remove value
+	colCount += 1;
+	if(colCount%6 == 0){ 
+		rowCount += 1;
+		colCount = 0;
+	}
 }
+
+
+//REMOVE COMMENT IN LINE 320 KUNG GAGAMITIN MO TO
+//COMMENT OUT LINE 313 - 319
+//addSubject("MATH 17");
+//addSubject("MATH 26");
+//addSubject("MATH 27");
+//addSubject("MATH 28");
+//addSubject("STAT 1");
+//addSubject("CMSC 11");
+//addSubject("CMSC 56");
+//addSubject("CMSC 21");
+//addSubject("CMSC 57");
+//addSubject("CMSC 130");
+//addSubject("CMSC 131");
+//addSubject("CMSC 132");
+//addSubject("CMSC 199");
+//addSubject("CMSC 198");
+//addSubject("CMS 2");
+//addSubject("CMSC 22");
+//addSubject("CMSC 100");
+//addSubject("CMSC 125");
+//addSubject("CMSC 137");
+//addSubject("CMSC 123");
+//addSubject("CMSC 124");
+//addSubject("CMSC 128");
+//addSubject("CMSC 141");
+//addSubject("CMSC 142");
+//addSubject("CMSC 127");
+//addSubject("CMSC 170");
+//addSubject("CMSC 150");

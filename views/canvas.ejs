@@ -1,7 +1,7 @@
 <html ng-app="">
 <head>
 
-  <title>awts</title>
+  <title><% courses %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -63,11 +63,11 @@
 <!--
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 dropdown-button" data-beloworigin="true" data-activates='add-subject-drop' id="add-subject-btn">Add Subject<i class="material-icons right">add</i></a>
 					<div class="col s8 offset-s2">
-						<ul id="add-subject-drop" class="dropdown-content">
-							<li><a href="#!" onClick="addSubject(this)">CMSC21</a></li>
-							<li><a href="#!" onClick="addSubject(this)">CMSC123</a></li>
-							<li><a href="#!" onClick="addSubject(this)">CMSC141</a></li>
-						</ul>
+                        <ul id="add-subject-drop" class="dropdown-content">
+						    <% for(var i=1; i<courses.length;i++) { %>
+                                <li><a href="#!" onClick="addSubject(this)"><%= courses[i].code %></a></li>
+                          <% }; %>
+                        </ul>
 					</div>
 -->
 					<div class="tab-option-btn add-subject-div">

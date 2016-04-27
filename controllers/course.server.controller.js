@@ -1,5 +1,14 @@
 var Course = require('mongoose').model('Course');
 
+exports.list = function(req, res, next) {
+    Course.find({}, function(err, courses) {
+        if(err)
+            throw err;
+        else
+            res.json(courses);
+    });
+};
+
 
 exports.add = function(req, res) {
     var ComputerScienceSubjects = [
@@ -81,17 +90,6 @@ exports.add = function(req, res) {
             description: "Principles of combinatorics, probability, algebraic systems and graph theory.",
             offered: [
                                 "First Semester"
-                    ]
-        },
-        {
-            code: "CMSC 57",
-            title: "Discrete Mathematical Structures in Computer Science II",
-            prerequisite: "MATH 17",
-            units: "3",
-            description: "Principles of combinatorics, probability, algebraic systems and graph theory.",
-            offered: [
-                        "First Semester",
-                        "Second Semester"
                     ]
         },
         {
@@ -249,23 +247,53 @@ exports.add = function(req, res) {
                     ]
         },
         {
-            code: "CMSC 150",
-            title: "Numerical and Symbolic Computation",
-            prerequisite: "(CMSC 123 and MATH 28) or MATH 38",
+            code: "CMSC 161",
+            title: "Interactive Computer Graphics",
+            prerequisite: "CMSC 123",
             units: "3",
-            description: "  Computational problem solving; sources of errors in computation; iterative approximation methods and symbolic algebra; mathematical software libraries and symbolic manipulation packages.",
+            description: "Graphics systems software and hardware, 2D drawing algorithms, geometrical transformations, surface modeling, 3D viewing, visible surface determination algorithms, reflection and illumination models, shading models for polygons, color theory, ray tracing, animation.",
+            offered: [
+                        "Second Semester"
+                    ]
+        },
+        {
+            code: "CMSC 170",
+            title: "Introduction to Artificial Intelligence",
+            prerequisite: "CMSC 124",
+            units: "3",
+            description: "Basic principles of Artificial Intelligence; knowledge representation; natural language processing; pattern recognition; and, expert systems.",
             offered: [
                         "First Semester"
                     ]
         },
         {
-            code: "CMSC 161",
-            title: "Interactive Computer Graphics",
-            prerequisite: "CMSC 123",
+            code: "CMSC 172",
+            title: "Robot Modelling",
+            prerequisite: "CMSC 161",
             units: "3",
-            description: "  Computational problem solving; sources of errors in computation; iterative approximation methods and symbolic algebra; mathematical software libraries and symbolic manipulation packages.",
+            description: "Robotics manipulators and their characteristics; conversion from joint space to real world coordinates; inverse kinematics; workspace analysis; differential motion.",
             offered: [
                         "Second Semester"
+                    ]
+        },
+        {
+            code: "CMSC 180",
+            title: "Introduction to Parallel Computing",
+            prerequisite: "CMSC 132",
+            units: "3",
+            description: "Parallel computational models, machine architectures, performance models, algorithms, and programming.",
+            offered: [
+                        "First Semester"
+                    ]
+        },
+        {
+            code: "CMSC 191",
+            title: "Special Topics",
+            prerequisite: "",
+            units: "3",
+            description: "Special Topics in Computer Science.",
+            offered: [
+                        "First Semester"
                     ]
         },
     ];

@@ -414,7 +414,6 @@ function fileSelect(evt) {
       		}
       	}
       }
-      alert(JSON.stringify(curriculum,null,2));
     };
     reader.readAsText(file);
 }

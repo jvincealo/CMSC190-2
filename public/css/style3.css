@@ -71,7 +71,7 @@ nav .brand-logo
 }
 
 .tab-div {
-		height: 90%;
+		height: 85%;
 }
 
 .tab-div-inside {
@@ -84,7 +84,22 @@ nav .brand-logo
 		margin-bottom: 5%;
 }
 
-#export-drop, #add-subject-drop {
+.add-subject-div {
+		margin-top: 5%;
+}
+
+.select-dropdown {
+		font-family: 'Roboto';
+		font-weight: 500;
+		color: white;
+		text-align: center;
+}
+
+.caret {
+	display: none;
+}
+
+#export-drop {
 		margin-left: 3.125%;
 }
 
@@ -93,11 +108,73 @@ nav .brand-logo
 }
 
 #tab-info {
-		height: 88%;
+		height: 83%;
 		padding: 5%;
 }
 
 #course-info {
 		margin-top: 1% !important;
 		height: 33% !important;
+}
+
+.curriculum-coursecode, .curriculum-coursetitle {
+		font-family: 'Bree Serif';
+}
+
+.curriculum-coursecode {
+		margin-bottom: 0px;
+}
+
+.curriculum-coursetitle {
+		margin-top: 0px;
+}
+
+.info-holder-div {
+		margin-top: 5%;
+		height: 50%;
+}
+
+.info-div {
+		text-align: justify;
+		margin-top: 5%;
+}
+
+.info-div label {
+		font-size: 16px;
+}
+
+.info-div span {
+		font-size: 14px;
+}
+
+.subject-comment {
+		margin-left: 0%;
+}
+
+.curriculum-degree, .comment-email {
+		font-family: 'Bree Serif';
+}
+
+.tab-comment-div {
+		width: 90%;
+		height: 70%;
+}
+
+.comment-div, .info-div {
+		margin-bottom: 1%;
+		font-size: 12px;
+}
+
+.comment-area-div {
+		padding: 0px 5% 0px 5% !important;
+		margin: 0px !important;
+		height: 10%;
+}
+
+#comment-area {
+		margin-top: 2% !important;
+}
+
+.comment-area-div label {
+		padding: 0px 5% 0px 5% !important;
 }

@@ -87,3 +87,38 @@
 		width: 30%;
 		border-radius: 7px;
 }
+
+.view-comments {
+		height: 80%;
+		width: 35%;
+		padding-top: 1%;
+		border-radius: 7px;
+}
+
+.view-comments-div{
+	height: 100%;
+}
+
+.view-comments-div h5, .view-comments-div h6 {
+		margin: 0px;
+		font-family: 'Bree Serif';
+}
+
+.view-comments-area {
+		margin-top: 5%;
+		height: 66%;
+		overflow: auto;
+		margin-bottom: 0px;
+		padding-bottom: 0px;
+}
+
+.view-comment-input {
+		margin-top: 5%;
+		width: 100%;
+		height: 10%;
+}
+
+.view-comment-input textarea {
+		margin: 0px !important;
+		padding-bottom: 0px !important;
+}

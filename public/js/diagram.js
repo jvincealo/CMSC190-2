@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    $('ul.tabs').tabs('select_tab', 'tab-info');
+  });
+
 var curriculum = {}; //json for the curriculum
 var coursePos = {}; //save positions
 var colCount = 0;
@@ -70,9 +74,11 @@ $('#diagram-container').bind('mousewheel', function(event) {
 });
 $(document).on('keyup',function(e){ //deletes selected subject
 	if(e.keyCode == 46) removeSubject();
-	console.log(e.keyCode);
+//	console.log(e.keyCode);
 });
-
+$(document).ready(function() {
+    $('select').material_select();
+  });
 function removeSubject(){
 	if(selectedSubject != null){
 		selectedSubject.attr({ rect: { 'stroke-width': 0 } });
@@ -310,13 +316,15 @@ function addCourse(course){
 }
 
 function addSubject(course){
-	if(course.value != null){
+	if(course != null){
 		var courseName = course.value;	
 		$('#modal-add-course').closeModal();
 	} else{
-		var courseName = course.innerHTML;
+//		var courseName = course.innerHTML;
+		var temp = document.getElementById("add-subject-drop")
+		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	} 
-//	var courseName = course; /
+//	var courseName = course; 
 	var subject = new joint.shapes.devs.Model({
 		id: courseName.replace(" ",""),
 		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },

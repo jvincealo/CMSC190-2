@@ -12,6 +12,8 @@ exports.home = function(req, res) {
 
 exports.create = function(req, res) {
     Course.find({})
+    .sort([['code', 'ascending']])
+    .lean()
     .exec(function(err, courses) {
         if(err)
             res.send(err)

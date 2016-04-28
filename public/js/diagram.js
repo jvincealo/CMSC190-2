@@ -5,6 +5,7 @@ var rowCount = 0;
 var graphScale = 1;
 var selectedSubject = null;
 
+
 var yearCount = 4; //default no. of years
 var xMax = $('#diagram-container').width();
 var yMax = $('#diagram-container').height();
@@ -123,8 +124,23 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 });
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
      $(document).ready(function(){
-			$('ul.tabs').tabs('select_tab', 'tab-info');
-		});
+            //search function
+            var index = -1;
+            for(var i=0; i<courses.length;i++) {
+                if(courses[i]["code"] == evt.model.id) {
+                    index = i;
+                    break;
+                }
+            }
+
+            $('ul.tabs').tabs('select_tab', 'tab-info');
+            $('label').addClass('active');
+            document.getElementById('courseCode').value = courses[i]["code"];
+            document.getElementById('courseTitle').value = courses[i]["title"];
+            document.getElementById('prerequisite').value = courses[i]["prerequisite"];
+            document.getElementById('units').value = courses[i]["units"];
+            document.getElementById('course-info').value = courses[i]["description"];
+        });
 });
 
 graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
@@ -325,7 +341,7 @@ function addSubject(course){
     //	var courseName = course; /
 
 	var subject = new joint.shapes.devs.Model({
-		id: courseName.replace(" ",""),
+		id: courseName,
 		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },
 		size: { width: semDivider, height: yMax/12 },
 		inPorts: [''],

@@ -18,7 +18,7 @@
 <div class="navbar-fixed">
   <nav class="blue lighten-1" role="navigation">
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Logo</a>
+      <a href="index.html" class="brand-logo">Logo</a>
       <div class="search-login-container right">
            <ul id="nav" class="row">
             <li class="col s8">
@@ -61,6 +61,7 @@
 			<!--	TAB-OPTIONS DIV	-->
 			<div class="tab-div" id="tab-option">
 				<div>
+<!--
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 dropdown-button" data-beloworigin="true" data-activates='add-subject-drop' id="add-subject-btn">Add Subject<i class="material-icons right">add</i></a>
 					<div class="col s8 offset-s2">
 						<ul id="add-subject-drop" class="dropdown-content"> 
@@ -69,6 +70,15 @@
 							<li><a href="#!" onClick="addSubject(this)">CMSC141</a></li>
 						</ul>
 					</div>
+-->
+					<div class="tab-option-btn add-subject-div">
+						<select id="add-subject-drop" class="blue lighten-1 z-depth-1" onchange="addSubject()">
+							<option value="" disabled selected>ADD SUBJECT</option>
+							<option>CMSC 11</option>
+							<option>CMSC 21</option>
+							<option>CMSC 123</option>
+						</select>
+					</div>	
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 ">Import<i class="material-icons right">file_upload</i></a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
@@ -83,10 +93,11 @@
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
-						
+		
 			</div>
 			<!--	TAB-INFO DIV	-->
 			<div id="tab-info">
+<!--
 					<form>
 						<div class="input-field">
 							<input id="courseCode" type="text" class="validate">
@@ -109,8 +120,49 @@
 							<label for="course-info">Course Description</label>
 						</div>
 					</form>
-		</div>
+-->
+				<div class="row">
+					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12">CMSC 170</h5>
+					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12">Introduction to Artificial Intelligence</h6>
+					<div class="info-holder-div col s12">
+						<div class="info-div">
+							<label class="comment-email blue-text text-lighten-1">Prerequisite:</label>
+							<span> CMSC 123 and CMSC 69</span>
+						</div>
+						<div class="info-div">
+							<label class="comment-email blue-text text-lighten-1">Units:</label>
+							<span> 3.0</span>
+						</div>
+						<div class="info-div">
+							<label class="comment-email blue-text text-lighten-1">Description:</label>
+							<span class="info-span"> Basic principles of Artificial Intelligence; knowledge representation; natural language processing; pattern recognition; and, expert systems.</span>
+						</div>
+					</div>
+					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>
+				</div>
 
+			</div>
+			<div id="tab-comment">
+					<h5 class="curriculum-degree center-align blue-text text-lighten-1">BS Computer Science</h5>
+					<div class="tab-comment-div row">
+						<div class="comment-div col s12">
+							<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: ang ganda po nung curriculum
+						</div>
+						<div class="comment-div col s12">
+							<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: pero sana po mas maunti yung GE kasi po pogi ako masyado
+						</div>
+						<div class="comment-div col s12">
+							<label class="comment-email blue-text text-lighten-1">bestSP2016@up.edu.ph</label>: BEST SP TANG INA!
+						</div>
+						<div class="comment-div col s12">
+							<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: manyakis po ako
+						</div>
+					</div>
+					<div class="input-field comment-area-div">
+						<textarea id="comment-area" class="materialize-textarea white"></textarea>
+						<label for="comment-area">Comment</label>
+					</div>
+			</div>
 <!--
 	<div id="cmsc11" class="item" >CMSC 11</div>
 	<div id="cmsc21" class="item">CMSC 21</div>
@@ -153,7 +205,6 @@
           <input id="courseCode" type="text" class="validate">
           <label for="courseCode">Course Code</label>
 				</div>
-<!--
 				<div class="input-field">
 					<i class="login-icon material-icons prefix">lock</i>
           <input id="icon_prefix" type="text" class="validate">
@@ -177,7 +228,6 @@
           <textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
           <label for="course-info">Course Description</label>
         </div>
--->
 				<div class="input-field row">
           <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="button" name="action" onClick="addSubject(courseCode)">Submit
 					<i class="material-icons right">send</i></button>
@@ -185,8 +235,65 @@
 			</form>
 		</div>
 	</div>
-	<div class="grey lighten-2 valign-wrapper">
-			<h6 class="add-course-footer center-align grey-text text-darken-1">Design your curriculum</h6>
+</div>
+<!-- VIEW COMMENTS MODAL -->
+<div id="modal-view-comments" class="view-comments modal grey lighten-3">
+	<div class="view-comments-div container">
+		<h5 class="center-align blue-text text-lighten-1">CMSC 170</h5>
+		<h6 class="blue-text text-lighten-1 center-align">Introduction to Artificial Intelligence</h6>
+		<div class="view-comments-area row">
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: ang ganda po nung curriculum
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: galing naman po
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">bestSP2016@up.edu.ph</label>: si emman na gagawa ng lahat
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">bronzeraf@up.edu.ph</label>: 1v1 bob0h
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: hehe
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: ang hirap po ng mga exer
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: dapat madali project kasi po tang ina niyo
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: pero sana po mas maunti yung GE kasi po pogi ako masyado
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">bestSP2016@up.edu.ph</label>: ty sir TJ nag best SP kami
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: ang ganda po nung curriculum
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: 8===D
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: shit
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">bestSP2016@up.edu.ph</label>: ang laki nung akin
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: pota
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: wew
+			</div>
+			<div class="comment-div col s12">
+				<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: gagoo
+			</div>
+		</div>
+		<div class="view-comment-input">
+			<textarea class="materialize-textarea white" placeholder="Comment"></textarea>
+		</div>
 	</div>
 </div>
 <!-- -------------------------------- END OF MODALS -------------------------------- -->

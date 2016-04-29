@@ -72,15 +72,22 @@
                                 <li><a href="#!" onClick="addSubject(this)"><%= courses[i].code %></a></li>
                           <% }; %>
                         </ul>
+<<<<<<< HEAD
 					</div>
 -->
 					<div class="tab-option-btn add-subject-div">
 						<select id="add-subject-drop" class="blue lighten-1 z-depth-1" onchange="addSubject()">
 							<option value="" disabled selected>ADD SUBJECT</option>
-							<option>CMSC 11</option>
-							<option>CMSC 21</option>
-							<option>CMSC 123</option>
+							<script type="text/javascript">
+                                var courses = '<%= (JSON.stringify(courses))%>'.replace(/&#34;/g, "\"");
+                                courses = JSON.parse(courses);
+                            </script>
+                            <% for(var i=1; i<courses.length;i++) { %>
+                                <option><%= courses[i].code %></option>
+                          <% }; %>
 						</select>
+=======
+>>>>>>> 6b4548ad4a028173467db918cd16819123ddf9f1
 					</div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
 					<input id="upload" type="file" style="display:none" />
@@ -97,6 +104,10 @@
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6b4548ad4a028173467db918cd16819123ddf9f1
 			</div>
 			<!--	TAB-INFO DIV	-->
 			<div id="tab-info">

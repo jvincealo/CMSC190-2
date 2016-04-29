@@ -137,12 +137,11 @@ paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - d
             }
 
             $('ul.tabs').tabs('select_tab', 'tab-info');
-            $('label').addClass('active');
-            document.getElementById('courseCode').value = courses[i]["code"];
-            document.getElementById('courseTitle').value = courses[i]["title"];
-            document.getElementById('prerequisite').value = courses[i]["prerequisite"];
-            document.getElementById('units').value = courses[i]["units"];
-            document.getElementById('course-info').value = courses[i]["description"];
+            document.getElementById('code').innerHTML = courses[i]["code"];
+            document.getElementById('title').innerHTML = courses[i]["title"];
+            document.getElementById('prerequisite').innerHTML = courses[i]["prerequisite"];
+            document.getElementById('units').innerHTML = courses[i]["units"];
+            document.getElementById('description').innerHTML = courses[i]["description"];
         });
 });
 

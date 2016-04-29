@@ -86,8 +86,6 @@
                                 <option><%= courses[i].code %></option>
                           <% }; %>
 						</select>
-=======
->>>>>>> 6b4548ad4a028173467db918cd16819123ddf9f1
 					</div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
 					<input id="upload" type="file" style="display:none" />
@@ -104,52 +102,24 @@
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 6b4548ad4a028173467db918cd16819123ddf9f1
 			</div>
 			<!--	TAB-INFO DIV	-->
 			<div id="tab-info">
-<!--
-					<form>
-						<div class="input-field">
-							<input id="courseCode" type="text" class="validate">
-							<label for="courseCode">Course Code</label>
-						</div>
-						<div class="input-field">
-							<input id="courseTitle" type="text" class="validate">
-							<label for="courseTitle">Course Title</label>
-						</div>
-						<div class="input-field">
-							<input id="prerequisite" type="text" class="validate">
-							<label for="prerequisite">Prerequisite</label>
-						</div>
-						<div class="input-field">
-							<input id="units" type="number" class="validate">
-							<label for="units">Units</label>
-						</div>
-						<div class="input-field">
-							<textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
-							<label for="course-info">Course Description</label>
-						</div>
-					</form>
--->
 				<div class="row">
-					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12">CMSC 170</h5>
-					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12">Introduction to Artificial Intelligence</h6>
+					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12"><span id="code"></span></h5>
+					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12"><span id="title"></span></h6>
 					<div class="info-holder-div col s12">
 						<div class="info-div">
 							<label class="comment-email blue-text text-lighten-1">Prerequisite:</label>
-							<span> CMSC 123 and CMSC 69</span>
+							<span id="prerequisite"></span>
 						</div>
 						<div class="info-div">
 							<label class="comment-email blue-text text-lighten-1">Units:</label>
-							<span> 3.0</span>
+							<span id="units"></span>
 						</div>
 						<div class="info-div">
 							<label class="comment-email blue-text text-lighten-1">Description:</label>
-							<span class="info-span"> Basic principles of Artificial Intelligence; knowledge representation; natural language processing; pattern recognition; and, expert systems.</span>
+							<span class="info-span" id="description"></span>
 						</div>
 					</div>
 					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>

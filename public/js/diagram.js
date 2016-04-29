@@ -1,6 +1,6 @@
-$(document).ready(function(){
-    $('ul.tabs').tabs('select_tab', 'tab-info');
-  });
+//$(document).ready(function(){
+//    $('ul.tabs').tabs('select_tab', 'tab-info');
+//  });
 
 var curriculum = {}; //json for the curriculum
 var coursePos = {}; //save positions
@@ -112,7 +112,7 @@ paper.on('blank:pointerup', function(evt, x, y){ //stop drag paper after press
 		dragFlag = false;
 //		delete dragStartPosition;
 });
-paper.on('blank:pointerclick', function(evt, x, y){
+paper.on('blank:pointerclick', function(evt, x, y){ //removes selected/highlighten subject on paper click
 	if(selectedSubject != null){
 		selectedSubject.attr({ rect: { 'stroke-width': 1 } });
 		selectedSubject = null;
@@ -128,9 +128,10 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 	evt.model.attr({ rect: { stroke: 'black', 'stroke-width': 3 } });
 });
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
-     $(document).ready(function(){
-			$('ul.tabs').tabs('select_tab', 'tab-info');
-		});
+//     $(document).ready(function(){
+//			$('ul.tabs').tabs('select_tab', 'tab-info');
+//		});
+		console.log(evt.model.id);
 });
 
 graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
@@ -186,7 +187,16 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 				 
 
 
-
+function exportCSV(){
+	var subjects = graph.getElements();
+//	console.log(subjects);
+	for (i = 0; i <= yearCount*2; i++) { 
+			console.log("Column "+(i+1));
+			for(j = 0; j<subjects.length; j++){
+				if(subjects[j].attributes.position.x == gridWidth*i) console.log(subjects[j].id);
+			}
+	}	
+}
 
 function addCourse(course){
 	if(course.value != null){

@@ -432,3 +432,44 @@ function fileSelect(evt) {
     };
     reader.readAsText(file);
 }
+
+//exports curriculum as CSV
+function exportCSV(){
+    var subjects = graph.getElements();
+    var code = "BSCS-2009";
+    var department = "ICS";
+    var title = "BS Computer Science (rev. 2009)";
+
+    var csv_data = [];
+    var year = ["FIRST", "SECOND", "THIRD", "FOURTH"];
+    var sem = ["FIRST", "SECOND"];
+
+    csv_data.push([code,department,title].join(','));
+    var sf = 0;
+    var yf = 0;
+    for (i = 0; i < yearCount*2; i++) {
+        var row_data = [code,year[yf],sem[sf]];
+        for(j = 0; j<subjects.length; j++){
+            if(subjects[j].attributes.position.x == gridWidth*i)  {
+                row_data.push(subjects[j].id);
+            }
+        }
+        csv_data.push(row_data.join(','));
+        if(sf == 1)
+            yf++;
+
+        if(sf == 0)
+            sf = 1;
+        else
+            sf = 0;
+    }
+
+    var csv_file = csv_data.join("%0A");
+    var a         = document.createElement('a');
+    a.href        = 'data:attachment/csv,' +  csv_file;
+    a.target      = '_blank';
+    a.download    = code + '.csv';
+
+    document.body.appendChild(a);
+    a.click();
+}

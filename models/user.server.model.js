@@ -3,23 +3,32 @@ var mongoose     = require('mongoose'),
     Schema       = mongoose.Schema;
 
 var UserSchema = new Schema({
-    name: String,
-    email: String,
-    username: {
+    local : {
+        username: {
                 type: String,
                 trim: true,
-                unique: true
-            },
-    password: String,
-    provider: String,
-    providerId: String,
-    providerData: {}
+                unique: true,
+                sparse: true
+        },
+        password: String,
+    },
+    google : {
+        id : String,
+        token : String,
+        email : {
+                type: String,
+                trim: true,
+                unique: true,
+                sparse: true
+            }
+    },
+    admin : Boolean
 });
 
 UserSchema.pre('save', function(next) {
-    if(this.password) {
+    if(this.local.password) {
         var md5 = crypto.createHash('md5');
-        this.password = md5.update(this.password).digest('hex');
+        this.local.password = md5.update(this.password).digest('hex');
     }
     next();
 });
@@ -28,29 +37,7 @@ UserSchema.methods.authenticate  = function(password) {
     var md5 = crypto.createHash('md5');
     md5 = md5.update(password).digest('hex');
 
-    return this.password === md5;
-};
-
-UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
-    var _this = this;
-    var possibleUsername = username + (suffix || '');
-
-    _this.findOne(
-        {username: possibleUsername},
-        function(err, user) {
-            if (!err) {
-                if (!user) {
-                    callback(possibleUsername);
-                }
-                else {
-                    return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
-                }
-            }
-            else {
-                callback(null);
-            }
-        }
-    );
+    return this.local.password === md5;
 };
 
 module.exports = mongoose.model('User', UserSchema);

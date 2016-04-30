@@ -8,25 +8,23 @@ module.exports = function() {
    passport.use(new GoogleStrategy({
         clientID    : config.google.clientID,
         clientSecret : config.google.clientSecret,
-        callbackURL  : config.google.callbackURL,
-        passReqToCallback: true
-
+        callbackURL  : config.google.callbackURL
     },
     function(req, accessToken, refreshToken, profile, done) {
-        var providerData = profile._json;
-        providerData.accessToken = accessToken;
-        providerData.refreshToken = refreshToken;
-
-        var providerUserProfile = {
-            name: profile.name.givenName,
-            email: profile.emails[0].value,
-            username: profile.username,
-            provider: 'facebook',
-            providerId: profile.id,
-            providerData: providerData
-        };
-
-        users.saveOAuthUserProfile(req, providerUserProfile, done);
+        process.nextTick(function () {
+                var domain = (profile.emails[0].value).split('@')[1];
+                if(domain === "up.edu.ph") {
+                    var providedData = {
+                        id : profile.id,
+                        accessToken : accessToken,
+                        email : profile.emails[0].value
+                    }
+                    users.saveGmailAccount(req, providedData, done);
+                } else {
+                    return done(null, profile);
+                }
+            }
+        );
     }
     ));
 }

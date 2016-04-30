@@ -1,9 +1,20 @@
-var passport = require('passport');
+var Course = require('mongoose').model('Course');
 
 exports.entry = function(req, res) {
-    res.render('index', {
-        title: 'Curriculum DB'
-    });
+    if(req.isAuthenticated())
+        if((req.user.email)) {
+            res.render('index', {
+                title: 'Curriculum DB',
+                message: req.flash("info", "Please login using your eUP account.")
+            });
+        }else
+            res.render('home')
+    else {
+        res.render('index', {
+        title: 'Curriculum DB',
+        message: ''
+        });
+    }
 };
 
 exports.create = function(req, res) {
@@ -42,8 +53,9 @@ exports.create = function(req, res) {
             });
         }
     });
+}
 
-exports.logout = function() {
+exports.logout = function(req, res) {
     req.logout();
     res.redirect('/');
 }

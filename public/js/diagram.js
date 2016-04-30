@@ -1,6 +1,3 @@
-$(document).ready(function(){
-    $('ul.tabs').tabs('select_tab', 'tab-info');
-  });
 
 var curriculum = {}; //json for the curriculum
 var coursePos = {}; //save positions
@@ -8,6 +5,7 @@ var colCount = 0;
 var rowCount = 0;
 var graphScale = 1;
 var selectedSubject = null;
+
 
 var yearCount = 4; //default no. of years
 var xMax = $('#diagram-container').width();
@@ -25,7 +23,7 @@ var paper = new joint.dia.Paper({
 		defaultLink: new joint.dia.Link({
 				router: { name: 'manhattan' },
 //    		connector: { name: 'rounded' },
-				attrs: { 
+				attrs: {
 					'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
 					'.connection': { 'stroke-width': 4 }
 				}
@@ -51,7 +49,7 @@ paper.setOrigin(xMax/7.5, yMax/20);
 zoomPaper(-0.5);
 
 //grid columns for years and semesters
-for (i = 0; i <= yearCount*2; i++) { 
+for (i = 0; i <= yearCount*2; i++) {
 	var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0, x2: gridWidth*i-(semDivider/4), y2: yMax*2, stroke: 'black' });
 	V(paper.viewport).append(line);
 }
@@ -89,11 +87,11 @@ function removeSubject(){
 
 function dragPaper(){ //scrolls paper on drag
 	if(dragFlag){
-//		var canvasDiv = document.getElementById("diagram-container"); 
+//		var canvasDiv = document.getElementById("diagram-container");
 //		canvasDiv.scrollLeft += dragStartPosition.x - event.offsetX;
 //		canvasDiv.scrollTop += dragStartPosition.y - event.offsetY;
 			paper.setOrigin(
-				event.offsetX - dragStartPosition.x, 
+				event.offsetX - dragStartPosition.x,
 				event.offsetY - dragStartPosition.y);
 	}
 }
@@ -129,8 +127,22 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 });
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
      $(document).ready(function(){
-			$('ul.tabs').tabs('select_tab', 'tab-info');
-		});
+            //search function
+            var index = -1;
+            for(var i=0; i<courses.length;i++) {
+                if(courses[i]["code"] == evt.model.id) {
+                    index = i;
+                    break;
+                }
+            }
+
+            $('ul.tabs').tabs('select_tab', 'tab-info');
+            document.getElementById('code').innerHTML = courses[i]["code"];
+            document.getElementById('title').innerHTML = courses[i]["title"];
+            document.getElementById('prerequisite').innerHTML = courses[i]["prerequisite"];
+            document.getElementById('units').innerHTML = courses[i]["units"];
+            document.getElementById('description').innerHTML = courses[i]["description"];
+        });
 });
 
 graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
@@ -146,7 +158,7 @@ graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT -
 					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
 				});
 				console.log("error");
-			} 
+			}
     }
 });
 graph.on('change:position', function(cell) { //constantly checks for conflicts based on source and target positions
@@ -183,19 +195,22 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 		}
 	});
 });
-				 
 
-
-
-
+function dragPaper(){
+	if(dragFlag){
+		paper.setOrigin(
+			event.offsetX - dragStartPosition.x,
+			event.offsetY - dragStartPosition.y);
+	}
+}
 function addCourse(course){
 	if(course.value != null){
-	 	var courseName = course.value;	
+	 	var courseName = course.value;
 		$('#modal-add-course').closeModal();
 	} else{
 		var courseName = course.innerHTML;
-	} 
-	
+	}
+
 	// Create a custom element.
 	// ------------------------
 	joint.shapes.html = {};
@@ -280,7 +295,7 @@ function addCourse(course){
         _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
             $outPorts.append(V(portTemplate({ id: index, port: port })).node);
         });
-    }, 
+    },
 
     update: function () {
         // First render ports so that `attrs` can be applied to those newly created DOM elements
@@ -302,9 +317,9 @@ function addCourse(course){
 	});
 
 	// Create JointJS elements and add them to the graph as usual.
-	var subject = new joint.shapes.html.Element({ 
-		position: { x: 80, y: 80 }, 
-		size: { width: 100, height: 50 }, 
+	var subject = new joint.shapes.html.Element({
+		position: { x: 80, y: 80 },
+		size: { width: 100, height: 50 },
 		inPorts: ['in'],
     outPorts: ['out'],
 		label: courseName
@@ -317,16 +332,15 @@ function addCourse(course){
 
 function addSubject(course){
 	if(course != null){
-		var courseName = course.value;	
+		var courseName = course.value;
 		$('#modal-add-course').closeModal();
 	} else{
 //		var courseName = course.innerHTML;
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
-	} 
-//	var courseName = course; 
+	}
 	var subject = new joint.shapes.devs.Model({
-		id: courseName.replace(" ",""),
+		id: courseName,
 		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },
 		size: { width: semDivider, height: yMax/12 },
 		inPorts: [''],
@@ -342,7 +356,7 @@ function addSubject(course){
 	graph.addCell(subject);
 //	document.getElementById("courseCode").value = ""; //remove value
 	colCount += 1;
-	if(colCount%6 == 0){ 
+	if(colCount%6 == 0){
 		rowCount += 1;
 		colCount = 0;
 	}
@@ -378,3 +392,43 @@ function addSubject(course){
 //addSubject("CMSC 127");
 //addSubject("CMSC 170");
 //addSubject("CMSC 150");
+
+//File IO
+var upload = document.getElementById('upload');
+upload.addEventListener('change', fileSelect, false);
+
+$(function(){
+    $("#upload_link").on('click', function(e){
+        e.preventDefault();
+        $("#upload:hidden").trigger('click');
+    });
+});
+
+function fileSelect(evt) {
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+  		// Great success! All the File APIs are supported.
+	} else {
+  		alert('The File APIs are not fully supported in this browser.');
+	}
+
+	var files = document.getElementById('upload').files;
+	var file = files[0];
+
+	var reader = new FileReader();
+
+	reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+      	var data = evt.target.result;
+      	var lines = data.split('\n');
+      	var tokens;
+
+      	for(var line = 0; line < lines.length ; line++) {
+      		tokens = lines[line].split(',');
+      		for(var token = 0; token < tokens.length; token++) {
+      			curriculum[tokens[token]] = tokens[token+1];
+      		}
+      	}
+      }
+    };
+    reader.readAsText(file);
+}

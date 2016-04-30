@@ -115,7 +115,7 @@ nav .brand-logo
 }
 
 .current-subjects div {
-		height: 90%;
+		height: 80%;
 		overflow: auto;
 }
 
@@ -147,4 +147,12 @@ nav .brand-logo
 
 .course-info-label {
 		padding: 1% !important;
+}
+
+.import-csv-btn {
+		height: 20% !important;
+}
+
+.import-csv-btn a {
+		margin-top: 5%;
 }

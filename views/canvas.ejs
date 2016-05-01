@@ -83,8 +83,8 @@
 						</select>
 					</div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 ">Import<i class="material-icons right">file_upload</i></a>
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
+					<input id="upload" type="file" style="display:none" />
+                    <a id='upload_link' class="tab-option-btn waves-effect waves-light btn blue lighten-1">Import<i id class="material-icons right">file_upload</i></a><a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
 					<div class="col s8 offset-s2">
 						<ul id="export-drop" class="dropdown-content">
 							<li><a href="#!">Image<i class="material-icons right">photo</i></a></li>
@@ -93,7 +93,7 @@
 						</ul>
 					</div>
 
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn" onClick="saveToAccount()">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
 
@@ -142,17 +142,6 @@
 						<label for="comment-area">Comment</label>
 					</div>
 			</div>
-<!--
-	<div id="cmsc11" class="item" >CMSC 11</div>
-	<div id="cmsc21" class="item">CMSC 21</div>
-	<div id="cmsc123" class="item">CMSC 123</div>
--->
-<!--
-	<div class="diagram-option">
-		<a class="waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add Course<i class="material-icons right">add</i></a>
-	</div>
--->
-	</div>
 </div>
 
 
@@ -160,7 +149,14 @@
 <!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout" class="logout-drop dropdown-content ">
-	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
+	<li class="valign-wrapper">
+		<label class="center-align">
+			<script type="text/javascript">
+                var user_id = '<%= user_id %>';
+            </script>
+			<%= ident %>
+		</label>
+	</li>
 	<li class="divider"></li>
 	<li><a href="#!" class="center-align">Logout</a></li>
 </ul>

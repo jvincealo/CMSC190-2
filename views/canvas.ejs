@@ -60,21 +60,6 @@
 			<!--	TAB-OPTIONS DIV	-->
 			<div class="tab-div" id="tab-option">
 				<div>
-<!--
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 dropdown-button" data-beloworigin="true" data-activates='add-subject-drop' id="add-subject-btn">Add Subject<i class="material-icons right">add</i></a>
-					<div class="col s8 offset-s2">
-                        <ul id="add-subject-drop" class="dropdown-content">
-                            <script type="text/javascript">
-                                var courses = '<%= (JSON.stringify(courses))%>'.replace(/&#34;/g, "\"");
-                                courses = JSON.parse(courses);
-                            </script>
-						    <% for(var i=1; i<courses.length;i++) { %>
-                                <li><a href="#!" onClick="addSubject(this)"><%= courses[i].code %></a></li>
-                          <% }; %>
-                        </ul>
-<<<<<<< HEAD
-					</div>
--->
 					<div class="tab-option-btn add-subject-div">
 						<select id="add-subject-drop" class="blue lighten-1 z-depth-1" onchange="addSubject()">
 							<option value="" disabled selected>ADD SUBJECT</option>
@@ -99,7 +84,7 @@
 						</ul>
 					</div>
 
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
+					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn" onClick="saveToAccount()">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
 			</div>
@@ -147,18 +132,6 @@
 						<label for="comment-area">Comment</label>
 					</div>
 			</div>
-<!--
-	<div id="cmsc11" class="item" >CMSC 11</div>
-	<div id="cmsc21" class="item">CMSC 21</div>
-	<div id="cmsc123" class="item">CMSC 123</div>
--->
-<!--
-	<div class="diagram-option">
-		<a class="waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add Course<i class="material-icons right">add</i></a>
-	</div>
--->
-
-
 </div>
 
 
@@ -167,7 +140,14 @@
 <!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout" class="logout-drop dropdown-content ">
-	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
+	<li class="valign-wrapper">
+		<label class="center-align">
+			<script type="text/javascript">
+                var user_id = '<%= user_id %>';
+            </script>
+			<%= ident %>
+		</label>
+	</li>
 	<li class="divider"></li>
 	<li><a href="/logout" class="center-align">Logout</a></li>
 </ul>

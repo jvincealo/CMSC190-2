@@ -88,11 +88,6 @@ exports.delete = function(req, res, next) {
     })
 };
 
-exports.logout = function(req, res, next) {
-    req.logout();
-    res.redirect('/');
-};
-
 exports.saveGmailAccount = function(req, profile, done) {
     User.findOne({
             'google.id' : profile.id

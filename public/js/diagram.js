@@ -1,4 +1,3 @@
-
 var curriculum = {}; //json for the curriculum
 var coursePos = {}; //save positions
 var colCount = 0;
@@ -87,9 +86,6 @@ function removeSubject(){
 
 function dragPaper(){ //scrolls paper on drag
 	if(dragFlag){
-//		var canvasDiv = document.getElementById("diagram-container");
-//		canvasDiv.scrollLeft += dragStartPosition.x - event.offsetX;
-//		canvasDiv.scrollTop += dragStartPosition.y - event.offsetY;
 			paper.setOrigin(
 				event.offsetX - dragStartPosition.x,
 				event.offsetY - dragStartPosition.y);
@@ -326,8 +322,6 @@ function addCourse(course){
 	});
 
 	graph.addCells([subject]);
-//	document.getElementById("courseCode").value = null; //remove value
-//	graph.addCells([subject, subject2, l]);
 }
 
 function addSubject(course){
@@ -335,7 +329,6 @@ function addSubject(course){
 		var courseName = course.value;
 		$('#modal-add-course').closeModal();
 	} else{
-//		var courseName = course.innerHTML;
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	}
@@ -352,46 +345,13 @@ function addSubject(course){
 				'.outPorts circle': { fill: '#16A085',r: 10, type: 'output' }
 		}
 	});
-//	subject.attr({ rect: { fill: 'red' } });
 	graph.addCell(subject);
-//	document.getElementById("courseCode").value = ""; //remove value
 	colCount += 1;
 	if(colCount%6 == 0){
 		rowCount += 1;
 		colCount = 0;
 	}
 }
-
-
-//REMOVE COMMENT IN LINE 320 KUNG GAGAMITIN MO TO
-//COMMENT OUT LINE 313 - 319
-//addSubject("MATH 17");
-//addSubject("MATH 26");
-//addSubject("MATH 27");
-//addSubject("MATH 28");
-//addSubject("STAT 1");
-//addSubject("CMSC 11");
-//addSubject("CMSC 56");
-//addSubject("CMSC 21");
-//addSubject("CMSC 57");
-//addSubject("CMSC 130");
-//addSubject("CMSC 131");
-//addSubject("CMSC 132");
-//addSubject("CMSC 199");
-//addSubject("CMSC 198");
-//addSubject("CMS 2");
-//addSubject("CMSC 22");
-//addSubject("CMSC 100");
-//addSubject("CMSC 125");
-//addSubject("CMSC 137");
-//addSubject("CMSC 123");
-//addSubject("CMSC 124");
-//addSubject("CMSC 128");
-//addSubject("CMSC 141");
-//addSubject("CMSC 142");
-//addSubject("CMSC 127");
-//addSubject("CMSC 170");
-//addSubject("CMSC 150");
 
 //File IO
 var upload = document.getElementById('upload');
@@ -441,7 +401,7 @@ function exportCSV(){
     var title = "BS Computer Science (rev. 2009)";
 
     var csv_data = [];
-    var year = ["FIRST", "SECOND", "THIRD", "FOURTH"];
+    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIX"];
     var sem = ["FIRST", "SECOND"];
 
     csv_data.push([code,department,title].join(','));
@@ -472,4 +432,49 @@ function exportCSV(){
 
     document.body.appendChild(a);
     a.click();
+}
+
+function saveToAccount() {
+    var subjects = graph.getElements();
+    var code = "BSCS-2009";
+    var department = "ICS";
+    var title = "BS Computer Science (rev. 2009)";
+
+    var csv_data = [];
+    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIX"];
+    var sem = ["FIRST", "SECOND"];
+
+    csv_data.push([code,department,title].join(','));
+    var sf = 0;
+    var yf = 0;
+    for (i = 0; i < yearCount*2; i++) {
+        var row_data = [code,year[yf],sem[sf]];
+        for(j = 0; j<subjects.length; j++){
+            if(subjects[j].attributes.position.x == gridWidth*i)  {
+                row_data.push(subjects[j].id);
+            }
+        }
+        csv_data.push(row_data.join(','));
+        if(sf == 1)
+            yf++;
+
+        if(sf == 0)
+            sf = 1;
+        else
+            sf = 0;
+    }
+
+    var csv_file = csv_data.join("%0A");
+    var request = {
+        author: user_id,
+        csv: csv_file,
+        code: code,
+        department: department,
+        title: title
+    }
+    $.post("/curriculum", request,
+        function(data, status){
+            alert(data["message"]);
+        }
+    );
 }

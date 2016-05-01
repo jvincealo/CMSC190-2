@@ -23,12 +23,12 @@
             <li class="col s8">
               <form>
                 <div class="search-input input-field col s12">
-									<a class="modal-trigger col s3 offset-s10" href="#modal-feedback"><i class="material-icons blue-text text-lighten-1">search</i></a>
-<!--
-									<input class="grey lighten-3 grey-text text-darken-3 col s12" placeholder="Search Course" type="search">
-									<label for="search"><i class="material-icons grey-text text-darken-3">search</i></label>
-									<i class="material-icons col s1">close</i>
--->
+									<a id="search-toggle" class="col s3 offset-s10" onclick="showSearch()"><i class="material-icons blue-text text-lighten-1">search</i></a>
+									<div id="search-bar-div">
+										<input id="search-bar" class="grey lighten-3 grey-text text-darken-3 col s12" placeholder="Search Course" type="search" autofocus>
+										<label for="search"><i class="material-icons blue-text text-lighten-1">search</i></label>
+										<i class="material-icons col s1 blue-text text-lighten-1" onclick="hideSearch()">close</i>
+									</div>
                 </div>
               </form>
             </li>
@@ -39,20 +39,19 @@
   </nav>
 </div>
 
-<div class="intro blue lighten-1 z-depth-1 valign-wrapper row col s15">
-	<div class="col s6">
-		<div class="intro-info valign col s11 offset-s1 row">
+<div class="row intro blue lighten-1 z-depth-1 valign-wrapper">
+	<div class="col s12 m6">
+		<div class="intro-info col s11 offset-s1 row">
 			<h3 class="white-text">Unravel the best routes.</h3>
 			<h5 class="white-text">Design, Acquire Feedback, Evaluate.</h5>
 			<a class="start-draw waves-effect waves-light btn-large grey lighten-2 blue-text col s4 offset-s2 modal-trigger" href="#modal-curriculum">Start Drawing</a>
-<!--			<h2>Evaluate.</h2>-->
 		</div>
 	</div>
 
-	<div class="col s6">
+	<div class="col s12 m6">
 		<div class="intro-background valign-wrapper col s11">
 <!--			<h2 class="col s12">IMAGE</h2>-->
-			<img class="bg-image z-depth-2" src="images/bg2.png" width="100%" height="100%">
+			<img class="bg-image z-depth-2" src="images/bg.png" width="100%" height="100%">
 		</div>
 	</div>
 
@@ -91,40 +90,15 @@
 			</div>
 		</div>
 	</div>
-<!--
-  <div class="info row">
-    <div class="info-descrpition col s12 m4 l4">
-			<img class="creation" src="images/creation.png">
-      <h5>Create</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-    </div>
-		<div class="info-descrpition col s12 m4 l4">
-			<img class="interaction" src="images/interact.png">
-      <h5>Interact</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-		<div class="info-descrpition col s12 m4 l4">
-			<img class="revision" src="images/revise.png">
-      <h5>Revise</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-    </div>
-  </div>
--->
 </div>
 
 <br>
 <div class="other-about row">
 	<div class="other-about-inside">
 		<h3 class="center-align grey-text text-darken-3">Make Your Own</h3>
-		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s2 offset-s5"><font color="white">Start Drawing</font></a>
+		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s2 offset-s5 modal-trigger" href="#modal-curriculum"><font color="white">Start Drawing</font></a>
 	</div>
-
 </div>
-<!--
-<div class="row">
-	<a class="start-draw waves-effect waves-light btn-large col s2 offset-s5 blue lighten-1">Start Drawing</a>
-</div>
--->
 
 <footer>
   <div class="footer-copyright grey lighten-3">
@@ -151,7 +125,7 @@
           <input id="password" type="password" class="validate">
           <label for="password">Password</label>
 				</div>
-				<div class="input-field row">
+		  		<div class="input-field row">
           <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Login
 					<i class="material-icons right">send</i></button>
 				</div>

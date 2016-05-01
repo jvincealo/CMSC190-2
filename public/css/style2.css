@@ -72,3 +72,87 @@ nav .brand-logo
 		font-size: 14px;
 		font-family: 'Merriweather'; 
 }
+
+
+
+/* ADMIN CSS */
+.admin-tab {
+	width: 30%;
+	height: 100%;
+}
+
+.admin-tab ul {
+		height: 100%;
+}
+
+.admin-tab ul li {
+		height: 100% !important;
+}
+
+.admin-tab ul li a {
+		height: 100% !important;
+		padding-top: 2.5% !important;
+		font-size: 16px;
+}
+
+.add-subject-admin form div{
+		margin-bottom: 0px !important;
+}
+
+.indicator { /* TAB LINE INDICATOR  */ 
+		background-color: white !important;
+}
+
+#subject-div, #curriculum-div {
+		margin-bottom: 0px !important;
+		height: 90%;
+}
+
+.current-subjects, .add-subject-admin {
+		height: 100%;
+		margin-bottom: 0px !important;
+		padding-top: 2% !important;
+}
+
+.current-subjects div {
+		height: 80%;
+		overflow: auto;
+}
+
+.current-subjects div ul {
+		overflow: auto;
+		font-family: 'Bree Serif';
+}
+
+.collapsible-header {
+		height: auto !important;
+}
+
+.collapsible-body {
+		height: auto !important;
+}
+
+.collapsible-body ul li {
+		margin: 0px !important;
+}
+
+.collapsible-body ul li a {
+		margin-left: 5%;
+		margin-bottom: 1%;
+}
+
+#course-info {
+		height: 20% !important;
+}
+
+.course-info-label {
+		padding: 1% !important;
+}
+
+.import-csv-btn {
+		height: 20% !important;
+}
+
+.import-csv-btn a {
+		margin-top: 5%;
+}

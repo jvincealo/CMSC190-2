@@ -47,6 +47,15 @@ nav .brand-logo
 		margin-bottom: 0px !important;
 }
 
+.fixed-action-btn {
+		top: 85% !important;
+		left: 1% !important;
+}
+
+.fixed-action-btn ul {
+		left: -95.5% !important;
+}
+
 .diagram-options {
 /*		margin: 1% !important;*/
 		height: 100%;
@@ -177,4 +186,8 @@ nav .brand-logo
 
 .comment-area-div label {
 		padding: 0px 5% 0px 5% !important;
+}
+
+.subject-info {
+		height: 20%;
 }

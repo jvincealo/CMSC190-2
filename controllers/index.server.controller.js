@@ -58,9 +58,6 @@ exports.entry = function(req, res) {
                 )
             });
         }
-
-
-
     } else {
         res.render('index', {
         title: 'Curriculum DB',
@@ -79,10 +76,6 @@ exports.authCallback = function() {
         failureRedirect :  '/index  '
     });
 };
-
-exports.home = function(req, res) {
-    res.render('home');
-}
 
 exports.create = function(req, res) {
     Course.find({})

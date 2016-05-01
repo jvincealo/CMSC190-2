@@ -1,5 +1,6 @@
 var Course = require('mongoose').model('Course');
 var User   = require('mongoose').model('User');
+var Curriculum = require('mongoose').model('Curriculum');
 
 //retrieve logged in user identity
 // function getIdentity(req, id) {
@@ -36,21 +37,36 @@ exports.entry = function(req, res) {
                 else
                     ident = user.google.email
 
-                res.render('home', {
-                    ident: ident
-                });
+                var curriculumMap = {};
+
+                Curriculum.find({
+                    author: req.user.id
+                    },
+                    function(err, curriculums) {
+                        var curr_map = [];
+                        var current = {};
+                        curriculums.forEach(function(curr) {
+                            current.id = curr._id;
+                            current.title = curr.title;
+                            curr_map.push(current);
+                        });
+                        res.render('home', {
+                            ident: ident,
+                            curr_map: curr_map
+                        });
+                    }
+                )
             });
         }
+
+
+
     } else {
         res.render('index', {
         title: 'Curriculum DB',
         message: ''
         });
     }
-};
-
-exports.home = function(req, res) {
-    res.render('home');
 };
 
 exports.auth = function() {
@@ -105,6 +121,7 @@ exports.create = function(req, res) {
 }
 
 exports.logout = function(req, res) {
-    req.logout();
+    if(req.isAuthenticated())
+        req.logout();
     res.redirect('/');
 }

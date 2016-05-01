@@ -20,3 +20,40 @@ exports.createOrUpdate = function(req, res, next) {
         }
     );
 };
+
+//show all users
+exports.list = function(req, res, next) {
+    Curriculum.find({}, function(err, curriculums) {
+        if(err)
+            return next(err);
+        else
+            res.json(curriculums);
+    });
+};
+
+exports.curriculumByUser = function(req, res, next, id) {
+    Curriculum.find({
+            author: id
+        },
+        function(err, curriculums) {
+            if (err) {
+                return next(err);
+            }
+            else {
+                res.json(curriculums);
+            }
+        }
+    );
+};
+
+//delete user
+exports.delete = function(req, res, next) {
+    req.user.remove(function(err) {
+        if (err) {
+            return next(err);
+        }
+        else {
+            res.json(req.user);
+        }
+    })
+};

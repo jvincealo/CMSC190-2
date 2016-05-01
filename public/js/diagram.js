@@ -481,9 +481,9 @@ function saveToAccount() {
         department: department,
         title: title
     }
-    $.post("/curriculum", request,
+    $.get("/curriculum",
         function(data, status){
-            alert(data["message"]);
+            alert(JSON.stringify(data));
         }
     );
 }

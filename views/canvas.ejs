@@ -70,29 +70,23 @@
 			<!--	TAB-OPTIONS DIV	-->
 			<div class="tab-div" id="tab-option">
 				<div>
-<!--
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 dropdown-button" data-beloworigin="true" data-activates='add-subject-drop' id="add-subject-btn">Add Subject<i class="material-icons right">add</i></a>
-					<div class="col s8 offset-s2">
-						<ul id="add-subject-drop" class="dropdown-content"> 
-							<li><a href="#!" onClick="addSubject(this)">CMSC21</a></li>
-							<li><a href="#!" onClick="addSubject(this)">CMSC123</a></li>
-							<li><a href="#!" onClick="addSubject(this)">CMSC141</a></li>
-						</ul>
-					</div>
--->
 					<div class="tab-option-btn add-subject-div">
 						<select id="add-subject-drop" class="blue lighten-1 z-depth-1" onchange="addSubject()">
 							<option value="" disabled selected>ADD SUBJECT</option>
-							<option>CMSC 11</option>
-							<option>CMSC 21</option>
-							<option>CMSC 123</option>
+							<script type="text/javascript">
+                                var courses = '<%= (JSON.stringify(courses))%>'.replace(/&#34;/g, "\"");
+                                courses = JSON.parse(courses);
+                            </script>
+                            <% for(var i=1; i<courses.length;i++) { %>
+                                <option><%= courses[i].code %></option>
+                          <% }; %>
 						</select>
-					</div>	
+					</div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 ">Import<i class="material-icons right">file_upload</i></a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
 					<div class="col s8 offset-s2">
-						<ul id="export-drop" class="dropdown-content"> 
+						<ul id="export-drop" class="dropdown-content">
 							<li><a href="#!">Image<i class="material-icons right">photo</i></a></li>
 							<li><a href="#!">PDF<i class="material-icons right">picture_as_pdf</i></a></li>
 							<li><a href="#!" onclick="exportCSV()">CSV File<i class="material-icons right">insert_drive_file</i></a></li>
@@ -102,49 +96,25 @@
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
 				</div>
-		
+
 			</div>
 			<!--	TAB-INFO DIV	-->
 			<div id="tab-info">
-<!--
-					<form>
-						<div class="input-field">
-							<input id="courseCode" type="text" class="validate">
-							<label for="courseCode">Course Code</label>
-						</div>
-						<div class="input-field">
-							<input id="courseTitle" type="text" class="validate">
-							<label for="courseTitle">Course Title</label>
-						</div>
-						<div class="input-field">
-							<input id="prerequisite" type="text" class="validate">
-							<label for="prerequisite">Prerequisite</label>
-						</div>
-						<div class="input-field">
-							<input id="units" type="number" class="validate">
-							<label for="units">Units</label>
-						</div>
-						<div class="input-field">
-							<textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
-							<label for="course-info">Course Description</label>
-						</div>
-					</form>
--->
 				<div class="row">
-					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12">CMSC 170</h5>
-					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12">Introduction to Artificial Intelligence</h6>
+					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12"><span id="code">No Course Selected</span></h5>
+					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12"><span id="title"></span></h6>
 					<div class="info-holder-div col s12">
 						<div class="info-div">
 							<label class="comment-email blue-text text-lighten-1">Prerequisite:</label>
-							<span> CMSC 123 and CMSC 69</span>
+							<span id="prerequisite"></span>
 						</div>
 						<div class="info-div">
 							<label class="comment-email blue-text text-lighten-1">Units:</label>
-							<span> 3.0</span>
+							<span id="units"></span>
 						</div>
 						<div class="info-div">
 							<label class="comment-email blue-text text-lighten-1">Description:</label>
-							<span class="info-span"> Basic principles of Artificial Intelligence; knowledge representation; natural language processing; pattern recognition; and, expert systems.</span>
+							<span class="info-span" id="description"></span>
 						</div>
 					</div>
 					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>
@@ -183,21 +153,21 @@
 	</div>
 -->
 	</div>
-</div>	
+</div>
 
 
-	
+
 <!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout" class="logout-drop dropdown-content ">
 	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
 	<li class="divider"></li>
 	<li><a href="#!" class="center-align">Logout</a></li>
-</ul>	
+</ul>
 <!--  EXPORT DROPDOWN -->
 
 <!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
-	
+
 <!-- ----------------------------------- MODALS ------------------------------------ -->
 <!--	ADD COURSE MODAL -->
 	<div id="modal-add-course" class="add-course modal grey lighten-3">
@@ -304,7 +274,7 @@
 	</div>
 </div>
 <!-- -------------------------------- END OF MODALS -------------------------------- -->
-	
+
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -312,6 +282,6 @@
 	<script type="text/javascript" src="js/lodash.min.js"></script>
 	<script type="text/javascript" src="js/backbone-min.js"></script>
 	<script type="text/javascript" src="js/joint.min.js"></script>
-  <script type="text/javascript" src="js/diagram.js"></script>	
+  <script type="text/javascript" src="js/diagram.js"></script>
 </body>
 </html>

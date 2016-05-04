@@ -1,10 +1,15 @@
+var csv = "MATH17,CMSC56\nMATH17,CMSC11\nMATH17,STAT1\nMATH26,MATH27\nMATH26,CMSC150\nMATH27,MATH28\nCMSC56,CMSC57\nCMSC57,CMSC130\nCMSC57,CMSC123\nCMSC21,CMSC123\nCMSC21,CMSC131\nCMSC11,CMSC21\nCMSC11,CMSC22\nCMSC11,CMSC130\nCMSC2,CMSC100\nCMSC22,CMSC100\nCMSC123,CMSC127\nCMSC123,CMSC170\nCMSC123,CMSC124\nCMSC123,CMSC125\nCMSC123,CMSC128\nCMSC123,CMSC141\nCMSC123,CMSC142\nCMSC123,CMSC150\nCMSC125,CMSC137\nCMSC131,CMSC132";
+
 var curriculum = {}; //json for the curriculum
-var coursePos = {}; //save positions
+var subjectArr = []; //save positions
 var colCount = 0;
 var rowCount = 0;
 var graphScale = 1;
 var selectedSubject = null;
-
+var linkSource;
+var linkTarget;
+var changeLink = false;
+var removing = false;
 
 var yearCount = 4; //default no. of years
 var xMax = $('#diagram-container').width();
@@ -21,8 +26,8 @@ var paper = new joint.dia.Paper({
 		gridSize: gridWidth/2,
 		defaultLink: new joint.dia.Link({
 				router: { name: 'manhattan' },
-//    		connector: { name: 'rounded' },
-				attrs: {
+    		connector: { name: 'rounded' },
+				attrs: { 
 					'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
 					'.connection': { 'stroke-width': 4 }
 				}
@@ -44,8 +49,64 @@ var paper = new joint.dia.Paper({
 		snapLinks: { radius: 75 },
 		multiLinks: false
 });
-paper.setOrigin(xMax/7.5, yMax/20);
+
+
+var containerHeight = gridWidth * 10;
+
+var subjectContainer = new joint.shapes.basic.Rect({
+    position: { x: 0-(semDivider/4), y: 0-semDivider/4 },
+    size: { width: gridWidth*8, height: containerHeight+semDivider/4 },
+    attrs: { rect: { style: {'pointer-events': 'none'}} }
+});
+graph.addCell(subjectContainer);
+paper.setOrigin(semDivider/2,(semDivider/4));
 zoomPaper(-0.5);
+//grid columns for years and semesters
+for (i = 0; i <= yearCount*2; i++) { 
+	var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*i-(semDivider/4), y2: containerHeight, stroke: 'black' });
+	V(paper.viewport).append(line);
+}
+
+$('#diagram-container').bind('mousewheel', function(event) {
+		event.preventDefault(); //disable scroll through mousewheel
+    if (event.originalEvent.wheelDelta >= 0) {
+				zoomPaper(0.05);
+    }
+    else {
+				zoomPaper(-0.05);
+    }
+});
+$(document).on('keyup',function(e){ //deletes selected subject
+	if(e.keyCode == 46) removeSubject();
+//	console.log(e.keyCode);
+});
+$(document).ready(function() {
+    $('select').material_select();
+  });
+function removeSubject(){
+	if(selectedSubject != null){
+		selectedSubject.attr({ rect: { 'stroke-width': 0 } });
+		selectedSubject.remove();
+		selectedSubject = null;
+	}
+}
+
+function dragPaper(){ //scrolls paper on drag
+	if(dragFlag){
+//		var canvasDiv = document.getElementById("diagram-container"); 
+//		canvasDiv.scrollLeft += dragStartPosition.x - event.offsetX;
+//		canvasDiv.scrollTop += dragStartPosition.y - event.offsetY;
+			paper.setOrigin(
+				event.offsetX - dragStartPosition.x, 
+				event.offsetY - dragStartPosition.y);
+	}
+}
+
+function zoomPaper(value){
+		graphScale += value;
+		paper.scale(graphScale);
+}
+
 
 //grid columns for years and semesters
 for (i = 0; i <= yearCount*2; i++) {
@@ -140,14 +201,44 @@ paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - d
             document.getElementById('description').innerHTML = courses[i]["description"];
         });
 });
-
+paper.on('cell:pointerdown', function(evt, x, y){
+	if(evt.model.isLink()){
+		if(evt.model.attributes.source.id != null && evt.model.attributes.target.id != null){
+			linkSource = evt.model.attributes.source.id;
+			linkTarget = evt.model.attributes.target.id;
+			changeLink = true;
+		}
+	}
+	removing = false;
+});
+paper.on('cell:pointerup', function(evt, x, y){ //if link connection target/source will be changed
+	if(evt.model.isLink()){
+		if(changeLink == true && !removing){
+			if(linkSource != evt.model.attributes.source.id || linkTarget != evt.model.attributes.target.id){
+				var temp = evt.model.attributes;
+//				if(temp.target.id != linkTarget){
+//					curriculum[temp.source.id].splice(curriculum[temp.source.id].indexOf(linkTarget), 1);
+//				} else {
+					curriculum[linkSource].splice(curriculum[linkSource].indexOf(linkTarget), 1);
+				linkSource = null;
+				linkTarget = null;
+				changeLink = false;
+			}
+		}
+		if (evt.model.attributes.source.id && evt.model.attributes.target.id && !removing) {
+			var sourceId = evt.model.attributes.source.id;
+			var targetId = evt.model.attributes.target.id;
+			if(curriculum[sourceId] == null){
+					curriculum[sourceId] = [];
+					curriculum[sourceId].push(targetId);
+			} else {
+					if(jQuery.inArray(targetId , curriculum[sourceId]) == -1) curriculum[sourceId].push(targetId); 
+			}	
+		}
+	}
+});
 graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
     if (link.get('source').id && link.get('target').id) { //if 2 subjects are connected
-			var sourceId = link.get('source').id;
-			var targetId = link.get('target').id;
-			if(curriculum[sourceId] == null) curriculum[sourceId] = targetId;
-			else curriculum[sourceId] += "," + targetId;
-			console.log(curriculum);
 			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
 				link.attr({
 					'.connection': { stroke: 'red' },
@@ -158,23 +249,23 @@ graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT -
     }
 });
 graph.on('change:position', function(cell) { //constantly checks for conflicts based on source and target positions
-		var outSubj = graph.getConnectedLinks(cell, { outbound: true });
-		var inSubj = graph.getConnectedLinks(cell, { inbound: true });
-		outSubj.forEach(function(link) { //CONFLICT CHECKING FOR OUTWARD LINKS
-			if(link.getTargetElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
-				if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
-					link.attr({
-						'.connection': { stroke: 'red' },
-						'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
-					});
-				} else {
-					link.attr({
-						'.connection': { stroke: 'black' },
-						'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
-					});
-				}
+	var outSubj = graph.getConnectedLinks(cell, { outbound: true });
+	var inSubj = graph.getConnectedLinks(cell, { inbound: true });
+	outSubj.forEach(function(link) { //CONFLICT CHECKING FOR OUTWARD LINKS
+		if(link.getTargetElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
+			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+				link.attr({
+					'.connection': { stroke: 'red' },
+					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
+			} else {
+				link.attr({
+					'.connection': { stroke: 'black' },
+					'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
 			}
-	});
+		}
+});
 	inSubj.forEach(function(link) { //CONFLICT CHECKING FOR INWARD LINKS
 		if(link.getSourceElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
 			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
@@ -190,6 +281,34 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 			}
 		}
 	});
+	
+	//BOUND SUBJECTS INSIDE BOX
+	var parentId = cell.get('parent');
+	if (!parentId) return;
+
+	var parent = graph.getCell(parentId);
+	var parentBbox = parent.getBBox();
+	var cellBbox = cell.getBBox();
+
+	if (parentBbox.containsPoint(cellBbox.origin()) &&
+			parentBbox.containsPoint(cellBbox.topRight()) &&
+			parentBbox.containsPoint(cellBbox.corner()) &&
+			parentBbox.containsPoint(cellBbox.bottomLeft())) {
+
+			// All the four corners of the child are inside
+			// the parent area.
+			return;
+	}
+	// Revert the child position.
+	cell.set('position', cell.previous('position'));
+});
+graph.on('remove', function(cell, collection, opt) {
+	if (cell.isLink()) { //remove connection between subjects when link is removed
+		if (cell.get('source').id && cell.get('target').id) {
+			curriculum[cell.get('source').id].splice(curriculum[cell.get('source').id].indexOf(cell.get('target').id), 1);
+			removing = true;
+		}
+	}
 });
 
 function exportCSV(){
@@ -200,8 +319,41 @@ function exportCSV(){
 			if(subjects[j].attributes.position.x == gridWidth*i) console.log(subjects[j].id);
 		}
 	}
+	console.log("DEPENDENCIES:"); //ETO YUNG PREREQUISITES
+	for(course in curriculum){
+		for(target in curriculum[course]) console.log(course+","+curriculum[course][target]);
+	}
 }
+function importCSV(){
+//	var csv = document.getElementById("import-csv");
+//	console.log("File String is:");
+//	console.log(csv.value);
+//	console.log(csv);
+//	curriculum[sourceId].push(targetId);
+	var dependencies = csv.split("\n");
+	for(i=0; i<dependencies.length; i++){
+		var temp = dependencies[i].split(","); //[0] is source, [1] is target
+		var sourceLink;
+		var targetLink;
+		for(j=0; j<subjectArr.length; j++) if(temp[0] == subjectArr[j].id) sourceLink = subjectArr[j].id;
+		for(j=0; j<subjectArr.length; j++) if(temp[1] == subjectArr[j].id) targetLink = subjectArr[j].id;
+		var link =  new joint.dia.Link({
+			source: { id: sourceLink, port: 'out' },
+			target: { id: targetLink, port: 'in' },
+			router: { name: 'manhattan' },
+			connector: { name: 'rounded' },
+			attrs: { 
+				'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
+				'.connection': { 'stroke-width': 4 }
+			}
+		});
+		graph.addCell(link);
+	}
 
+	
+	
+
+}
 function dragPaper(){
 	if(dragFlag){
 		paper.setOrigin(
@@ -209,154 +361,63 @@ function dragPaper(){
 			event.offsetY - dragStartPosition.y);
 	}
 }
-function addCourse(course){
-	if(course.value != null){
-	 	var courseName = course.value;
-		$('#modal-add-course').closeModal();
-	} else{
-		var courseName = course.innerHTML;
-	}
-
-	// Create a custom element.
-	// ------------------------
-	joint.shapes.html = {};
-	joint.shapes.html.Element = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
-			markup: '<g class="rotatable"><g class="scalable"><rect/></g><g class="inPorts"/><g class="outPorts"/></g>',
-			portMarkup: '<g class="port<%= id %>"><circle/></g>',
-			defaults: joint.util.deepSupplement({
-					type: 'html.Element',
-					size: { width: 100, height: 80 },
-					inPorts: [],
-					outPorts: [],
-					attrs: {
-							'.': { magnet: false },
-							rect: {
-									stroke: 'none', 'fill-opacity': 0, width: 150, height: 250,
-							},
-							circle: {
-									r: 6, //circle radius
-									magnet: true,
-									stroke: 'black'
-							},
-
-							'.inPorts circle': { fill: 'green', magnet: 'passive', type: 'input'},
-							'.outPorts circle': { fill: 'red', type: 'output'}
-					}
-			}, joint.shapes.basic.Generic.prototype.defaults),
-			getPortAttrs: function (portName, index, total, selector, type) {
-
-					var attrs = {};
-					var portClass = 'port' + index;
-					var portSelector = selector + '>.' + portClass;
-					var portCircleSelector = portSelector + '>circle';
-					attrs[portCircleSelector] = { port: { id: portName || _.uniqueId(type), type: type } };
-					attrs[portSelector] = { ref: 'rect', 'ref-y': (index + 0.5) * (1 / total) };
-					if (selector === '.outPorts') { attrs[portSelector]['ref-dx'] = 0; }
-					return attrs;
-			}
-	}));
-
-	joint.shapes.html.ElementView = joint.dia.ElementView.extend({
-		template: [
-				'<div class="html-element valign-wrapper" id="'+courseName.replace(" ","")+'" onmouseover="">',
-				'<button class="delete">x</button>',
-				'<label class="valign center-align"></label>',
-				'</div>'
-		].join(''),
-
-		initialize: function() {
-			_.bindAll(this, 'updateBox');
-			joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-
-			this.$box = $(_.template(this.template)());
-			this.$box.find('.delete').on('click', _.bind(this.model.remove, this.model));
-			// Update the box position whenever the underlying model changes.
-			this.model.on('change', this.updateBox, this);
-			// Remove the box when the model gets removed from the graph.
-			this.model.on('remove', this.removeBox, this);
-
-			this.updateBox();
-       this.listenTo(this.model, 'process:ports', this.update);
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-    },
-
-
-     render: function() {
-        joint.dia.ElementView.prototype.render.apply(this, arguments);
-        this.paper.$el.prepend(this.$box);
-        this.updateBox();
-        return this;
-    },
-
-    renderPorts: function () {
-        var $inPorts = this.$('.inPorts').empty();
-        var $outPorts = this.$('.outPorts').empty();
-
-        var portTemplate = _.template(this.model.portMarkup);
-
-        _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
-            $inPorts.append(V(portTemplate({ id: index, port: port })).node);
-        });
-        _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
-            $outPorts.append(V(portTemplate({ id: index, port: port })).node);
-        });
-    },
-
-    update: function () {
-        // First render ports so that `attrs` can be applied to those newly created DOM elements
-        // in `ElementView.prototype.update()`.
-        this.renderPorts();
-        joint.dia.ElementView.prototype.update.apply(this, arguments);
-    },
-		updateBox: function() {
-			// Set the position and dimension of the box so that it covers the JointJS element.
-			var bbox = this.model.getBBox();
-			// Example of updating the HTML with a data stored in the cell model.
-			this.$box.find('label').text(this.model.get('label'));
-			this.$box.find('span').text(this.model.get('select'));
-			this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y, transform: 'rotate(' + (this.model.get('angle') || 0) + 'deg)' });
-		},
-		removeBox: function(evt) {
-			this.$box.remove();
-		}
-	});
-
-	// Create JointJS elements and add them to the graph as usual.
-	var subject = new joint.shapes.html.Element({
-		position: { x: 80, y: 80 },
-		size: { width: 100, height: 50 },
-		inPorts: ['in'],
-    outPorts: ['out'],
-		label: courseName
-	});
-
-	graph.addCells([subject]);
-}
 
 function addSubject(course){
-	if(course != null){
-		var courseName = course.value;
-		$('#modal-add-course').closeModal();
-	} else{
-		var temp = document.getElementById("add-subject-drop")
-		var courseName = temp.options[temp.selectedIndex].innerHTML;
+//	if(course != null){
+//		var courseName = course.value;	
+//		$('#modal-add-course').closeModal();
+//	} else{
+////		var courseName = course.innerHTML;
+//		var temp = document.getElementById("add-subject-drop")
+//		var courseName = temp.options[temp.selectedIndex].innerHTML;
+//	} 
+	var courseName = course; 
+	var shapeHeight = yMax/12;
+	var initX = 0;
+	var initY = 0;
+	var availablePos = false;
+	
+	if(subjectArr.length > 0){
+		for(j=0; j<yearCount*2; j++){ //check for available positions
+			for(i=0; i<20; i++){
+				initX = gridWidth * j;
+				initY = gridWidth/2 * i;
+				for(k=0; k<subjectArr.length; k++){
+					if(subjectArr[k].attributes.position.x == initX && subjectArr[k].attributes.position.y == initY) break;
+					if(k == (subjectArr.length-1)) availablePos = true;
+				}
+				if(availablePos) break;
+			}
+			if(availablePos) break;
+		}
 	}
+	
+	if(courseName.length > 12) shapeHeight = yMax/6;
+	var wraptext = joint.util.breakText(courseName, {
+    width: semDivider,
+    height: shapeHeight
+	});
 	var subject = new joint.shapes.devs.Model({
-		id: courseName,
-		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },
-		size: { width: semDivider, height: yMax/12 },
-		inPorts: [''],
-		outPorts: [''],
+		id: courseName.replace(" ",""),
+		position: { x: initX, y: initY },
+		size: { width: semDivider, height: shapeHeight },
+		inPorts: ['in'],
+		outPorts: ['out'],
 		attrs: {
-        '.label': { text: courseName, 'ref-x': .5, 'ref-y': .33 },
-				rect: { fill: '#42a5f5' },
-				'.inPorts circle': { fill: '#E74C3C', r: 10, magnet: 'passive', type: 'input' },
-				'.outPorts circle': { fill: '#16A085',r: 10, type: 'output' }
+        '.label': { text: wraptext, 'ref-x': .5, 'ref-y': .33 },
+				rect: { fill: '#42a5f5', stroke: 0 },
+				'.inPorts circle': { fill: '#e0e0e0', r: 10, magnet: 'passive', type: 'input', stroke: 0 },
+				'.outPorts circle': { fill: '#e0e0e0',r: 10, type: 'output', stroke: 0}
 		}
 	});
+//	subject.attr({ rect: { fill: 'red' } });
+	subjectContainer.embed(subject);
 	graph.addCell(subject);
+	subjectArr.push(subject);
+
+//	document.getElementById("courseCode").value = ""; //remove value
 	colCount += 1;
-	if(colCount%6 == 0){
+	if(colCount%6 == 0){ 
 		rowCount += 1;
 		colCount = 0;
 	}
@@ -487,3 +548,31 @@ function saveToAccount() {
         }
     );
 }
+
+addSubject("MATH 17");
+addSubject("MATH 26");
+addSubject("MATH 27");
+addSubject("MATH 28");
+addSubject("STAT 1");
+addSubject("CMSC 11");
+addSubject("CMSC 56");
+addSubject("CMSC 21");
+addSubject("CMSC 57");
+addSubject("CMSC 130");
+addSubject("CMSC 131");
+addSubject("CMSC 132");
+addSubject("CMSC 199");
+addSubject("CMSC 198");
+addSubject("CMSC 2");
+addSubject("CMSC 22");
+addSubject("CMSC 100");
+addSubject("CMSC 125");
+addSubject("CMSC 137");
+addSubject("CMSC 123");
+addSubject("CMSC 124");
+addSubject("CMSC 128");
+addSubject("CMSC 141");
+addSubject("CMSC 142");
+addSubject("CMSC 127");
+addSubject("CMSC 170");
+addSubject("CMSC 150");

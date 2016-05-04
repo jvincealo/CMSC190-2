@@ -47,9 +47,9 @@
 					<i class="large material-icons">file_download</i>
 				</a>
 				<ul>
-					<li><a class="btn-floating blue"><i class="material-icons">photo</i></a></li>
-					<li><a class="btn-floating red"><i class="material-icons">picture_as_pdf</i></a></li>
-					<li><a class="btn-floating green"><i class="material-icons">insert_drive_file</i></a></li>
+					<li><a class="btn-floating blue tooltipped" data-position="right" data-delay="0" data-tooltip="Image"><i class="material-icons">photo</i></a></li>
+					<li><a class="btn-floating red tooltipped" data-position="right" data-delay="0" data-tooltip="PDF"><i class="material-icons">picture_as_pdf</i></a></li>
+					<li><a class="btn-floating green tooltipped" data-position="right" data-delay="0" data-tooltip="CSV" onclick="exportCSV()"><i class="material-icons">insert_drive_file</i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -83,15 +83,16 @@
 						</select>
 					</div>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
-					<input id="upload" type="file" style="display:none" />
-                    <a id='upload_link' class="tab-option-btn waves-effect waves-light btn blue lighten-1">Import<i id class="material-icons right">file_upload</i></a><a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
-					<div class="col s8 offset-s2">
-						<ul id="export-drop" class="dropdown-content">
-							<li><a href="#!">Image<i class="material-icons right">photo</i></a></li>
-							<li><a href="#!">PDF<i class="material-icons right">picture_as_pdf</i></a></li>
-							<li><a href="#!" onclick="exportCSV()">CSV File<i class="material-icons right">insert_drive_file</i></a></li>
-						</ul>
+					<div class="file-field input-field">
+						<div class="tab-option-btn waves-effect waves-light btn blue lighten-1">
+							<span>Import CSV</span>
+							<input type="file" id="upload_link" onchange="importCSV()">
+						</div>
 					</div>
+<!--
+					<input id="upload" type="file" style="display:none" />
+                    <a id='upload_link' class="tab-option-btn waves-effect waves-light btn blue lighten-1">Import<i id class="material-icons right">file_upload</i></a>
+-->
 
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn" onClick="saveToAccount()">Save to account</a>
 					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>

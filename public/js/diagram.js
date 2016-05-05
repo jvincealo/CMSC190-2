@@ -490,9 +490,8 @@ function showComments(type) {
     var commetsMap = {};
     var target = type+"_comments_container";
     var container = document.getElementById(target);
+    container.innerHTML = "";
 
-    var comments_map = [];
-    var comment = {};
     $.ajax({
         url: '/comments/course/' + courses[i]["_id"],
         type: 'get',
@@ -507,15 +506,6 @@ function showComments(type) {
             console.log(e.message);
         }
     });
-
-    // comment.id = '2';
-    // comment.text = '123';
-    // comment.author = 'ako';
-    // comments_map.push(comment);
-
-    // alert(JSON.stringify(comments_map));
-
-
 }
 
 function submitComment(type) {
@@ -528,11 +518,16 @@ function submitComment(type) {
     }
     var target = type+"_comment_textarea";
     var text = document.getElementById(target).value;
+    var author;
 
-    var ident = ident || "anonymous"
+    if(ident === "not logged in")
+        author = "anonymous"
+    else
+        author = ident
+
     var request = {
                 text: text,
-                author: ident,
+                author: author,
                 target: courses[i]["_id"],
                 type: type
             }
@@ -545,4 +540,6 @@ function submitComment(type) {
             }
         );
     }
+
+    document.getElementById(target).value = "";
 }

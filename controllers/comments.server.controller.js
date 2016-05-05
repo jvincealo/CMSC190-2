@@ -48,7 +48,7 @@ exports.listByCurriculum = function(req, res) {
                 current.author = users.userById(curr.author)
                 comments_map.push(current);
             });
-            res.jsonp(comments_map);
+            res.json(comments_map);
         }
     )
 };
@@ -56,22 +56,14 @@ exports.listByCurriculum = function(req, res) {
 exports.listByCourse = function(req, res) {
     var course_id = req.params.course_id;
 
-    Comment.find({
+    Comment.find( {
         type: 'course',
         target: course_id
-        },
+    })
+    .lean()
+    .exec(
         function(err, comments) {
-            var comments_map = [];
-            var current = {};
-
-            comments.forEach(function(curr) {
-                    current.id = curr._id;
-                    current.text = curr.text;
-                    current.author = curr.author;
-                    comments_map.push(current);
-            });
-
-                    res.json(comments_map);
+            res.json(comments);
         }
-    )
+    );
 };

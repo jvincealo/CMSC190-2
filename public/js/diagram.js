@@ -5,7 +5,6 @@ var rowCount = 0;
 var graphScale = 1;
 var selectedSubject = null;
 
-
 var yearCount = 4; //default no. of years
 var xMax = $('#diagram-container').width();
 var yMax = $('#diagram-container').height();
@@ -21,7 +20,6 @@ var paper = new joint.dia.Paper({
 		gridSize: gridWidth/2,
 		defaultLink: new joint.dia.Link({
 				router: { name: 'manhattan' },
-//    		connector: { name: 'rounded' },
 				attrs: {
 					'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
 					'.connection': { 'stroke-width': 4 }
@@ -120,24 +118,24 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 	}
 	selectedSubject = evt.model;
 	evt.model.attr({ rect: { stroke: 'black', 'stroke-width': 3 } });
-});
-paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
-     $(document).ready(function(){
-            //search function
-            var index = -1;
+
+    var index = -1;
             for(var i=0; i<courses.length;i++) {
-                if(courses[i]["code"] == evt.model.id) {
+                if(courses[i]["code"] == selectedSubject.id) {
                     index = i;
                     break;
                 }
             }
 
-            $('ul.tabs').tabs('select_tab', 'tab-info');
             document.getElementById('code').innerHTML = courses[i]["code"];
             document.getElementById('title').innerHTML = courses[i]["title"];
             document.getElementById('prerequisite').innerHTML = courses[i]["prerequisite"];
             document.getElementById('units').innerHTML = courses[i]["units"];
             document.getElementById('description').innerHTML = courses[i]["description"];
+});
+paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
+     $(document).ready(function(){
+        $('ul.tabs').tabs('select_tab', 'tab-info');
         });
 });
 
@@ -191,16 +189,6 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 		}
 	});
 });
-
-function exportCSV(){
-	var subjects = graph.getElements();
-	for (i = 0; i <= yearCount*2; i++) {
-			console.log("Column "+(i+1));
-		for(j = 0; j<subjects.length; j++){
-			if(subjects[j].attributes.position.x == gridWidth*i) console.log(subjects[j].id);
-		}
-	}
-}
 
 function dragPaper(){
 	if(dragFlag){
@@ -410,7 +398,7 @@ function exportCSV(){
     var title = "BS Computer Science (rev. 2009)";
 
     var csv_data = [];
-    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIX"];
+    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH"];
     var sem = ["FIRST", "SECOND"];
 
     csv_data.push([code,department,title].join(','));
@@ -450,7 +438,7 @@ function saveToAccount() {
     var title = "BS Computer Science (rev. 2009)";
 
     var csv_data = [];
-    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIX"];
+    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH"];
     var sem = ["FIRST", "SECOND"];
 
     csv_data.push([code,department,title].join(','));
@@ -481,9 +469,68 @@ function saveToAccount() {
         department: department,
         title: title
     }
-    $.get("/curriculum",
+    $.post("/curriculum",
+        request,
         function(data, status){
-            alert(JSON.stringify(data));
+            alert(data["message"]);
         }
     );
+}
+
+function showComments() {
+    var index = -1;
+    for(var i=0; i<courses.length;i++) {
+        if(courses[i]["code"] == selectedSubject.id) {
+            index = i;
+            break;
+        }
+    }
+    document.getElementById('comment_code').innerHTML = courses[i]["code"];
+
+    var target = "course_comments_container";
+    var container = document.getElementById(target);
+    $.ajax({
+        url: '/comments/course/' + courses[i]["_id"],
+        type: 'get',
+        success: function(data) {
+         $.each(data.items, function(item) {
+            var content = "<div class='comment-div col s12'>";
+            content+= "<label class='comment-email blue-text text-lighten-1'>"+ item.author + "</label>: " + item.text +"</div>";
+            container.append(content);
+            });
+        },
+        error: function(e) {
+            console.log(e.message);
+        }
+    });
+
+}
+
+function submitComment(type) {
+    var index = -1;
+    for(var i=0; i<courses.length;i++) {
+        if(courses[i]["code"] == selectedSubject.id) {
+            index = i;
+            break;
+        }
+    }
+    var target = type+"_comment_textarea";
+    var text = document.getElementById(target).value;
+
+    var ident = ident || "anonymous"
+    var request = {
+                text: text,
+                author: ident,
+                target: courses[i]["_id"],
+                type: type
+            }
+
+    if(text.length != 0) {
+        $.post("/comments",
+            request,
+            function(data, status){
+                console.log("comment submitted");
+            }
+        );
+    }
 }

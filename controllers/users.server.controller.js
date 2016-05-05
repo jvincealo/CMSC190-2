@@ -48,18 +48,15 @@ exports.read = function(req, res) {
     res.json(req.user);
 };
 
-exports.userByID = function(req, res, next, id) {
+exports.userByID = function(id) {
     User.findOne({
             _id: id
         },
         function(err, user) {
-            if (err) {
-                return next(err);
-            }
-            else {
-                req.user = user;
-                next();
-            }
+            if(!user.username)
+                res.json(user.google.email)
+            else
+                res.json(user.username)
         }
     );
 };

@@ -13,7 +13,7 @@ var CurriculumSchema = new Schema({
     code: {
             type: String,
             trim: true,
-            unique: true,
+            sparse: true,
             default: ""
         },
     department: {
@@ -23,6 +23,14 @@ var CurriculumSchema = new Schema({
     title: {
             type: String,
             default: "New Curriculum"
+        },
+    created: {
+            type: Date,
+            default: Date.now
+        },
+    updated: {
+            type: Date,
+            default: Date.now
         }
 });
 

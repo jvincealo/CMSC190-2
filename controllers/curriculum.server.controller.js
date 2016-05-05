@@ -21,7 +21,7 @@ exports.createOrUpdate = function(req, res, next) {
     );
 };
 
-//show all users
+//show all curriculums
 exports.list = function(req, res, next) {
     Curriculum.find({}, function(err, curriculums) {
         if(err)
@@ -31,13 +31,13 @@ exports.list = function(req, res, next) {
     });
 };
 
-exports.curriculumByUser = function(req, res, next, id) {
+exports.show = function(req, res) {
     Curriculum.find({
-            author: id
+            author: req.params.curr_id
         },
         function(err, curriculums) {
             if (err) {
-                return next(err);
+                   res.send(err);
             }
             else {
                 res.json(curriculums);

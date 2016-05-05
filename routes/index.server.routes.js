@@ -4,9 +4,11 @@ var passport = require('passport'),
 module.exports = function(app) {
     var index = require('../controllers/index.server.controller');
 
+    app.get('/admin', index.admin);
     app.get('/', index.entry);
     app.get('/new', index.create);
     app.get('/logout', index.logout);
+    app.get('/:user_id', index.list);
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
     app.get('/auth/google/callback',
         passport.authenticate('google',

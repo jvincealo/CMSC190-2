@@ -2,24 +2,6 @@ var Course = require('mongoose').model('Course');
 var User   = require('mongoose').model('User');
 var Curriculum = require('mongoose').model('Curriculum');
 
-//retrieve logged in user identity
-// function getIdentity(req, id) {
-//     if(req.isAuthenticated()) {
-//         User.findById(id)
-//         .lean()
-//         .exec(function(err, user) {
-//             var ident;
-//             if(user.username)
-//                 ident = user.username
-//             else
-//                 ident = user.google.email
-
-//             // console.log(ident);
-//             return ident;
-//         });
-//     }
-// };
-
 exports.entry = function(req, res) {
     if(req.isAuthenticated()) {
         if((req.user.email)) {
@@ -113,8 +95,50 @@ exports.create = function(req, res) {
     });
 }
 
+exports.list = function(req, res) {
+    var curriculumMap = {};
+    var ident = "not logged in";
+
+    Curriculum.find({
+        author: req.params.user_id
+        },
+        function(err, curriculums) {
+            var curr_map = [];
+            var current = {};
+            curriculums.forEach(function(curr) {
+                current.id = curr._id;
+                current.title = curr.title;
+                curr_map.push(current);
+            });
+
+            if(req.isAuthenticated()) {
+                User.findById(req.user.id
+                    , function(err, user) {
+                    if(user.username)
+                        ident = user.username
+                    else
+                        ident = user.google.email
+                    res.render('home', {
+                        ident: ident,
+                        curr_map: curr_map
+                    });
+                });
+            } else {
+                res.render('home', {
+                    ident: ident,
+                    curr_map: curr_map
+                });
+            }
+        }
+    )
+}
+
 exports.logout = function(req, res) {
     if(req.isAuthenticated())
         req.logout();
     res.redirect('/');
+}
+
+exports.admin = function(req, res) {
+    res.render('admin');
 }

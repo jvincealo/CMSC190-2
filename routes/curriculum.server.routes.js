@@ -4,4 +4,7 @@ module.exports = function(app) {
     app.route('/curriculum')
         .post(curriculum.createOrUpdate)
         .get(curriculum.list);
+
+    app.route('/curriculum/:curr_id')
+        .get(curriculum.show);
 }

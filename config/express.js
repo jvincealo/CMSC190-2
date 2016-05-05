@@ -8,12 +8,15 @@ var config  = require('../config/config'),
     session     = require('express-session');
 
 module.exports = function() {
-    var app = express();
+    var app = express(),
+        http = require('http').createServer(app),
+        io = require('socket.io')(http);
 
     //configurations
     app.set('views', __dirname + '/../views');
     app.set('view engine', 'ejs');
 
+    require('./socket.js')(io);
 
     app.use(morgan('dev'));
     app.use(cookieParser());
@@ -42,8 +45,9 @@ module.exports = function() {
     require('../routes/course.server.routes.js')(app);
     require('../routes/users.server.routes.js')(app);
     require('../routes/curriculum.server.routes.js')(app);
+    require('../routes/comment.server.routes.js')(app);
 
     //use static files
     app.use(express.static('./public'));
-    return app;
+    return http;
 }

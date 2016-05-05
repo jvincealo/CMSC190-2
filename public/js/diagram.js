@@ -518,12 +518,7 @@ function submitComment(type) {
     }
     var target = type+"_comment_textarea";
     var text = document.getElementById(target).value;
-    var author;
-
-    if(ident === "not logged in")
-        author = "anonymous"
-    else
-        author = ident
+    var author = ident;
 
     var request = {
                 text: text,

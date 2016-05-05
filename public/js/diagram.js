@@ -477,7 +477,7 @@ function saveToAccount() {
     );
 }
 
-function showComments() {
+function showComments(type) {
     var index = -1;
     for(var i=0; i<courses.length;i++) {
         if(courses[i]["code"] == selectedSubject.id) {
@@ -487,22 +487,34 @@ function showComments() {
     }
     document.getElementById('comment_code').innerHTML = courses[i]["code"];
 
-    var target = "course_comments_container";
+    var commetsMap = {};
+    var target = type+"_comments_container";
     var container = document.getElementById(target);
+
+    var comments_map = [];
+    var comment = {};
     $.ajax({
         url: '/comments/course/' + courses[i]["_id"],
         type: 'get',
         success: function(data) {
-         $.each(data.items, function(item) {
-            var content = "<div class='comment-div col s12'>";
-            content+= "<label class='comment-email blue-text text-lighten-1'>"+ item.author + "</label>: " + item.text +"</div>";
-            container.append(content);
-            });
+            for(var key in data) {
+                var content =  "<div class='comment-div col s12'>";
+                content+= "<label class='comment-email blue-text text-lighten-1'>"+ data[key].author + "</label>: " + data[key].text +"</div>";
+                container.innerHTML = container.innerHTML + content;
+            }
         },
         error: function(e) {
             console.log(e.message);
         }
     });
+
+    // comment.id = '2';
+    // comment.text = '123';
+    // comment.author = 'ako';
+    // comments_map.push(comment);
+
+    // alert(JSON.stringify(comments_map));
+
 
 }
 

@@ -1,517 +1,516 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>RESPONSIVE NA TO</title>
 
-  <title>awts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- CSS  -->
 	<link href='https://fonts.googleapis.com/css?family=Bitter|Signika|Bree+Serif|Nunito' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Roboto|Merriweather|Righteous|Exo|Changa+One' rel='stylesheet' type='text/css'>
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="css/style2.css">
-	<link type="text/css" rel="stylesheet" href="css/modal.css">
+	<link href='https://fonts.googleapis.com/css?family=Crete+Round|Indie+Flower|Righteous|Exo|Changa+One' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/diagram.css">
 
 </head>
-<body>
+<body class="row">
 <div class="navbar-fixed">
   <nav class="blue lighten-1" role="navigation">
-    <div class="nav-wrapper row">
-      <a href="index.html" class="brand-logo">Logo</a>
-<!--
-			<div class="">
-				<div class="">
--->
-<!--
-			<div class="admin-tab center">
-				<ul class="tabs">
-					<li class="tab  green lighten-1"><a class="active white-text" href="#subject-div">Subject</a></li>
-					<li class="tab  green lighten-1"><a class="white-text" href="#curriculum-dv">Curriculum</a></li>
+    <div class="nav-wrapper container">
+			<a href="#" data-activates="nav-mobile" class="pepe button-collapse"><i class="material-icons grey-text text-lighten-3">menu</i></a>
+      <a href="index.html" class="brand-logo grey-text text-lighten-3 hide-on-med-and-down">Logo</a>
+			<div class="admin-tab col s8 m6 l6 offset-m2 offset-l2">
+				<ul class="tabs lighten-1 valign-wrapper">
+					<li class="tab blue lighten-1"><a class="active white-text" href="#admin-subject-div">Subject</a></li>
+					<li class="tab blue lighten-1"><a class="white-text" href="#admin-curriculum-div">Curriculum</a></li>
 				</ul>
 			</div>
--->
-				<div class="admin-tab center col s4 offset-s4">
-					<ul class="tabs blue lighten-1 valign-wrapper">
-						<li class="tab blue lighten-1"><a class="active white-text" href="#subject-div">Subject</a></li>
-						<li class="tab blue lighten-1"><a class="white-text" href="#curriculum-div">Curriculum</a></li>
-					</ul>
-				</div>
-			
+			<div class="right search-container hide-on-med-and-down">
+				<ul class="row">
+					<li class="search-area">
+						<a id="search-toggle"><i class="material-icons grey-text text-lighten-3" onclick="showSearch()">search</i></a>
+						<div class="input-field" id="search-bar-div">
+							<input id="search-bar" type="search" class="blue lighten-1" placeholder="Search Course">
+							<label for="search"><i class="material-icons grey-text text-lighten-3" >search</i></label>
+							<i class="material-icons grey-text text-lighten-3" onclick="hideSearch()">close</i>
+						</div>
+					</li>
+	        
+					<li><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout-drop' href="#"><i class="small material-icons grey-text text-lighten-3">arrow_drop_down</i></a></li>
+				</ul>
+			</div>
 
-      <div class="search-login-container right">
-           <ul id="nav" class="row">
-            <li class="col s8">
-              <form>
-							 	<div class="search-input input-field col s12">
-									<a id="search-toggle" class="col s3 offset-s10" onclick="showSearch()"><i class="material-icons  grey-text text-lighten-2">search</i></a>
-									<div id="search-bar-div">
-										<input id="search-bar" class="blue lighten-1 grey-text text-lighten-2 col s12" placeholder="Search Course" type="search" autofocus>
-										<label for="search"><i class="material-icons grey-text text-lighten-2">search</i></label>
-										<i class="material-icons col s1 grey-text text-lighten-2" onclick="hideSearch()">close</i>
-									</div>
-                </div>
-              </form>
-            </li>
-            <li class="login-logout"><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout' href="#"><i class="small material-icons">arrow_drop_down</i></a></li>
-          </ul>
-      </div>
+      <ul id="nav-mobile" class="side-nav">
+        <li><a id="search-toggle"><i class="material-icons">search</i></a></li>
+				<a class="active grey-text text-lighten-3" href="#admin-subject-div">Subject</a>
+				<a class=" grey-text text-lighten-3" href="#admin-curriculum-div">Curriculum</a>
+        <li><a class="valign-wrapper" href="#">Logout</a></li>
+      </ul>
+      
     </div>
-		
   </nav>
 </div>
-<div>
-	<div>
-		<div id="subject-div" class="col s12 row">
-			<div class="current-subjects col s6 row">
-				<div class="col s10 offset-s1">
+	
+<div class="base-div grey lighten-3">
+	<div class="admin-div col s12 m12 l12 row">
+		<div id="admin-subject-div" class="col s12 m12 l12 row ">
+			<div class="col s12 m6 l6">
+				<div class="admin-current-subjects container">
 					<ul class="collapsible" data-collapsible="accordion">
 						<li>
 							<div class="collapsible-header">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-								</ul>		
-							</div>
-						</li>
-						<li>
-							<div class="collapsible-header">BS Computer Science</div>
-							<div class="collapsible-body">
-								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="#modal-edit-course">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
-									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header">BS Computer Science</div>
+							<div class="collapsible-header white">BS Computer Science</div>
 							<div class="collapsible-body">
 								<ul>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 100</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 11</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 123</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 124</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 125</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 127</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 128</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
-									<li class="row"><a class="modal-trigger valign-wrapper col s10" href="">CMSC 130</a>
-									<a class="col s2 black-text">Delete</a>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+								</ul>		
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header white">BS Computer Science</div>
+							<div class="collapsible-body">
+								<ul>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 100</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 11</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 123</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 124</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 125</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 127</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 128</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
+									</li>
+									<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">CMSC 130</a>
+									<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>
 									</li>
 								</ul>		
 							</div>
 						</li>
 					</ul>
 				</div>
-				<div class="import-csv-btn col s10 offset-s1">
-					<a class="waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2" href="#modal-curriculum"><font color="white">IMPORT CSV</font></a>
+				<div class="admin-import-csv col s12 file-field input-field">
+					<div class="waves-effect waves-light btn blue lighten-1 col s4 offset-s4 valign-wrapper">
+						<span class="white-text">Import CSV</span>
+						<input type="file" id="import-csv" onchange="">
+					</div>
 				</div>
 			</div>
-			<div class="add-subject-admin col s6 row">
-				<form class="col s10 offset-s1">
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="department" type="text" class="validate">
-							<label for="department">Department</label>
-						</div>
+			<div class="col s12 m6 l6">
+				<div class="admin-add-subjects">
+					<div>
+						<form class="col s10 offset-s1">
+							<div class="row">
+								<div class="input-field col s12">
+									<i class="login-icon material-icons prefix">school</i>
+									<input id="department" type="text" class="validate">
+									<label for="department">Department</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<i class="login-icon material-icons prefix">description</i>
+									<input id="courseCode" type="text" class="validate">
+									<label for="courseCode">Course Code</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<i class="login-icon material-icons prefix">description</i>
+									<input id="icon_prefix" type="text" class="validate">
+									<label for="icon_prefix">Course Title</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<i class="login-icon material-icons prefix">directions</i>
+									<input id="icon_prefix" type="text" class="validate">
+									<label for="icon_prefix">Prerequisite</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<i class="login-icon material-icons prefix">filter_3</i>
+									<input id="icon_prefix" type="number" class="validate">
+									<label for="icon_prefix">Units</label>
+								</div>
+							</div>
+							<div class="input-field row">
+								<button class="admin-add-new blue lighten-1 large btn waves-effect waves-light center-align col s6 offset-s3" type="submit" name="action">ADD NEW SUBJECT
+								<i class="material-icons right">send</i></button>
+							</div>
+						</form>
 					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="courseCode" type="text" class="validate">
-							<label for="courseCode">Course Code</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="icon_prefix" type="text" class="validate">
-							<label for="icon_prefix">Course Title</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s7">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="icon_prefix" type="text" class="validate">
-							<label for="icon_prefix">Prerequisite</label>
-						</div>
-						<div class="input-field col s5">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="icon_prefix" type="number" class="validate">
-							<label for="icon_prefix">Units</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
-							<label class="course-info-label" for="course-info">Course Description</label>
-						</div>
-					</div>
-					<div class="input-field row">
-						<button class="blue lighten-1 large btn waves-effect waves-light center-align col s6 offset-s3" type="submit" name="action">ADD NEW SUBJECT
-						<i class="material-icons right">send</i></button>
-					</div>
-				</form>
+					
+				</div>
 			</div>
 		</div>
-		<div id="curriculum-div" class="col s12">
-			<div class="base-div row">
-				<div class="col s3 row">
-					<div class="blue lighten-1 card col s10 offset-s1">
+		<div id="admin-curriculum-div" class="col s12 m12 l12 row">
+			<div class="base-div2 row">
+				<div class="col s12 m6 l3 row">
+					<div class="blue lighten-1 card col s10 offset-s1 row">
 						<div class="card-image">
 							<img src="images/cara.jpg">
 						</div>
@@ -520,7 +519,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col s3 row">
+				<div class="col s12 m6 l3 row">
 					<div class="blue lighten-1 card col s10 offset-s1">
 						<div class="card-image">
 							<img src="images/cara2.jpg">
@@ -531,7 +530,7 @@
 						</div>			
 					</div>
 				</div>
-				<div class="col s3 row">
+				<div class="col s12 m6 l3 row">
 					<div class="blue lighten-1 card col s10 offset-s1">
 						<div class="card-image">
 							<img src="images/cara3.jpg">
@@ -542,7 +541,7 @@
 						</div>			
 					</div>
 				</div>
-				<div class="col s3 row">
+				<div class="col s12 m6 l3 row">
 					<div class="blue lighten-1 card col s10 offset-s1">
 						<div class="card-image">
 							<img src="images/cara4.jpg">
@@ -552,7 +551,7 @@
 						</div>			
 					</div>
 				</div>
-				<div class="col s3 row">
+				<div class="col s12 m6 l3 row">
 					<div class="blue lighten-1 card col s10 offset-s1">
 						<div class="card-image">
 							<img src="images/cara5.jpg">
@@ -565,67 +564,65 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 
-<!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
-<ul id="logout" class="logout-drop dropdown-content ">
+<ul id="logout-drop" class="dropdown-content col m12 l12">
 	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
 	<li class="divider"></li>
 	<li><a href="#!" class="center-align">Logout</a></li>
 </ul>	
-<!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
-	
-<!-- ----------------------------------- MODALS ------------------------------------ -->
-<!--	ADD COURSE MODAL -->
-<div id="modal-edit-course" class="add-course modal grey lighten-3">
-	<nav class="add-course-nav valign-wrapper grey lighten-2">
-			<h6 class="center-align grey-text text-darken-1">Edit Subject</h6>
+<!--	EDIT COURSE MODAL -->
+<div id="modal-edit-course" class="edit-course-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<nav class="curriculum-nav grey lighten-2 valign-wrapper row">
+			<h6 class="center-align grey-text text-darken-1 col s12 m12 l12">Edit Subject</h6>
 	</nav>
-	<div class="add-course-div container">
-		<div class="add-course-form">
-			<form>
-				<div class="input-field">
-					<i class="login-icon material-icons prefix">email</i>
-					<input id="courseCode" type="text" class="validate">
-					<label for="courseCode">Course Code</label>
-				</div>
-				<div class="input-field">
-					<i class="login-icon material-icons prefix">lock</i>
-					<input id="icon_prefix" type="text" class="validate">
-					<label for="icon_prefix">Course Title</label>
-				</div>
-				<div class="input-field">
-					<div class="row prereq-units">
-						<div class="col s7">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="icon_prefix" type="text" class="validate">
-							<label for="icon_prefix">Prerequisite</label>
+	<div class="login-tab row col s12 m12 l12 ">
+			<div id="login-tab-div" class="row col s12 m12 l12">
+				<div class="row container">
+					<form action="landing.html">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">school</i>
+							<input id="department" type="text" class="validate">
+							<label for="department">Department</label>
 						</div>
-						<div class="col s5">
-							<i class="units-icon material-icons prefix">lock</i>
-							<input id="icon_prefix" type="number" class="validate">
-							<label class="col s1 offset-s1" for="icon_prefix">Units</label>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">description</i>
+							<input id="courseCode" type="text" class="validate">
+							<label for="courseCode">Course Code</label>
 						</div>
-					</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">description</i>
+							<input id="courseTitle" type="text" class="validate">
+							<label for="courseTitle">Course Title</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">directions</i>
+							<input id="prerequisites" type="text" class="validate">
+							<label for="prerequisites">Prerequisite</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">filter_3</i>
+							<input id="units" type="number" class="validate">
+							<label for="units">Units</label>
+						</div>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">EDIT
+							<i class="material-icons right">send</i></button>
+						</div>
+					</form>
 				</div>
-				<div class="input-field">
-					<textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
-					<label for="course-info">Course Description</label>
-				</div>
-				<div class="input-field row">
-					<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="button" name="action" onClick="addSubject(courseCode)">Edit
-					<i class="material-icons right">send</i></button>
-				</div>
-			</form>
-		</div>
+			</div>	
 	</div>
 </div>
-<!-- -------------------------------- END OF MODALS -------------------------------- -->
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/modal.js"></script>
-
+	<script src="js/init.js"></script>
+	<script>
+	$(document).ready(function(){
+		$('admin-tab/ul.tabs').tabs('select_tab', 'admin-subject-div');
+	});
+	</script>
 </body>
 </html>

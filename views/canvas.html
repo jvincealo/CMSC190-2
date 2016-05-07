@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>RESPONSIVE NA TO</title>
+
+  <!-- CSS  -->
+	<link href='https://fonts.googleapis.com/css?family=Bitter|Signika|Bree+Serif|Nunito' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Crete+Round|Indie+Flower|Righteous|Exo|Changa+One' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/diagram.css">
+	<link type="text/css" rel="stylesheet" href="css/joint.min.css">
+
+</head>
+<body class="row">
+<div class="navbar-fixed">
+  <nav class="blue lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo grey-text text-lighten-3">Logo</a>
+			<div class="right search-container hide-on-med-and-down">
+				<ul class="row">
+					<li class="search-area">
+						<a id="search-toggle"><i class="material-icons grey-text text-lighten-3" onclick="showSearch()">search</i></a>
+						<div class="input-field" id="search-bar-div">
+							<input id="search-bar" type="search" class="blue lighten-1" placeholder="Search Course">
+							<label for="search"><i class="material-icons grey-text text-lighten-3" >search</i></label>
+							<i class="material-icons grey-text text-lighten-3" onclick="hideSearch()">close</i>
+						</div>
+					</li>
+	        
+					<li><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout-drop' href="#"><i class="small material-icons grey-text text-lighten-3">arrow_drop_down</i></a></li>
+				</ul>
+			</div>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li class="side-search-list">
+					<div class="side-search input-field">
+						<input id="search-bar2" type="search" class="grey lighten-2" placeholder="Search Course">
+						<label for="search"><i class="material-icons blue-text text-lighten-1" >search</i></label>
+					</div>
+				</li>
+        <li><a class="valign-wrapper" href="#">Logout</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons grey-text text-lighten-3">menu</i></a>
+    </div>
+  </nav>
+</div>
+
+<div class="base-div col s12 m12 l12">
+	<div id="diagram-container" class="col l9" onmousemove="dragPaper()">
+		<div class="fixed-action-btn click-to-toggle col s1">
+			<a class="btn-floating btn-large blue lighten-1 tooltipped" data-position="right" data-delay="0" data-tooltip="Export as...">
+				<i class="large material-icons">file_download</i>
+			</a>
+			<ul class="col s1">
+				<li><a class="btn-floating blue tooltipped" data-position="right" data-delay="0" data-tooltip="Image"><i class="material-icons">photo</i></a></li>
+				<li><a class="btn-floating red tooltipped" data-position="right" data-delay="0" data-tooltip="PDF"><i class="material-icons">picture_as_pdf</i></a></li>
+				<li><a class="btn-floating green tooltipped" data-position="right" data-delay="0" data-tooltip="CSV" onclick="exportCSV()"><i class="material-icons">insert_drive_file</i></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="diagram-options col hide-on-small-and-down m4 l3 row">
+		<div class="diagram-tab col s12 m12 l12 grey lighten-2">
+			<ul class="tabs blue-text">
+				<li class="tab col s4 blue-text z-depth-1"><a class="active blue-text" href="#tab-option">
+						<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon col s12 m12 l12 center-align">settings</i></div>
+					</a></li>
+				<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-info">
+						<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon col s12 m12 l12 center-align">description</i></div>
+					</a></li>
+				<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-comment">
+						<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon col s12 m12 l12 center-align">comment</i></div>
+					</a></li>
+			</ul>
+		</div>
+		<!--	TAB-OPTIONS DIV	-->
+		<div class="tab-div col s12 m12 l12 row grey lighten-2" id="tab-option">
+				<div class="add-subject-div col s8 offset-s2">
+					<select id="add-subject-drop" class="blue lighten-1 z-depth-1 white-text center-align" onchange="addSubject()">
+						<option value="" disabled selected>ADD SUBJECT</option>
+						<option>CMSC 11</option>
+						<option>CMSC 21</option>
+						<option>CMSC 123</option>
+					</select>
+				</div>	
+				<div class="tab-option-btn col s12">
+					<a class="waves-effect waves-light btn blue lighten-1 modal-trigger col s8 offset-s2" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
+				</div>
+				
+				<div class="diagram-import col s12 file-field input-field">
+					<div class="import-btn waves-effect waves-light btn blue lighten-1 col s8 offset-s2">
+						<span>Import CSV</span>
+						<input type="file" id="import-csv" onchange="importCSV()">
+					</div>
+				</div>
+
+				<div class="tab-option-btn2 col s12 ">
+					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="save-btn">Save to account</a>
+				</div>
+				<div class="tab-option-btn3 col s12 ">
+					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="clear-btn">Clear Canvas</a>
+				</div>
+		</div>
+		<div class="tab-div col s12 m12 l12 grey lighten-2" id="tab-info">
+				<div class="diagram-info row container col s12 m12 l12">
+					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12">CMSC 170</h5>
+					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12">Introduction to Artificial Intelligence</h6>
+					<div class="info-holder-div col s12">
+						<div class="info-div">
+							<label class="blue-text text-lighten-1">Prerequisite:</label>
+							<span> CMSC 123 and CMSC 69</span>
+						</div>
+						<div class="info-div">
+							<label class="blue-text text-lighten-1">Units:</label>
+							<span> 3.0</span>
+						</div>
+
+					</div>
+					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>
+				</div>
+
+		</div>
+		<div class="tab-div col s12 m12 l12 grey lighten-2" id="tab-comment">
+			<div class="curriculum-comment-div row">
+				<div class="curriculum-degree valign-wrapper"><h5 class="center-align blue-text text-lighten-1 col s12">BS Computer Science</h5></div>
+				<div class="tab-comment-div col s12 row">
+						<div class="tab-comment-div-inside row">
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div><div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div><div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div>
+						</div>
+				</div>
+				<div class="input-field comment-area-div col s12">
+						<textarea id="comment-area" class="materialize-textarea grey lighten-3"></textarea>
+						<label for="comment-area">Comment</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+
+<!--	LOGOUT DROPDOWN -->
+<ul id="logout-drop" class="dropdown-content col m12 l12">
+	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
+	<li class="divider"></li>
+	<li><a href="#!" class="center-align">Logout</a></li>
+</ul>	
+<!--	ADD COURSE MODAL -->
+<div id="modal-add-course" class="add-course-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<nav class="curriculum-nav grey lighten-2 valign-wrapper row">
+			<h6 class="center-align grey-text text-darken-1 col s12 m12 l12">Add Subject</h6>
+	</nav>
+	<div class="login-tab row col s12 m12 l12 ">
+			<div id="login-tab-div" class="row col s12 m12 l12">
+				<div class="row container">
+					<form action="landing.html">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">description</i>
+							<input id="courseCode" type="text" class="validate">
+							<label for="courseCode">Course Code</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">description</i>
+							<input id="courseTitle" type="text" class="validate">
+							<label for="courseTitle">Course Title</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">directions</i>
+							<input id="prerequisites" type="text" class="validate">
+							<label for="prerequisites">Prerequisite</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">filter_3</i>
+							<input id="units" type="number" class="validate">
+							<label for="units">Units</label>
+						</div>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">CREATE
+							<i class="material-icons right">send</i></button>
+						</div>
+					</form>
+				</div>
+			</div>	
+	</div>
+</div>
+<!-- VIEW COMMENTS MODAL -->
+<div id="modal-view-comments" class="view-comments-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<div class="row container view-comments-div col s12 m12 l12">
+		<div class="view-comments-subject col s12 m12 l12">
+			<h5 class="center-align blue-text text-lighten-1">CMSC 170</h5>
+			<h6 class="blue-text text-lighten-1 center-align">Introduction to Artificial Intelligence</h6>
+		</div>
+		<div class="view-comments-area row col s12 m12 l12">
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: ang ganda po nung curriculum</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: galing naman po</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+				<span>: si emman na gagawa ng lahat</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bronzeraf@up.edu.ph</label>
+				<span>: 1v1 bob0h</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: hehe</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: ang hirap po ng mga exer</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: dapat madali project kasi po tang ina niyo</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+				<span>: ty sir TJ nag best SP kami</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: ang ganda po nung curriculum</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: 8===D</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: shit</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+				<span>: ang laki nung akin</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: pota</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: wew</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: gagoo</span>
+			</div>
+		</div>
+				<div class="input-field view-comments-input col s12 m12 l12">
+				<textarea id="view-comments-textarea" class="materialize-textarea grey lighten-2" placeholder="Comments"></textarea>
+		</div>
+	</div>
+	
+</div>
+  <!-- jQuery is required by Materialize to function -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+	<script src="js/init.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('select').material_select();
+		});
+	</script>
+	<script type="text/javascript" src="js/lodash.min.js"></script>
+	<script type="text/javascript" src="js/backbone-min.js"></script>
+	<script type="text/javascript" src="js/joint.min.js"></script>
+  <script type="text/javascript" src="js/diagram.js"></script>	
+</body>
+</html>

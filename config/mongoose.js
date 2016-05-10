@@ -9,6 +9,7 @@ module.exports = function() {
     require("../models/course.server.model.js");
     require('../models/curriculum.server.model.js');
     require('../models/comment.server.model.js');
+    require('../models/department.server.model.js');
 
     return db
 ;}

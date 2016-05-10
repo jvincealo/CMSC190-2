@@ -1,9 +1,16 @@
+var csv =
+		"1-1,PE 1,MATH 17,ENG 1(AH),GE(SSP),GE(MST),GE(SSP)\n1-2,PE 2,CMSC 2,CMSC 11,CMSC 56,MATH 26,ENG 2(AH),GE(MST)\n2-1,NSTP 1,PE 2,CMSC 21,CMSC 57,MATH 27,STAT 1,GE(AH),GE(MST)\n2-2,NSTP 2,PE 2,CMSC 22,CMSC 123,CMSC 130,MATH 28,GE(MST),GE(SSP)\n3-1,CMSC 100,CMSC 124,CMSC 127,CMSC 131,SPCM 1(AH),ELECTIVE\n3-2,CMSC 125,CMSC 128,CMSC 132,CMSC 170,ENG 10,ELECTIVE\n3-3,CMSC 198\n4-1,CMSC 137,CMSC 141,CMSC 150,CMSC 190-1,CMSC 199,GE(SSP),ELECTIVE\n4-2,CMSC 142,CMSC 190-2,PI 10(SSP),GE(MST),GE(AH),ELECTIVE\n\nMATH17,CMSC56\nMATH17,CMSC11\nMATH17,STAT1\nMATH26,MATH27\nMATH26,CMSC150\nMATH27,MATH28\nCMSC56,CMSC57\nCMSC57,CMSC130\nCMSC57,CMSC123\nCMSC21,CMSC123\nCMSC21,CMSC131\nCMSC11,CMSC21\nCMSC11,CMSC22\nCMSC11,CMSC130\nCMSC2,CMSC100\nCMSC22,CMSC100\nCMSC123,CMSC127\nCMSC123,CMSC170\nCMSC123,CMSC124\nCMSC123,CMSC125\nCMSC123,CMSC128\nCMSC123,CMSC141\nCMSC123,CMSC142\nCMSC123,CMSC150\nCMSC125,CMSC137\nCMSC131,CMSC132";
+
 var curriculum = {}; //json for the curriculum
-var coursePos = {}; //save positions
+var subjectArr = []; //save positions
 var colCount = 0;
 var rowCount = 0;
 var graphScale = 1;
 var selectedSubject = null;
+var linkSource;
+var linkTarget;
+var changeLink = false;
+var removing = false;
 
 var yearCount = 4; //default no. of years
 var xMax = $('#diagram-container').width();
@@ -20,6 +27,7 @@ var paper = new joint.dia.Paper({
 		gridSize: gridWidth/2,
 		defaultLink: new joint.dia.Link({
 				router: { name: 'manhattan' },
+    		connector: { name: 'rounded' },
 				attrs: {
 					'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
 					'.connection': { 'stroke-width': 4 }
@@ -42,28 +50,34 @@ var paper = new joint.dia.Paper({
 		snapLinks: { radius: 75 },
 		multiLinks: false
 });
-paper.setOrigin(xMax/7.5, yMax/20);
-zoomPaper(-0.5);
 
+
+var containerHeight = gridWidth * 10;
+
+var subjectContainer = new joint.shapes.basic.Rect({
+    position: { x: 0-(semDivider/4), y: 0-semDivider/4 },
+    size: { width: gridWidth*yearCount*2, height: containerHeight+semDivider/4 },
+    attrs: { rect: { style: {'pointer-events': 'none'}, 'stroke-width': 0, fill: 'none'} }
+});
+graph.addCell(subjectContainer);
+paper.setOrigin((xMax-gridWidth*yearCount)/2,(semDivider/4));
+zoomPaper(-0.5);
 //grid columns for years and semesters
 for (i = 0; i <= yearCount*2; i++) {
-	var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0, x2: gridWidth*i-(semDivider/4), y2: yMax*2, stroke: 'black' });
+	var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*i-(semDivider/4), y2: containerHeight, stroke: 'black', 'stroke-width': 3 });
 	V(paper.viewport).append(line);
 }
-var line = V('line', { x1: 0-(semDivider/4), y1: 0, x2: (xMax*3)/2-(semDivider/4), y2: 0, stroke: 'black' });
+var line = V('line', { x1: 0-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*8-(semDivider/4), y2: 0-semDivider/4, stroke: 'black', 'stroke-width': 3 });
+var line2 = V('line', { x1: 0-(semDivider/4), y1: containerHeight+semDivider/4-semDivider/4, x2: gridWidth*8-(semDivider/4), y2: containerHeight+semDivider/4-semDivider/4, stroke: 'black', 'stroke-width': 3 });
 V(paper.viewport).append(line);
-var line2 = V('line', { x1: 0-(semDivider/4), y1: yMax*2, x2: (xMax*3)/2-(semDivider/4), y2: yMax*2, stroke: 'black' });
 V(paper.viewport).append(line2);
-
 
 $('#diagram-container').bind('mousewheel', function(event) {
 		event.preventDefault(); //disable scroll through mousewheel
     if (event.originalEvent.wheelDelta >= 0) {
-        console.log('Scroll up');
 				zoomPaper(0.05);
     }
     else {
-        console.log('Scroll down');
 				zoomPaper(-0.05);
     }
 });
@@ -76,6 +90,7 @@ $(document).ready(function() {
   });
 function removeSubject(){
 	if(selectedSubject != null){
+		for(i=0; i<subjectArr.length; i++) if(subjectArr[i].attr('.label/text') == selectedSubject.attr('.label/text')) subjectArr.splice(i,1);
 		selectedSubject.attr({ rect: { 'stroke-width': 0 } });
 		selectedSubject.remove();
 		selectedSubject = null;
@@ -84,6 +99,9 @@ function removeSubject(){
 
 function dragPaper(){ //scrolls paper on drag
 	if(dragFlag){
+//		var canvasDiv = document.getElementById("diagram-container");
+//		canvasDiv.scrollLeft += dragStartPosition.x - event.offsetX;
+//		canvasDiv.scrollTop += dragStartPosition.y - event.offsetY;
 			paper.setOrigin(
 				event.offsetX - dragStartPosition.x,
 				event.offsetY - dragStartPosition.y);
@@ -118,34 +136,54 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 	}
 	selectedSubject = evt.model;
 	evt.model.attr({ rect: { stroke: 'black', 'stroke-width': 3 } });
-
-    var index = -1;
-            for(var i=0; i<courses.length;i++) {
-                if(courses[i]["code"] == selectedSubject.id) {
-                    index = i;
-                    break;
-                }
-            }
-
-            document.getElementById('code').innerHTML = courses[i]["code"];
-            document.getElementById('title').innerHTML = courses[i]["title"];
-            document.getElementById('prerequisite').innerHTML = courses[i]["prerequisite"];
-            document.getElementById('units').innerHTML = courses[i]["units"];
-            document.getElementById('description').innerHTML = courses[i]["description"];
 });
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
-     $(document).ready(function(){
-        $('ul.tabs').tabs('select_tab', 'tab-info');
-        });
+//     $(document).ready(function(){
+//			$('ul.tabs').tabs('select_tab', 'tab-info');
+//		});
+//		console.log(evt.model.id);
+	console.log(subjectArr[0].attributes.position.x+","+subjectArr[0].attributes.position.y);
+});
+paper.on('cell:pointerdown', function(evt, x, y){
+	if(evt.model.isLink()){
+		if(evt.model.attributes.source.id != null && evt.model.attributes.target.id != null){
+			linkSource = evt.model.attributes.source.id;
+			linkTarget = evt.model.attributes.target.id;
+			changeLink = true;
+
+		}
+	}
+	removing = false;
+});
+paper.on('cell:pointerup', function(evt, x, y){ //if link connection target/source will be changed
+	if(evt.model.isLink()){
+		if(changeLink == true && !removing){
+			if(linkSource != evt.model.attributes.source.id || linkTarget != evt.model.attributes.target.id){
+				var temp = evt.model.attributes;
+//				if(temp.target.id != linkTarget){
+//					curriculum[temp.source.id].splice(curriculum[temp.source.id].indexOf(linkTarget), 1);
+//				} else {
+					curriculum[linkSource].splice(curriculum[linkSource].indexOf(linkTarget), 1);
+				linkSource = null;
+				linkTarget = null;
+				changeLink = false;
+			}
+		}
+		if (evt.model.attributes.source.id && evt.model.attributes.target.id && !removing) {
+			var sourceId = evt.model.attributes.source.id;
+			var targetId = evt.model.attributes.target.id;
+			if(curriculum[sourceId] == null){
+					curriculum[sourceId] = [];
+					curriculum[sourceId].push(targetId);
+			} else {
+					if(jQuery.inArray(targetId , curriculum[sourceId]) == -1) curriculum[sourceId].push(targetId);
+			}
+		}
+	}
 });
 
 graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
     if (link.get('source').id && link.get('target').id) { //if 2 subjects are connected
-			var sourceId = link.get('source').id;
-			var targetId = link.get('target').id;
-			if(curriculum[sourceId] == null) curriculum[sourceId] = targetId;
-			else curriculum[sourceId] += "," + targetId;
-			console.log(curriculum);
 			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
 				link.attr({
 					'.connection': { stroke: 'red' },
@@ -153,26 +191,36 @@ graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT -
 				});
 				console.log("error");
 			}
+			if(Math.abs(link.getSourceElement().attributes.position.x - link.getTargetElement().attributes.position.x) > (gridWidth + gridWidth/2)){
+				link.set('router', { name: 'manhattan' } );
+			}  else {
+				link.unset('router');
+			}
     }
 });
 graph.on('change:position', function(cell) { //constantly checks for conflicts based on source and target positions
-		var outSubj = graph.getConnectedLinks(cell, { outbound: true });
-		var inSubj = graph.getConnectedLinks(cell, { inbound: true });
-		outSubj.forEach(function(link) { //CONFLICT CHECKING FOR OUTWARD LINKS
-			if(link.getTargetElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
-				if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
-					link.attr({
-						'.connection': { stroke: 'red' },
-						'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
-					});
-				} else {
-					link.attr({
-						'.connection': { stroke: 'black' },
-						'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
-					});
-				}
+	var outSubj = graph.getConnectedLinks(cell, { outbound: true });
+	var inSubj = graph.getConnectedLinks(cell, { inbound: true });
+	outSubj.forEach(function(link) { //CONFLICT CHECKING FOR OUTWARD LINKS
+		if(link.getTargetElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
+			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+				link.attr({
+					'.connection': { stroke: 'red' },
+					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
+			} else {
+				link.attr({
+					'.connection': { stroke: 'black' },
+					'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
+				});
 			}
-	});
+			if(Math.abs(link.getSourceElement().attributes.position.x - link.getTargetElement().attributes.position.x) > (gridWidth + gridWidth/2)){
+				link.set('router', { name: 'manhattan' } );
+			}  else {
+				link.unset('router');
+			}
+		}
+});
 	inSubj.forEach(function(link) { //CONFLICT CHECKING FOR INWARD LINKS
 		if(link.getSourceElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
 			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
@@ -186,355 +234,225 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 					'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
 				});
 			}
+			if(Math.abs(link.getSourceElement().attributes.position.x - link.getTargetElement().attributes.position.x) > (gridWidth + gridWidth/2)){
+				link.set('router', { name: 'manhattan' } );
+			}  else {
+				link.unset('router');
+			}
 		}
 	});
+
+	//BOUND SUBJECTS INSIDE BOX
+	var parentId = cell.get('parent');
+	if (!parentId) return;
+
+	var parent = graph.getCell(parentId);
+	var parentBbox = parent.getBBox();
+	var cellBbox = cell.getBBox();
+
+	if (parentBbox.containsPoint(cellBbox.origin()) &&
+			parentBbox.containsPoint(cellBbox.topRight()) &&
+			parentBbox.containsPoint(cellBbox.corner()) &&
+			parentBbox.containsPoint(cellBbox.bottomLeft())) {
+
+			// All the four corners of the child are inside
+			// the parent area.
+			return;
+	}
+	// Revert the child position.
+	cell.set('position', cell.previous('position'));
+});
+graph.on('remove', function(cell, collection, opt) {
+	if (cell.isLink()) { //remove connection between subjects when link is removed
+		if (cell.get('source').id && cell.get('target').id) {
+			curriculum[cell.get('source').id].splice(curriculum[cell.get('source').id].indexOf(cell.get('target').id), 1);
+			removing = true;
+		}
+	}
 });
 
-function dragPaper(){
-	if(dragFlag){
-		paper.setOrigin(
-			event.offsetX - dragStartPosition.x,
-			event.offsetY - dragStartPosition.y);
-	}
+function clearCanvas(){
+	graph.clear();
+	curriculum = {};
+	subjectArr = [];
+	graph.addCell(subjectContainer);
 }
-function addCourse(course){
-	if(course.value != null){
-	 	var courseName = course.value;
-		$('#modal-add-course').closeModal();
-	} else{
-		var courseName = course.innerHTML;
-	}
-
-	// Create a custom element.
-	// ------------------------
-	joint.shapes.html = {};
-	joint.shapes.html.Element = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
-			markup: '<g class="rotatable"><g class="scalable"><rect/></g><g class="inPorts"/><g class="outPorts"/></g>',
-			portMarkup: '<g class="port<%= id %>"><circle/></g>',
-			defaults: joint.util.deepSupplement({
-					type: 'html.Element',
-					size: { width: 100, height: 80 },
-					inPorts: [],
-					outPorts: [],
-					attrs: {
-							'.': { magnet: false },
-							rect: {
-									stroke: 'none', 'fill-opacity': 0, width: 150, height: 250,
-							},
-							circle: {
-									r: 6, //circle radius
-									magnet: true,
-									stroke: 'black'
-							},
-
-							'.inPorts circle': { fill: 'green', magnet: 'passive', type: 'input'},
-							'.outPorts circle': { fill: 'red', type: 'output'}
-					}
-			}, joint.shapes.basic.Generic.prototype.defaults),
-			getPortAttrs: function (portName, index, total, selector, type) {
-
-					var attrs = {};
-					var portClass = 'port' + index;
-					var portSelector = selector + '>.' + portClass;
-					var portCircleSelector = portSelector + '>circle';
-					attrs[portCircleSelector] = { port: { id: portName || _.uniqueId(type), type: type } };
-					attrs[portSelector] = { ref: 'rect', 'ref-y': (index + 0.5) * (1 / total) };
-					if (selector === '.outPorts') { attrs[portSelector]['ref-dx'] = 0; }
-					return attrs;
+function exportCSV(){
+	var temp = "";
+	var year = 1;
+	var tempX, tempY;
+	var subjExist = false;
+	for(j=0; j<yearCount*2; j++){ //print per column
+		subjExist = false;
+		tempX = gridWidth * j;
+		temp = year + "-" + ((j%2)+1);
+		for(i=0; i<20; i++){ //traverse through all rows to check for subjects
+			tempY = gridWidth/2 * i;
+			for(k=0; k<subjectArr.length; k++){
+				if(subjectArr[k].attributes.position.x == tempX && subjectArr[k].attributes.position.y == tempY){
+					subjExist = true;
+					temp += "," + subjectArr[k].attr('.label/text');
+					break;
+				}
 			}
-	}));
-
-	joint.shapes.html.ElementView = joint.dia.ElementView.extend({
-		template: [
-				'<div class="html-element valign-wrapper" id="'+courseName.replace(" ","")+'" onmouseover="">',
-				'<button class="delete">x</button>',
-				'<label class="valign center-align"></label>',
-				'</div>'
-		].join(''),
-
-		initialize: function() {
-			_.bindAll(this, 'updateBox');
-			joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-
-			this.$box = $(_.template(this.template)());
-			this.$box.find('.delete').on('click', _.bind(this.model.remove, this.model));
-			// Update the box position whenever the underlying model changes.
-			this.model.on('change', this.updateBox, this);
-			// Remove the box when the model gets removed from the graph.
-			this.model.on('remove', this.removeBox, this);
-
-			this.updateBox();
-       this.listenTo(this.model, 'process:ports', this.update);
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-    },
-
-
-     render: function() {
-        joint.dia.ElementView.prototype.render.apply(this, arguments);
-        this.paper.$el.prepend(this.$box);
-        this.updateBox();
-        return this;
-    },
-
-    renderPorts: function () {
-        var $inPorts = this.$('.inPorts').empty();
-        var $outPorts = this.$('.outPorts').empty();
-
-        var portTemplate = _.template(this.model.portMarkup);
-
-        _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
-            $inPorts.append(V(portTemplate({ id: index, port: port })).node);
-        });
-        _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
-            $outPorts.append(V(portTemplate({ id: index, port: port })).node);
-        });
-    },
-
-    update: function () {
-        // First render ports so that `attrs` can be applied to those newly created DOM elements
-        // in `ElementView.prototype.update()`.
-        this.renderPorts();
-        joint.dia.ElementView.prototype.update.apply(this, arguments);
-    },
-		updateBox: function() {
-			// Set the position and dimension of the box so that it covers the JointJS element.
-			var bbox = this.model.getBBox();
-			// Example of updating the HTML with a data stored in the cell model.
-			this.$box.find('label').text(this.model.get('label'));
-			this.$box.find('span').text(this.model.get('select'));
-			this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y, transform: 'rotate(' + (this.model.get('angle') || 0) + 'deg)' });
-		},
-		removeBox: function(evt) {
-			this.$box.remove();
+			if(i == 19 && subjExist) console.log(temp);
 		}
-	});
+		if(((j%2)+1) == 2){ //check for midyear subjects
+			subjExist = false;
+			tempX = (gridWidth * j) + gridWidth/2;
+			temp = year + "-3";
+			for(i=0; i<20; i++){ //traverse through all rows to check for subjects
+				tempY = gridWidth/2 * i;
+				for(k=0; k<subjectArr.length; k++){
+					if(subjectArr[k].attributes.position.x == tempX && subjectArr[k].attributes.position.y == tempY){
+						temp += "," + subjectArr[k].attr('.label/text');
+						subjExist = true;
+						break;
+					}
+				}
+				if(i == 19 && subjExist) console.log(temp);
+			}
+			year++; //after 2 sems, increment year
+		}
+	}
 
-	// Create JointJS elements and add them to the graph as usual.
-	var subject = new joint.shapes.html.Element({
-		position: { x: 80, y: 80 },
-		size: { width: 100, height: 50 },
-		inPorts: ['in'],
-    outPorts: ['out'],
-		label: courseName
-	});
-
-	graph.addCells([subject]);
+	console.log("\nPREREQUISITES:");
+	for(course in curriculum){
+		for(target in curriculum[course]) console.log(course+","+curriculum[course][target]);
+	}
 }
+function importCSV(){
+	var importString = csv.split("\n\n");
 
-function addSubject(course){
-	if(course != null){
+	//ADD THE SUBJECTS IN THE DIAGRAM
+	var sems = importString[0].split("\n");
+	for(m=0; m<sems.length; m++){
+		var subjects = sems[m].split(",");
+		var year_sem = subjects[0].split("-");
+		for(n=1; n<subjects.length; n++){
+			addSubject(subjects[n], year_sem[0], year_sem[1]);
+		}
+	}
+
+	//CONNECT THE PREREQUISITES
+	var dependencies = importString[1].split("\n");
+	for(i=0; i<dependencies.length; i++){
+		var temp = dependencies[i].split(","); //[0] is source, [1] is target
+		var sourceLink;
+		var targetLink;
+		for(j=0; j<subjectArr.length; j++) if(temp[0] == subjectArr[j].id) sourceLink = subjectArr[j].id;
+		for(j=0; j<subjectArr.length; j++) if(temp[1] == subjectArr[j].id) targetLink = subjectArr[j].id;
+		var link =  new joint.dia.Link({
+			source: { id: sourceLink, port: 'out' },
+			target: { id: targetLink, port: 'in' },
+			router: { name: 'manhattan' },
+			connector: { name: 'rounded' },
+			attrs: {
+				'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
+				'.connection': { 'stroke-width': 4 }
+			}
+		});
+
+		graph.addCell(link);
+		if(Math.abs(link.getSourceElement().attributes.position.x - link.getTargetElement().attributes.position.x) > (gridWidth + gridWidth/2)){
+			link.set('router', { name: 'manhattan' } );
+		}  else {
+			link.unset('router');
+		}
+		if(curriculum[sourceLink] == null) curriculum[sourceLink] = [];
+		curriculum[sourceLink].push(targetLink);
+	}
+
+
+
+
+}
+function addSubject(course, year, sem){
+	if(year != null && course != null){
+		var courseName = course;
+	} else if(year == null && course != null){
 		var courseName = course.value;
 		$('#modal-add-course').closeModal();
 	} else{
+//		var courseName = course.innerHTML;
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	}
+	var shapeHeight = gridWidth/4;
+	var initX = 0;
+	var initY = 0;
+	var availablePos = false;
+	var portSize = 10;
+	var yPos = .33
+
+	if(year != null){
+		if(sem == 3) initX = (gridWidth * (year*2-1)) + gridWidth/2;
+		else initX = gridWidth * (year*2-(Math.pow(sem,-1)*2));
+	}
+
+	if(subjectArr.length > 0){
+		for(j=0; j<yearCount*2; j++){ //check for available positions
+			for(i=0; i<20; i++){
+				if(year == null) initX = gridWidth * j;
+				if(sem == 3) initY = gridWidth/2 * 10;
+				else initY = gridWidth/2 * i;
+				for(k=0; k<subjectArr.length; k++){
+					if(subjectArr[k].attributes.position.x == initX && subjectArr[k].attributes.position.y == initY) break;
+					if(k == (subjectArr.length-1)) availablePos = true;
+				}
+				if(availablePos) break;
+			}
+			if(availablePos) break;
+		}
+	}
+	var subjectName = courseName
+	if(window.innerWidth < 992){ //responsiveness
+		shapeHeight = gridWidth/5;
+		portSize = 4;
+		yPos = .1;
+	}
+
+	if(courseName.length > 12){
+		shapeHeight *= 2;
+		var wraptext = joint.util.breakText(courseName, {
+			width: semDivider*1.5,
+			height: shapeHeight*2
+		});
+		subjectName = wraptext;
+	}
+
+// if(window.innerWidth < 992) wraptext = courseName;
+
 	var subject = new joint.shapes.devs.Model({
-		id: courseName,
-		position: { x: semDivider*rowCount, y: (semDivider/2)*(colCount+1) },
-		size: { width: semDivider, height: yMax/12 },
-		inPorts: [''],
-		outPorts: [''],
+		position: { x: initX, y: initY },
+		size: { width: semDivider, height: shapeHeight },
+		inPorts: ['in'],
+		outPorts: ['out'],
 		attrs: {
-        '.label': { text: courseName, 'ref-x': .5, 'ref-y': .33 },
-				rect: { fill: '#42a5f5' },
-				'.inPorts circle': { fill: '#E74C3C', r: 10, magnet: 'passive', type: 'input' },
-				'.outPorts circle': { fill: '#16A085',r: 10, type: 'output' }
+        '.label': { text: subjectName, 'ref-x': .5, 'ref-y': yPos },
+				rect: { fill: '#42a5f5', stroke: 0 },
+				'.inPorts circle': { fill: '#bdbdbd', r: portSize, magnet: 'passive', type: 'input', stroke: 0 },
+				'.outPorts circle': { fill: '#bdbdbd',r: portSize, type: 'output', stroke: 0}
 		}
 	});
-	graph.addCell(subject);
+	var tempId = courseName.split("(");
+	var tempId2 = courseName.split(" ");
+	if(tempId[0] != "GE" && tempId2[0] != "PE") subject.set({ id: courseName.replace(" ","") });
+	var existing = false;
+	for(i=0; i<subjectArr.length; i++){
+		if(subjectArr[i].id == courseName.replace(" ","")) existing = true;
+	}
+
+	if(!existing){
+		subjectContainer.embed(subject);
+		graph.addCell(subject);
+		subjectArr.push(subject);
+	}
+
+//	document.getElementById("courseCode").value = ""; //remove value
 	colCount += 1;
 	if(colCount%6 == 0){
 		rowCount += 1;
 		colCount = 0;
 	}
-}
-
-//File IO
-var upload = document.getElementById('upload');
-upload.addEventListener('change', fileSelect, false);
-
-$(function(){
-    $("#upload_link").on('click', function(e){
-        e.preventDefault();
-        $("#upload:hidden").trigger('click');
-    });
-});
-
-function fileSelect(evt) {
-	if (window.File && window.FileReader && window.FileList && window.Blob) {
-  		// Great success! All the File APIs are supported.
-	} else {
-  		alert('The File APIs are not fully supported in this browser.');
-	}
-
-	var files = document.getElementById('upload').files;
-	var file = files[0];
-
-	var reader = new FileReader();
-
-	reader.onloadend = function(evt) {
-      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-      	var data = evt.target.result;
-      	var lines = data.split('\n');
-      	var tokens;
-
-      	for(var line = 0; line < lines.length ; line++) {
-      		tokens = lines[line].split(',');
-      		for(var token = 0; token < tokens.length; token++) {
-      			curriculum[tokens[token]] = tokens[token+1];
-      		}
-      	}
-      }
-    };
-    reader.readAsText(file);
-}
-
-//exports curriculum as CSV
-function exportCSV(){
-    var subjects = graph.getElements();
-    var code = "BSCS-2009";
-    var department = "ICS";
-    var title = "BS Computer Science (rev. 2009)";
-
-    var csv_data = [];
-    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH"];
-    var sem = ["FIRST", "SECOND"];
-
-    csv_data.push([code,department,title].join(','));
-    var sf = 0;
-    var yf = 0;
-    for (i = 0; i < yearCount*2; i++) {
-        var row_data = [code,year[yf],sem[sf]];
-        for(j = 0; j<subjects.length; j++){
-            if(subjects[j].attributes.position.x == gridWidth*i)  {
-                row_data.push(subjects[j].id);
-            }
-        }
-        csv_data.push(row_data.join(','));
-        if(sf == 1)
-            yf++;
-
-        if(sf == 0)
-            sf = 1;
-        else
-            sf = 0;
-    }
-
-    var csv_file = csv_data.join("%0A");
-    var a         = document.createElement('a');
-    a.href        = 'data:attachment/csv,' +  csv_file;
-    a.target      = '_blank';
-    a.download    = code + '.csv';
-
-    document.body.appendChild(a);
-    a.click();
-}
-
-function saveToAccount() {
-    var subjects = graph.getElements();
-    var code = "BSCS-2009";
-    var department = "ICS";
-    var title = "BS Computer Science (rev. 2009)";
-
-    var csv_data = [];
-    var year = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH"];
-    var sem = ["FIRST", "SECOND"];
-
-    csv_data.push([code,department,title].join(','));
-    var sf = 0;
-    var yf = 0;
-    for (i = 0; i < yearCount*2; i++) {
-        var row_data = [code,year[yf],sem[sf]];
-        for(j = 0; j<subjects.length; j++){
-            if(subjects[j].attributes.position.x == gridWidth*i)  {
-                row_data.push(subjects[j].id);
-            }
-        }
-        csv_data.push(row_data.join(','));
-        if(sf == 1)
-            yf++;
-
-        if(sf == 0)
-            sf = 1;
-        else
-            sf = 0;
-    }
-
-    var csv_file = csv_data.join("%0A");
-    var request = {
-        author: user_id,
-        csv: csv_file,
-        code: code,
-        department: department,
-        title: title
-    }
-    $.post("/curriculum",
-        request,
-        function(data, status){
-            alert(data["message"]);
-        }
-    );
-}
-
-function showComments(type) {
-    var index = -1;
-    for(var i=0; i<courses.length;i++) {
-        if(courses[i]["code"] == selectedSubject.id) {
-            index = i;
-            break;
-        }
-    }
-    document.getElementById('comment_code').innerHTML = courses[i]["code"];
-
-    var commetsMap = {};
-    var target = type+"_comments_container";
-    var container = document.getElementById(target);
-    container.innerHTML = "";
-
-    $.ajax({
-        url: '/comments/course/' + courses[i]["_id"],
-        type: 'get',
-        success: function(data) {
-            for(var key in data) {
-                var content =  "<div class='comment-div col s12'>";
-                content+= "<label class='comment-email blue-text text-lighten-1'>"+ data[key].author + "</label>: " + data[key].text +"</div>";
-                container.innerHTML = container.innerHTML + content;
-            }
-        },
-        error: function(e) {
-            console.log(e.message);
-        }
-    });
-}
-
-function submitComment(type) {
-    var index = -1;
-    for(var i=0; i<courses.length;i++) {
-        if(courses[i]["code"] == selectedSubject.id) {
-            index = i;
-            break;
-        }
-    }
-    var target = type+"_comment_textarea";
-    var text = document.getElementById(target).value;
-    var author = ident;
-
-    var request = {
-                text: text,
-                author: author,
-                target: courses[i]["_id"],
-                type: type
-            }
-
-    if(text.length != 0) {
-        $.post("/comments",
-            request,
-            function(data, status){
-                console.log("comment submitted");
-            }
-        );
-    }
-
-    document.getElementById(target).value = "";
 }

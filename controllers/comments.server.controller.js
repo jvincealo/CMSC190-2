@@ -1,24 +1,5 @@
 var Comment = require('mongoose').model('Comment');
 var User = require('mongoose').model('User');
-var async = require('async');
-
-var getById = function(id, callback) {
-    User.findOne({
-            _id: id
-        },
-        function(err, user) {
-            if(!user.username) {
-                console.log(user.google.email)
-                return user.google.email
-
-            } else {
-                console.log(user.username);
-                return user.username
-            }
-        }
-    );
-    callback();
-}
 
 exports.createOrUpdate = function(req, res) {
     var new_comment = new Comment(req.body);

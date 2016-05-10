@@ -1,198 +1,227 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>RESPONSIVE NA TO</title>
 
-  <title>
-    <%= title %>
-  </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Bitter|Signika|Bree+Serif|Nunito' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Crete+Round|Indie+Flower|Righteous|Exo|Changa+One' rel='stylesheet' type='text/css'>
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <!-- CSS  -->
+	<link href="font/google-material/material-icons.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="font/font.css">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="css/modal.css">
-
 </head>
-<body>
+<body class="row">
 <div class="navbar-fixed">
   <nav class="grey lighten-3" role="navigation">
-    <div class="nav-wrapper">
-      <a href="index.html" class="brand-logo">Logo</a>
-      <div class="search-login-container right">
-           <ul id="nav-mobile" class="row">
-            <li class="col s8">
-              <form>
-                <div class="search-input input-field col s12">
-									<a id="search-toggle" class="col s3 offset-s10" onclick="showSearch()"><i class="material-icons blue-text text-lighten-1">search</i></a>
-									<div id="search-bar-div">
-										<input id="search-bar" class="grey lighten-3 grey-text text-darken-3 col s12" placeholder="Search Course" type="search" autofocus>
-										<label for="search"><i class="material-icons blue-text text-lighten-1">search</i></label>
-										<i class="material-icons col s1 blue-text text-lighten-1" onclick="hideSearch()">close</i>
-									</div>
-                </div>
-              </form>
-            </li>
-            <li class="login-logout"><a class="modal-trigger valign-wrapper" href="#modal-login">Login</a></li>
-          </ul>
-      </div>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo blue-text text-lighten-1">Logo</a>
+			<div class="right search-container hide-on-med-and-down">
+				<ul class="row">
+					<li class="search-area">
+						<a id="search-toggle"><i class="material-icons blue-text text-lighten-1" onclick="showSearch()">search</i></a>
+						<div class="input-field" id="search-bar-div">
+							<input id="search-bar" type="search" class="grey lighten-3" placeholder="Search Course">
+							<label for="search"><i class="material-icons blue-text text-lighten-1" >search</i></label>
+							<i class="material-icons blue-text text-lighten-1" onclick="hideSearch()">close</i>
+						</div>
+					</li>
+
+					<li><a class="modal-trigger valign-wrapper" href="#modal-login">Login</a></li>
+				</ul>
+			</div>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li class="side-search-list">
+					<div class="side-search input-field">
+						<input id="search-bar2" type="search" class="grey lighten-2" placeholder="Search Course">
+						<label for="search"><i class="material-icons blue-text text-lighten-1" >search</i></label>
+					</div>
+				</li>
+        <li><a class="modal-trigger valign-wrapper" href="#modal-login">Login</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
 </div>
 
-<div class="row intro blue lighten-1 z-depth-1 valign-wrapper">
-	<div class="col s12 m6">
-		<div class="intro-info col s11 offset-s1 row">
-			<h3 class="white-text">Unravel the best routes.</h3>
-			<h5 class="white-text">Design, Acquire Feedback, Evaluate.</h5>
-			<a class="start-draw waves-effect waves-light btn-large grey lighten-2 blue-text col s4 offset-s2 modal-trigger" href="#modal-curriculum">Start Drawing</a>
-		</div>
-	</div>
+<div id="index-banner" class="parallax-container">
+    <div class="row blue lighten-1 z-depth-1">
+			<div class="intro row col s12 m6 l6 valign-wrapper">
+				<div class="intro-info col s12 m12 l10 offset-s1 valign">
+					<h3 class="white-text">Unravel the best routes.</h3>
+					<h5 class="white-text">Design, Acquire Feedback, Evaluate.</h5>
+					<a class="waves-effect waves-light btn-large grey lighten-3 blue-text col s12 m8 l6 center-align modal-trigger" href="#modal-curriculum">Start Drawing</a>
+				</div>
+			</div>
 
-	<div class="col s12 m6">
-		<div class="intro-background valign-wrapper col s11">
-<!--			<h2 class="col s12">IMAGE</h2>-->
-			<img class="bg-image z-depth-2" src="images/bg2.png" width="100%" height="100%">
-		</div>
-	</div>
-
-</div>
+			<div class="col s12 m6 l6">
+				<div class="valign-wrapper">
+					<div class="intro-background col s12 m12 l12 valign-wrapper">
+						<img class="bg-image z-depth-2" src="images/bg.png" height="350px">
+					</div>
+				</div>
+			</div>
+    </div>
+  </div>
 
 <div class="container about">
 	<br>
   <h4 class="center-align grey-text text-darken-3">Creating a curriculum had never been this easy.</h4>
 	<br>
 	<div class="info row">
-		<img class="creation col s3 offset-s1" src="images/creation.png">
-		<div class="info-description col s7 valign-wrapper">
-			<div class="valign">
+		<img class="creation col s12 m3 l3 offset-m1 offset-l1" src="images/creation.png">
+		<div class="info-description col s12 m7 l7">
+			<div>
 				<h5>Create</h5>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>With *INSERT NAME*, curriculum creation will be significantly easier, create one from scratch or import one from an existing CSV file with university format.</p>
 			</div>
 		</div>
 	</div>
 	<br>
 	<div class="info row">
-		<div class="info-description col s7 offset-s1 valign-wrapper">
-			<div class="valign">
+		<img class="interaction col s12 m3 l3 offset-m1 offset-l1 push-m7 push-l7" src="images/interact.png">
+		<div class="info-description col s12 m7 l7 pull-m3 pull-l3">
+			<div>
 				<h5>Interact</h5>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>Point out significant suggestions and facts regarding existing curriculums and respective courses. Everybody is allowed to create a curriculum so professors can get ideas for the official curriculums.</p>
 			</div>
 		</div>
-		<img class="interaction col s3" src="images/interact.png">
 	</div>
 	<br>
 	<div class="info row">
-		<img class="revision col s3 offset-s1" src="images/revise.png">
-		<div class="info-description col s7 valign-wrapper">
-			<div class="valign">
+		<img class="revision col s12 m3 l3 offset-m1 offset-l1" src="images/revise.png">
+		<div class="info-description col s12 m7 l7">
+			<div>
 				<h5>Revise</h5>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>Save your curriculums for later revisions. Detect conflicts related to current curriculums or adjust courses relative to other people's suggestions.</p>
 			</div>
 		</div>
 	</div>
 </div>
-
 <br>
-<div class="other-about row">
-	<div class="other-about-inside">
+<div class="bottom-div row">
 		<h3 class="center-align grey-text text-darken-3">Make Your Own</h3>
-		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s2 offset-s5 modal-trigger" href="#modal-curriculum"><font color="white">Start Drawing</font></a>
-	</div>
+		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s10 m4 l2 offset-s1 offset-m4 offset-l5 modal-trigger" href="#modal-curriculum"><font color="white">Start Drawing</font></a>
 </div>
 
 <footer>
-  <div class="footer-copyright grey lighten-3">
+  <div class="footer-copyright grey lighten-3 center-align">
     © 2016 Institute of Computer Science, UPLB
   </div>
 </footer>
 
-<!-- ----------------------------------- MODALS ------------------------------------ -->
 <!--	LOGIN MODAL -->
-<div id="modal-login" class="login modal grey lighten-3">
-	<nav class="login-nav valign-wrapper grey lighten-2">
-			<h6 class="center-align grey-text text-darken-1">Login to Curriculum DB</h6>
-	</nav>
-	<div class="login-div container">
-		<div class="login-form">
-			<form action="landing.html">
-				<div class="input-field">
-					<i class="login-icon material-icons prefix">email</i>
-          <input id="email" type="email" class="validate">
-          <label for="email">Email (@up.edu.ph)</label>
-				</div>
-				<div class="input-field">
-					<i class="login-icon material-icons prefix">lock</i>
-          <input id="password" type="password" class="validate">
-          <label for="password">Password</label>
-				</div>
-		  		<div class="input-field row">
-          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Login
-					<i class="material-icons right">send</i></button>
-				</div>
-			</form>
+<div id="modal-login" class="login-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<div class="login-tab row col s12 m12 l12 ">
+		<div class="col s12 m12 l12 ">
+			<ul class="tabs grey lighten-2">
+				<li class="tab col s12 m6 l6"><a class="active blue-text text-lighten-1" href="#login-tab-div">Login</a></li>
+				<li class="tab col s12 m6 l6"><a class="blue-text text-lighten-1" href="#register-tab-div">REGISTER</a></li>
+			</ul>
 		</div>
+			<div id="login-tab-div" class="row col s12 m12 l12"> <!--	LOGIN TAB		-->
+				<div class="row container">
+					<form action="landing.html row col s12 m12 l12">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">email</i>
+							<input id="email" type="email" class="validate">
+							<label for="email">Username</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">lock</i>
+							<input id="password" type="password" class="validate">
+							<label for="password">Password</label>
+						</div>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Login
+							<i class="material-icons right">send</i></button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer grey lighten-2 col s12 m12 l12 valign-wrapper">
+						<h6 class="center-align grey-text text-darken-1">Login with e-UP <a href="/auth/google">here</a></h6>
+				</div>
+			</div>
+			<div id="register-tab-div" class="col s12"> <!--	REGISTER TAB		-->
+				<div class="row container">
+					<form action="landing.html row col s12 m12 l12">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">email</i>
+							<input id="email" type="email" class="validate">
+							<label for="email">Username</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">lock</i>
+							<input id="password" type="password" class="validate">
+							<label for="password">Password</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">lock</i>
+							<input id="password" type="password" class="validate">
+							<label for="password">Confirm Password</label>
+						</div>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Register
+							<i class="material-icons right">send</i></button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer grey lighten-2 col s12 m12 l12 valign-wrapper">
+						<h6 class="center-align grey-text text-darken-1">Find out how to get your e-UP account <a href="https://www.uplbosa.org">here</a></h6>
+				</div>
+			</div>
 	</div>
-	<div class="login-footer grey lighten-2 valign-wrapper">
-			<h6 class="center-align grey-text text-darken-1">Log in using your eUP account <a href="/auth/google">here</a></h6>
+</div>
+<!-- CURRICULUM MODAL	-->
+<div id="modal-curriculum" class="curriculum-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<nav class="curriculum-nav grey lighten-2 valign-wrapper row">
+			<h6 class="center-align grey-text text-darken-1 col s12 m12 l12">Create New Curriculum</h6>
+	</nav>
+	<div class="login-tab row col s12 m12 l12 ">
+			<div id="login-tab-div" class="row col s12 m12 l12">
+				<div class="row container">
+					<form action="canvas.html">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">location_city</i>
+							<input id="department" type="text" class="validate">
+							<label for="department">Department</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">school</i>
+							<input id="degree" type="text" class="validate">
+							<label for="degree">Degree Program</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">edit</i>
+							<input id="code" type="text" class="validate">
+							<label for="code">Curriculum Code</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">access_time</i>
+							<input id="year-count" type="number" class="validate">
+							<label for="year-count">Years</label>
+						</div>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">CREATE
+							<i class="material-icons right">send</i></button>
+						</div>
+					</form>
+				</div>
+			</div>
 	</div>
 </div>
 
-<!-- FEEDBACK MODAL	-->
-<div id="modal-feedback" class="feedback modal grey lighten-3">
-	<nav class="feedback-nav valign-wrapper grey lighten-2">
-			<h6 class="center-align grey-text text-darken-1">Curriculum Feedback</h6>
-	</nav>
-	<div class="feedback-div container">
-		<div class="feedback-form">
-			<form>
-				<div class="feedback-sem">
-					<h6 class="blue-text text-lighten-1">Preferred Semester</h6>
-					<p class="range-field"><input type="range" min="0" max="11" /></p>
-				</div>
-        <div class="feedback-comment input-field">
-					<h6 class="blue-text text-lighten-1">Comments</h6>
-          <textarea id="comments" class="materialize-textarea grey lighten-2"></textarea>
-        </div>
-				<div class="input-field row">
-          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action" onClick="switchModal()">Submit
-					<i class="material-icons right">send</i></button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<!-- CURRICULUM MODAL -->
-<div id="modal-curriculum" class="curriculum modal grey lighten-3">
-	<nav class="curriculum-nav valign-wrapper grey lighten-2">
-			<h6 class="center-align grey-text text-darken-1">Create New Curriculum</h6>
-	</nav>
-	<div class="login-div container">
-		<div class="login-form">
-			<form action="canvas.html">
-				<div class="input-field">
-					<i class="login-icon material-icons prefix">email</i>
-          <input id="icon_prefix" type="text" class="validate">
-          <label for="icon_prefix">Degree Program</label>
-				</div>
-				<div class="input-field">
-					<i class="login-icon material-icons prefix">lock</i>
-          <input id="icon_prefix" type="number" class="validate">
-					<label for="icon_prefix">Years</label>
-				</div>
-				<div class="input-field row">
-          <button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Create
-					<i class="material-icons right">send</i></button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<!-- -------------------------------- END OF MODALS -------------------------------- -->
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('ul.tabs').tabs('select_tab', 'login-tab-div');
+		});
+	</script>
 
-  <!-- jQuery is required by Materialize to function -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/modal.js"></script>
-
-</body>
+  </body>
 </html>

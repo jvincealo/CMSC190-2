@@ -1,242 +1,421 @@
-<html ng-app="">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>RESPONSIVE NA TO</title>
 
-  <title>awts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Bitter|Signika|Bree+Serif|Nunito' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Roboto|Merriweather|Righteous|Exo|Changa+One' rel='stylesheet' type='text/css'>
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="css/style3.css">
-	<link type="text/css" rel="stylesheet" href="css/modal.css">
+  <!-- CSS  -->
+	<link href="font/google-material/material-icons.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="font/font.css">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="css/diagram.css">
 	<link type="text/css" rel="stylesheet" href="css/joint.min.css">
 
 </head>
-<body>
+<body class="row">
 <div class="navbar-fixed">
   <nav class="blue lighten-1" role="navigation">
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Logo</a>
-      <div class="search-login-container right">
-           <ul id="nav" class="row">
-            <li class="col s8">
-              <form>
-							 <div class="search-input input-field col s12">
-									<a id="search-toggle" class="col s3 offset-s10" onclick="showSearch()"><i class="material-icons  grey-text text-lighten-2">search</i></a>
-									<div id="search-bar-div">
-										<input id="search-bar" class="blue lighten-1 grey-text text-lighten-2 col s12" placeholder="Search Course" type="search" autofocus>
-										<label for="search"><i class="material-icons grey-text text-lighten-2">search</i></label>
-										<i class="material-icons col s1 grey-text text-lighten-2" onclick="hideSearch()">close</i>
-									</div>
-                </div>
-              </form>
-            </li>
-            <li class="login-logout"><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout' href="/logout"><i class="small material-icons">arrow_drop_down</i></a></li>
-          </ul>
-      </div>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo grey-text text-lighten-3">Logo</a>
+			<div class="right search-container hide-on-med-and-down">
+				<ul class="row">
+					<li class="search-area">
+						<a id="search-toggle"><i class="material-icons grey-text text-lighten-3" onclick="showSearch()">search</i></a>
+						<div class="input-field" id="search-bar-div">
+							<input id="search-bar" type="search" class="blue lighten-1" placeholder="Search Course">
+							<label for="search"><i class="material-icons grey-text text-lighten-3" >search</i></label>
+							<i class="material-icons grey-text text-lighten-3" onclick="hideSearch()">close</i>
+						</div>
+					</li>
+
+					<li><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout-drop' href="#"><i class="small material-icons grey-text text-lighten-3">arrow_drop_down</i></a></li>
+				</ul>
+			</div>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li class="side-search-list">
+					<div class="side-search input-field">
+						<input id="search-bar2" type="search" class="grey lighten-2" placeholder="Search Course">
+						<label for="search"><i class="material-icons blue-text text-lighten-1" >search</i></label>
+					</div>
+				</li>
+        <li><a class="valign-wrapper" href="#">Logout</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons grey-text text-lighten-3">menu</i></a>
     </div>
   </nav>
 </div>
 
-<div class="base-div row">
-		<div id="diagram-container" class="col s9" onmousemove="dragPaper()">
-			<div class="fixed-action-btn click-to-toggle">
-				<a class="btn-floating btn-large blue lighten-1">
-					<i class="large material-icons">file_download</i>
-				</a>
-				<ul>
-					<li><a class="btn-floating blue"><i class="material-icons">photo</i></a></li>
-					<li><a class="btn-floating red"><i class="material-icons">picture_as_pdf</i></a></li>
-					<li><a class="btn-floating green"><i class="material-icons">insert_drive_file</i></a></li>
-				</ul>
-			</div>
+<div class="base-div col s12 m12 l12">
+	<div id="diagram-container" class="col s12 m8 l9" onmousemove="dragPaper()">
+		<div class="fixed-action-btn click-to-toggle col s1">
+			<a class="btn-floating btn-large blue lighten-1 tooltipped" data-position="right" data-delay="0" data-tooltip="Export as...">
+				<i class="large material-icons">file_download</i>
+			</a>
+			<ul class="col s1">
+				<li><a class="btn-floating blue tooltipped" data-position="right" data-delay="0" data-tooltip="Image"><i class="material-icons">photo</i></a></li>
+				<li><a class="btn-floating red tooltipped" data-position="right" data-delay="0" data-tooltip="PDF"><i class="material-icons">picture_as_pdf</i></a></li>
+				<li><a class="btn-floating green tooltipped" data-position="right" data-delay="0" data-tooltip="CSV" onclick="exportCSV()"><i class="material-icons">insert_drive_file</i></a></li>
+			</ul>
 		</div>
-		<div class="diagram-options col s3 row grey lighten-3">
-			<div class="diagram-tab">
-				<ul class="tabs blue-text">
-					<li class="tab col s4 blue-text z-depth-1"><a class="active blue-text" href="#tab-option">
-							<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon center-align">settings</i></div>
-						</a></li>
-					<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-info">
-							<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon center-align">description</i></div>
-						</a></li>
-					<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-comment">
-							<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon center-align">comment</i></div>
-						</a></li>
-				</ul>
-			</div>
-			<!--	TAB-OPTIONS DIV	-->
-			<div class="tab-div" id="tab-option">
-				<div>
-					<div class="tab-option-btn add-subject-div">
-						<select id="add-subject-drop" class="blue lighten-1 z-depth-1" onchange="addSubject()">
-							<option value="" disabled selected>ADD SUBJECT</option>
-							<script type="text/javascript">
-                                var courses = '<%= (JSON.stringify(courses))%>'.replace(/&#34;/g, "\"");
-                                courses = JSON.parse(courses);
-                            </script>
-                            <% for(var i=0; i<courses.length;i++) { %>
-                                <option><%= courses[i].code %></option>
-                          <% }; %>
-						</select>
-					</div>
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 modal-trigger" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
-					<input id="upload" type="file" style="display:none" />
-                    <a id='upload_link' class="tab-option-btn waves-effect waves-light btn blue lighten-1">Import<i id class="material-icons right">file_upload</i></a><a class="tab-option-btn waves-effect waves-light btn blue lighten-1  dropdown-button" data-beloworigin="true" data-activates='export-drop'>Export<i class="material-icons right">file_download</i></a>
-					<div class="col s8 offset-s2">
-						<ul id="export-drop" class="dropdown-content">
-							<li><a href="#!">Image<i class="material-icons right">photo</i></a></li>
-							<li><a href="#!">PDF<i class="material-icons right">picture_as_pdf</i></a></li>
-							<li><a href="#!" onclick="exportCSV()">CSV File<i class="material-icons right">insert_drive_file</i></a></li>
-						</ul>
-					</div>
-
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="save-btn" onClick="saveToAccount()">Save to account</a>
-					<a class="tab-option-btn waves-effect waves-light btn blue lighten-1 " id="clear-btn">Clear Canvas</a>
+	</div>
+	<div class="diagram-options col hide-on-small-and-down m4 l3 row">
+		<div class="diagram-tab col s12 m12 l12 grey lighten-2">
+			<ul class="tabs blue-text">
+				<li class="tab col s4 blue-text z-depth-1"><a class="active blue-text" href="#tab-option">
+						<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon col s12 m12 l12 center-align">settings</i></div>
+					</a></li>
+				<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-info">
+						<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon col s12 m12 l12 center-align">description</i></div>
+					</a></li>
+				<li class="tab col s4 blue-text z-depth-1"><a class=" blue-text" href="#tab-comment">
+						<div class="valign-wrapper grey lighten-3"><i class="material-icons small tab-icon col s12 m12 l12 center-align">comment</i></div>
+					</a></li>
+			</ul>
+		</div>
+		<!--	TAB-OPTIONS DIV	-->
+		<div class="tab-div col s12 m12 l12 row grey lighten-2" id="tab-option">
+				<div class="tab-edit-info input-field col s10 offset-s1">
+					<select onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required="required" id="dept_opts">
+					    <option value="">Choose department</option>
+					</select>
+			    	<label>Department</label>
 				</div>
-
-			</div>
-			<!--	TAB-INFO DIV	-->
-			<div id="tab-info">
-				<div class="row">
-					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12"><span id="code">No Course Selected</span></h5>
-					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12"><span id="title"></span></h6>
+				<div class="tab-edit-info input-field col s10 offset-s1">
+					<i class="login-icon material-icons prefix blue-text text-lighten-1">school</i>
+					<input id="edit-tab-degree" type="text" class="validate" value="BS Computer Science">
+					<label for="edit-tab-degree">Degree Program</label>
+				</div>
+				<div class="tab-edit-info input-field col s10 offset-s1">
+					<i class="login-icon material-icons prefix blue-text text-lighten-1">school</i>
+					<input id="edit-tab-curriculum-code" type="text" class="validate" value="BSCS-2016">
+					<label for="edit-tab-curriculum-code">Curriculum Code</label>
+				</div>
+				<div class="add-subject-div col s8 offset-s2">
+					<select onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur();' id="add-subject-drop" class="blue lighten-1 z-depth-1 white-text center-align" onchange="addSubject()">
+						<option value="" disabled selected>ADD SUBJECT</option>
+						<option>CMSC 11</option>
+						<option>CMSC 21</option>
+						<option>CMSC 123</option>
+					</select>
+				</div>
+				<div class="tab-option-btn col s12">
+					<a class="waves-effect waves-light btn blue lighten-1 modal-trigger col s8 offset-s2" href="#modal-add-course">Add New Subject<i class="material-icons right">add</i></a>
+				</div>
+				<div class="diagram-import col s12 file-field input-field">
+					<div class="import-btn waves-effect waves-light btn blue lighten-1 col s8 offset-s2">
+						<span>Import CSV</span>
+						<input type="file" id="import-csv" onchange="importCSV()">
+					</div>
+				</div>
+				<div class="tab-option-btn2 col s12 ">
+					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="save-btn">Save to account</a>
+				</div>
+				<div class="tab-option-btn3 col s12 ">
+					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="clear-btn" onclick="clearCanvas()">Clear Canvas</a>
+				</div>
+		</div>
+		<div class="tab-div col s12 m12 l12 grey lighten-2" id="tab-info">
+				<div class="diagram-info row container col s12 m12 l12">
+					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12">CMSC 170</h5>
+					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12">Introduction to Artificial Intelligence</h6>
 					<div class="info-holder-div col s12">
 						<div class="info-div">
-							<label class="comment-email blue-text text-lighten-1">Prerequisite:</label>
-							<span id="prerequisite"></span>
+							<label class="blue-text text-lighten-1">Prerequisite:</label>
+							<span> CMSC 123 and CMSC 69</span>
 						</div>
 						<div class="info-div">
-							<label class="comment-email blue-text text-lighten-1">Units:</label>
-							<span id="units"></span>
+							<label class="blue-text text-lighten-1">Units:</label>
+							<span> 3.0</span>
 						</div>
 						<div class="info-div">
-							<label class="comment-email blue-text text-lighten-1">Description:</label>
-							<span class="info-span" id="description"></span>
+							<label class="blue-text text-lighten-1">Semester Offered:</label>
+							<span>1, 2, Summer</span>
 						</div>
+
 					</div>
-					<div class="col s12"><a onClick="showComments('course')" class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>
+					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>
 				</div>
 
-			</div>
-			<div id="tab-comment">
-					<h5 class="curriculum-degree center-align blue-text text-lighten-1">BS Computer Science</h5>
-					<div class="tab-comment-div row">
-						<div class="comment-div col s12">
-							<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: ang ganda po nung curriculum
+		</div>
+		<div class="tab-div col s12 m12 l12 grey lighten-2" id="tab-comment">
+			<div class="curriculum-comment-div row">
+				<div class="curriculum-degree valign-wrapper"><h5 class="center-align blue-text text-lighten-1 col s12">BS Computer Science</h5></div>
+				<div class="tab-comment-div col s12 row">
+						<div class="tab-comment-div-inside row">
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div><div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div><div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: ang ganda po nung curriculum</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+								<span>: BEST SP TANG INA!</span>
+							</div>
+							<div class="comment-div col s12">
+								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+								<span>: manyakis po ako</span>
+							</div>
 						</div>
-						<div class="comment-div col s12">
-							<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: pero sana po mas maunti yung GE kasi po pogi ako masyado
-						</div>
-						<div class="comment-div col s12">
-							<label class="comment-email blue-text text-lighten-1">bestSP2016@up.edu.ph</label>: BEST SP TANG INA!
-						</div>
-						<div class="comment-div col s12">
-							<label class="comment-email blue-text text-lighten-1">emmanyakol@up.edu.ph</label>: manyakis po ako
-						</div>
-					</div>
-					<div class="input-field comment-area-div">
-						<textarea id="comment-area" class="materialize-textarea white"></textarea>
+				</div>
+				<div class="input-field comment-area-div col s12">
+						<textarea id="comment-area" class="materialize-textarea grey lighten-3"></textarea>
 						<label for="comment-area">Comment</label>
-					</div>
+				</div>
 			</div>
+		</div>
+	</div>
 </div>
 
-
-
-<!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
-<ul id="logout" class="logout-drop dropdown-content ">
-	<li class="valign-wrapper">
-		<label class="center-align">
-			<script type="text/javascript">
-                var ident = '<%= ident %>';
-            </script>
-			<%= ident %>
-		</label>
-	</li>
+<ul id="logout-drop" class="dropdown-content col m12 l12">
+	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
 	<li class="divider"></li>
-	<li><a href="/logout" class="center-align">Logout</a></li>
+	<li><a href="#!" class="center-align">Logout</a></li>
 </ul>
-<!--  EXPORT DROPDOWN -->
-
-<!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
-
-<!-- ----------------------------------- MODALS ------------------------------------ -->
 <!--	ADD COURSE MODAL -->
-	<div id="modal-add-course" class="add-course modal grey lighten-3">
-		<nav class="add-course-nav valign-wrapper grey lighten-2">
-				<h6 class="center-align grey-text text-darken-1">Add Subject</h6>
-		</nav>
-		<div class="add-course-div container">
-			<div class="add-course-form">
-				<form>
-					<div class="input-field">
-						<i class="login-icon material-icons prefix">email</i>
-						<input id="courseCode" type="text" class="validate">
-						<label for="courseCode">Course Code</label>
-					</div>
-					<div class="input-field">
-						<i class="login-icon material-icons prefix">lock</i>
-						<input id="icon_prefix" type="text" class="validate">
-						<label for="icon_prefix">Course Title</label>
-					</div>
-					<div class="input-field">
-						<div class="row prereq-units">
-							<div class="col s7">
-								<i class="login-icon material-icons prefix">lock</i>
-								<input id="icon_prefix" type="text" class="validate">
-								<label for="icon_prefix">Prerequisite</label>
+<div id="modal-add-course" class="add-course-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<nav class="curriculum-nav grey lighten-2 valign-wrapper row">
+			<h6 class="center-align grey-text text-darken-1 col s12 m12 l12">Add Subject</h6>
+	</nav>
+	<div class="login-tab row col s12 m12 l12 ">
+			<div id="login-tab-div" class="row col s12 m12 l12">
+				<div class="row container">
+					<form action="#">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">location_city</i>
+							<input id="department" type="text" class="validate">
+							<label for="department">Department</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">description</i>
+							<input id="courseCode" type="text" class="validate">
+							<label for="courseCode">Course Code</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">description</i>
+							<input id="courseTitle" type="text" class="validate">
+							<label for="courseTitle">Course Title</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">directions</i>
+							<input id="prerequisites" type="text" class="validate">
+							<label for="prerequisites">Prerequisite</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">filter_3</i>
+							<input id="units" type="number" class="validate">
+							<label for="units">Units</label>
+						</div>
+						<div class="sem-offered-div input-field col s12 row">
+							<div class="sem-offered col s12">
+								<span class="sem-offered-span blue-text text-lighten-1">Semester Offered</span>
 							</div>
-							<div class="col s5">
-								<i class="units-icon material-icons prefix">lock</i>
-								<input id="icon_prefix" type="number" class="validate">
-								<label class="col s1 offset-s1" for="icon_prefix">Units</label>
+							<div class="col s12">
+								<div class="sem-option col s4 m6 l4">
+									<input type="checkbox" id="firstsem" />
+									<label for="firstsem">First</label>
+								</div>
+								<div class="sem-option col s4 m6 l4">
+									<input type="checkbox" id="secondsem" />
+									<label for="secondsem">Second</label>
+								</div>
+								<div class="sem-option col s4 m6 l4">
+									<input type="checkbox" id="midyear" />
+									<label for="midyear">Midyear</label>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="input-field">
-						<textarea id="course-info" class="materialize-textarea grey lighten-2"></textarea>
-						<label for="course-info">Course Description</label>
-					</div>
-					<div class="input-field row">
-						<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="button" name="action" onClick="addSubject(courseCode)">Submit
-						<i class="material-icons right">send</i></button>
-					</div>
-				</form>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="button" name="action" onclick="addSubject(courseCode)">ADD NEW</button>
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
-	</div>
-<!-- VIEW COMMENTS MODAL -->
-<div id="modal-view-comments" class="view-comments modal grey lighten-3">
-	<div class="view-comments-div container">
-		<h5 class="center-align blue-text text-lighten-1"><span id="comment_code">No Course Selected</span></h5>
-		<div class="view-comments-area row">
-		<div id="course_comments_container">
-
-		</div>
-		</div>
-		<div class="view-comment-input">
-			<textarea class="materialize-textarea white" placeholder="Comment" id="course_comment_textarea"></textarea>
-			<br/>
-			<button id="course_comment_submit" onclick="submitComment('course')" class="blue lighten-1 large btn waves-effect waves-light left-align col s8 offset-s2" type="submit" name="action">Submit
-				<i class="material-icons right">send</i>
-			</button>
-		</div>
 	</div>
 </div>
-<!-- -------------------------------- END OF MODALS -------------------------------- -->
+<!-- VIEW COMMENTS MODAL -->
+<div id="modal-view-comments" class="view-comments-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<div class="row container view-comments-div col s12 m12 l12">
+		<div class="view-comments-subject col s12 m12 l12">
+			<h5 class="center-align blue-text text-lighten-1">CMSC 170</h5>
+			<h6 class="blue-text text-lighten-1 center-align">Introduction to Artificial Intelligence</h6>
+		</div>
+		<div class="view-comments-area row col s12 m12 l12">
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: ang ganda po nung curriculum</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: galing naman po</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+				<span>: si emman na gagawa ng lahat</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bronzeraf@up.edu.ph</label>
+				<span>: 1v1 bob0h</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: hehe</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: ang hirap po ng mga exer</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: dapat madali project kasi po tang ina niyo</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+				<span>: ty sir TJ nag best SP kami</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: ang ganda po nung curriculum</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: 8===D</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: shit</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
+				<span>: ang laki nung akin</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: pota</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: wew</span>
+			</div>
+			<div class="col s12 m12 l12">
+				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
+				<span>: gagoo</span>
+			</div>
+		</div>
+				<div class="input-field view-comments-input col s12 m12 l12">
+				<textarea id="view-comments-textarea" class="materialize-textarea grey lighten-2" placeholder="Comments"></textarea>
+		</div>
+	</div>
 
+</div>
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
-	<script type="text/javascript" src="js/modal.js"></script>
+	<script src="js/init.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('select').material_select();
+		});
+	</script>
 	<script type="text/javascript" src="js/lodash.min.js"></script>
 	<script type="text/javascript" src="js/backbone-min.js"></script>
 	<script type="text/javascript" src="js/joint.min.js"></script>
   <script type="text/javascript" src="js/diagram.js"></script>
-  <script type="text/javascript" src="js/socket.io/socket.io.js"></script>
 </body>
 </html>

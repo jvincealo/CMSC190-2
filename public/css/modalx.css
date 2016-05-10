@@ -1,0 +1,124 @@
+.login {
+		margin-top: 5%;
+		height: 50%;
+		width: 35%;
+		border-radius: 7px;
+}
+
+.login-nav, .feedback-nav, .add-course-nav, .curriculum-nav {
+		height: 10%;
+		width: 100%;
+}
+
+.login h6, .feedback h6, .add-course-nav h6, .curriculum-nav h6 {
+		width: 100%;
+		font-family: Bitter;
+}
+
+.login-div, .feedback-div {
+		height: 75%;
+}
+
+.login-form, .feedback-form {
+		height: 80%;
+		position: relative;
+		top: 10%;
+}
+
+#email, #password {
+		height: 20%;
+}
+
+.login-icon {
+		position: relative;
+		top: 10%;
+		left: 1%;
+		color: #42a5f5;
+}
+
+.login-footer {
+		height: 10%;
+}
+
+.feedback {
+		margin-top: 5%;
+		height: 55%;
+		width: 50%;
+		border-radius: 7px;
+}
+
+.feedback-sem {
+		width: 100%;
+}
+
+.feedback-comment {
+		margin-top: 0px;
+}
+
+.materialize-textarea {
+		padding: 1% !important;
+		height: 40% !important;
+		width: 98% !important;
+}
+
+.add-course {
+		height: 80%;
+		width: 40%;
+}
+
+.add-course-div {
+		width: 90% !important;
+}
+
+.prereq-units {
+		margin: 0px !important;
+}
+
+.units-icon {
+		position: relative;
+		top: 10%;
+		left: 61%;
+		color: #42a5f5;
+}
+
+.curriculum {
+		margin-top: 5%;
+		height: 50%;
+		width: 30%;
+		border-radius: 7px;
+}
+
+.view-comments {
+		height: 80%;
+		width: 35%;
+		padding-top: 1%;
+		border-radius: 7px;
+}
+
+.view-comments-div{
+	height: 100%;
+}
+
+.view-comments-div h5, .view-comments-div h6 {
+		margin: 0px;
+		font-family: 'Bree Serif';
+}
+
+.view-comments-area {
+		margin-top: 5%;
+		height: 66%;
+		overflow: auto;
+		margin-bottom: 0px;
+		padding-bottom: 0px;
+}
+
+.view-comment-input {
+		margin-top: 5%;
+		width: 100%;
+		height: 10%;
+}
+
+.view-comment-input textarea {
+		margin: 0px !important;
+		padding-bottom: 0px !important;
+}

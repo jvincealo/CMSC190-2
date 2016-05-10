@@ -1,0 +1,108 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.button-collapse {
+  color: #42a5f5;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+
+nav ul a, nav .brand-logo, .side-nav li a
+{
+    color: #42a5f5;
+    font-size: 20px;
+    font-family: 'Bree Serif';
+}
+
+.intro {
+		height: 400px;
+		margin: 0px;
+}
+
+.intro-info h3, .intro-info h5 {
+  text-align: left;
+  color: #e0e0e0;
+  font-family: 'Bree Serif';
+}
+
+.intro-info a {
+    margin-top: 2.5%;
+}
+
+.intro-info a, .bottom-div a {
+  font-family: Nunito;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.bg-image {
+  width: 85%;
+  margin-left: 7.5%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+}
+
+.about h4, .about h5 {
+    color: #42a5f5;
+}
+
+.about h4 {
+  margin-bottom: 40px;
+  font-style: italic;
+  font-family: 'Crete Round';
+}
+
+.about h5, .about p {
+  margin: 1%;
+  font-family: Bitter;
+}
+
+.info-description div {
+  margin-top: 50px;
+}
+
+.bottom-div h3 {
+  font-family: 'Crete Round';
+}

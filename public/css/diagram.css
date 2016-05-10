@@ -57,3 +57,12 @@
 	width: 100%;
 }
 
+.port-label {
+	display: none;
+}
+
+@media only screen and (max-width : 992px) {
+	.element g .label tspan {
+			font-size: 7.5px !important;
+	}
+}

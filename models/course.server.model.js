@@ -6,19 +6,21 @@ var CourseSchema = new Schema({
                     type: String,
                     unique: true
                 },
-    title: {
+    department: String,
+    title: String,
+    term : String,
+    prerequisite: String,
+    corequisite: {
                     type: String,
-                    unique: true
+                    default: ""
                 },
-    prerequisite: [{
-                    type: String
-                }],
-    units:      Number,
-    description: String,
-    offered    : [{
-                            type: String,
-                            enum: ["First Semester", "Second Semester", "Midyear"]
-                }]
+    concurrent : {
+                    type: String,
+                    default: ""
+                },
+    conprereq: {
+                    type: String,
+                    default: ""
+                }
 });
-
 mongoose.model('Course', CourseSchema);

@@ -1,76 +1,156 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>RESPONSIVE NA TO</title>
 
-  <title>awts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Bitter|Signika|Bree+Serif|Nunito' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Roboto|Merriweather|Righteous|Exo|Changa+One' rel='stylesheet' type='text/css'>
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="css/style2.css">
+  <!-- CSS  -->
+	<link href="font/google-material/material-icons.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="font/font.css">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="css/modal.css">
+
 </head>
-<body>
+<body class="row">
 <div class="navbar-fixed">
   <nav class="blue lighten-1" role="navigation">
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Logo</a>
-      <div class="search-login-container right">
-           <ul id="nav" class="row">
-            <li class="col s8">
-              <form>
-               <div class="search-input input-field col s12">
-									<a id="search-toggle" class="col s3 offset-s10" onclick="showSearch()"><i class="material-icons  grey-text text-lighten-2">search</i></a>
-									<div id="search-bar-div">
-										<input id="search-bar" class="blue lighten-1 grey-text text-lighten-2 col s12" placeholder="Search Course" type="search" autofocus>
-										<label for="search"><i class="material-icons grey-text text-lighten-2">search</i></label>
-										<i class="material-icons col s1 grey-text text-lighten-2" onclick="hideSearch()">close</i>
-									</div>
-                </div>
-              </form>
-            </li>
-            <li class="login-logout"><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout' href="#"><i class="small material-icons">arrow_drop_down</i></a></li>
-          </ul>
-      </div>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo grey-text text-lighten-3">Logo</a>
+			<div class="right search-container hide-on-med-and-down">
+				<ul class="row">
+					<li class="search-area">
+						<a id="search-toggle"><i class="material-icons grey-text text-lighten-3" onclick="showSearch()">search</i></a>
+						<div class="input-field" id="search-bar-div">
+							<input id="search-bar" type="search" class="blue lighten-1" placeholder="Search Course">
+							<label for="search"><i class="material-icons grey-text text-lighten-3" >search</i></label>
+							<i class="material-icons grey-text text-lighten-3" onclick="hideSearch()">close</i>
+						</div>
+					</li>
+	        
+					<li><a class="dropdown-button valign-wrapper" data-beloworigin="true" data-activates='logout-drop' href="#"><i class="small material-icons grey-text text-lighten-3">arrow_drop_down</i></a></li>
+				</ul>
+			</div>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li class="side-search-list">
+					<div class="side-search input-field">
+						<input id="search-bar2" type="search" class="grey lighten-2" placeholder="Search Course">
+						<label for="search"><i class="material-icons blue-text text-lighten-1" >search</i></label>
+					</div>
+				</li>
+        <li><a class="valign-wrapper" href="#">Logout</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons grey-text text-lighten-3">menu</i></a>
     </div>
   </nav>
 </div>
 
-<div class="base-div row">
-	<div class="col s3 row">
-        <% for(var i=0; i<curr_map.length;i++) { %>
-            <div class="blue lighten-1 card col s10 offset-s1">
-            <div class="card-image">
-                <img src="images/cara5.jpg">
-            </div>
-            <div class="card-content valign-wrapper">
-                <a class="grey-text text-lighten-3 center-align" href="#"><%= curr_map[i].title %></a>
-            </div>
-        </div>
-        <% }; %>
+<div class="base-div2 row">
+	<div class="col s12 m6 l3 row">
+		<div class="blue lighten-1 card col s10 offset-s1 row">
+			<div class="card-image">
+				<img src="images/cara.jpg">
+			</div>
+			<div class="card-content valign-wrapper">
+				<a class="grey-text text-lighten-3 center-align" href="#">BS Computer Science</a>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m6 l3 row">
+		<div class="blue lighten-1 card col s10 offset-s1">
+			<div class="card-image">
+				<img src="images/cara2.jpg">
+				<span class="comment-badge new badge red darken-2">3</span>
+			</div>
+			<div class="card-content valign-wrapper">
+				<a class="grey-text text-lighten-3 center-align" href="#">BS Agricultural and Biosystems Engineering</a>
+			</div>			
+		</div>
+	</div>
+	<div class="col s12 m6 l3 row">
+		<div class="blue lighten-1 card col s10 offset-s1">
+			<div class="card-image">
+				<img src="images/cara3.jpg">
+				<span class="comment-badge new badge red darken-2">19</span>
+			</div>
+			<div class="card-content valign-wrapper">
+				<a class="grey-text text-lighten-3 center-align" href="#">BS Development Communication</a>
+			</div>			
+		</div>
+	</div>
+	<div class="col s12 m6 l3 row">
+		<div class="blue lighten-1 card col s10 offset-s1">
+			<div class="card-image">
+				<img src="images/cara4.jpg">
+			</div>
+			<div class="card-content valign-wrapper">
+				<a class="grey-text text-lighten-3 center-align" href="#">BS Applied Mathematics</a>
+			</div>			
+		</div>
+	</div>
+	<div class="col s12 m6 l3 row">
+		<div class="blue lighten-1 card col s10 offset-s1">
+			<div class="card-image">
+				<img src="images/cara5.jpg">
+			</div>
+			<div class="card-content valign-wrapper">
+				<a class="grey-text text-lighten-3 center-align" href="#">BS Math</a>
+			</div>			
+		</div>
 	</div>
 </div>
-
+	
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-	<a class="btn-floating btn-large btn tooltipped blue lighten-1" href="/new" data-position="left" data-tooltip="Create New Curriculum">
+	<a class="modal-trigger btn-floating btn-large btn tooltipped blue lighten-1" href="#modal-curriculum" data-position="left" data-tooltip="Create New Curriculum">
 		<i class="large material-icons">add</i>
 	</a>
 </div>
 
-<!-- ----------------------------------- DROP DOWN ------------------------------------ -->
 <!--	LOGOUT DROPDOWN -->
-<ul id="logout" class="logout-drop dropdown-content ">
-	<li class="valign-wrapper"><label class="center-align"><%= ident %></label></li>
+<ul id="logout-drop" class="dropdown-content col m12 l12">
+	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
 	<li class="divider"></li>
-	<li><a href="/logout" class="center-align">Logout</a></li>
-</ul>
-
-<!-- -------------------------------- END OF DRPWDOWN -------------------------------- -->
-
+	<li><a href="#!" class="center-align">Logout</a></li>
+</ul>	
+<!-- CURRICULUM MODAL	-->
+<div id="modal-curriculum" class="curriculum-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
+	<nav class="curriculum-nav grey lighten-2 valign-wrapper row">
+			<h6 class="center-align grey-text text-darken-1 col s12 m12 l12">Create New Curriculum</h6>
+	</nav>
+	<div class="login-tab row col s12 m12 l12 ">
+			<div id="login-tab-div" class="row col s12 m12 l12">
+				<div class="row container">
+					<form action="landing.html">
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">location_city</i>
+							<input id="department" type="text" class="validate">
+							<label for="department">Department</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">school</i>
+							<input id="degree" type="text" class="validate">
+							<label for="degree">Degree Program</label>
+						</div>
+						<div class="input-field col s12 m12 l12">
+							<i class="login-icon material-icons prefix">access_time</i>
+							<input id="year-count" type="number" class="validate">
+							<label for="year-count">Years</label>
+						</div>
+						<div class="input-field row col s12 m12 l12">
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">CREATE
+							<i class="material-icons right">send</i></button>
+						</div>
+					</form>
+				</div>
+			</div>	
+	</div>
+</div>	
   <!-- jQuery is required by Materialize to function -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/modal.js"></script>
+  <script src="js/init.js"></script>
 
 </body>
 </html>

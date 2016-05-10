@@ -1,156 +1,557 @@
-/*
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(myLocalFontDir/MaterialIcons-Regular.eot); 
-  src: local('Material Icons'),
-       local('MaterialIcons-Regular'),
-       url(myLocalFontDir/MaterialIcons-Regular.woff2) format('woff2'),
-       url(myLocalFontDir/MaterialIcons-Regular.woff) format('woff'),
-       url(myLocalFontDir/MaterialIcons-Regular.ttf) format('truetype');
-}
-*/
-
-body, html
-{
-    background-color: #eeeeee !important;
+/* ----------------- BASE CSS ----------------- */
+html, body {
+	height: 100%;
 }
 
-.search-login-container {
-		width: 30%
+body {
+	margin-bottom: 0px !important;
+}
+/* ----------------- TEMPLATE CSS ----------------- */
+.button-collapse {
+  color: #42a5f5;
+	height: 100% !important;
 }
 
-.search-input {
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+/* ----------------- NAV & INDEX CSS ----------------- */
+
+.search-container, .search-container ul, .search-area, .search-area div{
 		height: 100%;
 }
 
-.nav-wrapper {
-    padding-left: 5%;
-    padding-right: 5%;   
-    height: 100%;
-}
-
-nav ul a,
-nav .brand-logo
+nav ul a, nav .brand-logo, .side-nav li a
 {
     color: #42a5f5;
     font-size: 20px;
-		font-family: 'Bree Serif';
+    font-family: 'Bree Serif';
 }
 
-.login-logout {
-		margin-left: 5%;
+.side-search-list {
+		height: 12.5%;
 }
 
-.intro
-{
-		height: 75%;
-		width: 100%;
-    text-align: center;
-		margin-bottom: 5%;
+.side-search {
+		height: 100%;
 }
 
-
-.intro-info {
-		height: 40%;
+.side-nav li {
+		padding: 0 !important;
 }
 
-.intro-background {
-		height: 75%;
-/*		background-color: #e0e0e0;*/
+.intro {
+		height: 400px;
+		margin: 0px;
 }
 
-.start-draw, .start-draw-other {
-		margin-top: 2.5%;
-		font-family: Nunito;
-		font-weight: bold;
-		border-radius: 3px;
+.intro-info h3, .intro-info h5 {
+  text-align: left;
+  color: #e0e0e0;
+  font-family: 'Bree Serif';
 }
 
-.intro h3, .intro h5 {
-	margin: 1%;
-	text-align: left;
-	color: #e0e0e0;
-	font-family: 'Bree Serif';
+.intro-info a {
+    margin-top: 2.5%;
 }
 
-.info {
-		height: 33%;
-}
-
-.info-description {
-		height: 90%;
-}
-
-.about {
-/*		height: 80%;*/
-}
-
-.about .col
-{
-    margin-bottom: 24px;
-}
-
-.about h4, .about h5 {
-		color: #42a5f5;
-}
-
-.about h4 {
-		margin-bottom: 40px;
-		font-style: italic;
-		font-family: 'Crete Round';
-}
-
-.about h5, .about p {
-		margin: 1%;
-/*		margin: 2.5%;*/
-		font-family: Bitter;
-}
-
-.creation, .interaction, .revision {
-	margin-left: 10%;
-	margin-bottom: 5%;
-	height: 100%;
-	width: 70%;
-}
-
-.other-about {
-		height: 35%;
-}
-
-.other-about-inside {
-		height: 60%;
-		position: relative;
-		top: 20%;
-}
-
-.other-about h3 {
-		font-family: 'Crete Round';
-		margin-bottom: 0px;
-}
-
-.start-draw-other {
-		margin-top: 2%;
-		font-family: 
-}
-
-footer
-{
-		text-align: center;
-    padding-top: 0px;
-}
-
-
-
-
-/* TEMPORARY CSS PANG WIREFRAME LANG */
-
-.intro h2 {
-		font-family: Nunito;
-		color: #42a5f5;
+.intro-info a, .bottom-div a {
+  font-family: Nunito;
+  font-weight: bold;
+  border-radius: 3px;
 }
 
 .bg-image {
-		border-radius: 10px;
+  width: 85%;
+  margin-left: 7.5%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+}
+
+.about h4, .about h5 {
+    color: #42a5f5;
+}
+
+.about h4 {
+  margin-bottom: 40px;
+  font-style: italic;
+  font-family: 'Crete Round';
+}
+
+.about h5, .about p {
+  margin: 1%;
+  font-family: Bitter;
+}
+
+.info-description div {
+  margin-top: 50px;
+}
+
+.bottom-div h3 {
+  font-family: 'Crete Round';
+}
+
+/* ----------------- LANDING.HTML CSS ----------------- */
+.card {
+		padding: 0px !important;
+		height: 225px !important;
+}
+
+.card-image {
+		height: 70%;
+}
+
+.card-image img {
+		height: 100%;
+}
+
+.card-content {
+		height: 30% !important;
+}
+
+#logout-drop {
+		width: 20% !important;
+		height: 101px;
+		padding: 0 !important;
+}
+
+#logout-drop li, #logout-drop li label {
+		width: 100%;
+}
+/* ----------------- CANVAS.HTML CSS ----------------- */
+@media only screen and (max-width : 992px) {
+	.base-div {
+			height: 87.2%;
+	}
+}
+
+@media only screen and (min-width : 992px) {
+	.base-div {
+			height: 90.4%;
+	}
+}
+
+.base-div {
+		padding: 0px !important;
+}
+
+#diagram-container {
+		margin: 0px !important;
+}
+
+.fixed-action-btn {
+		width: 5% !important;
+}
+
+.diagram-options {
+		height: 100%;
+		padding: 0px !important;
+		margin: 0px !important;
+}
+
+.diagram-tab {
+		padding: 0px !important;
+		height: 10% !important;
+}
+
+.diagram-tab div {
+		height: 100%;
+}
+
+.tab-div {
+		height: 90%;
+		padding: 0px !important;
+		margin: 0px !important;
+}
+
+.tab-edit-info {
+		height: 10%;
+}
+
+.add-subject-div {
+		height: 15% !important;
+		padding: 0 !important;
+		padding-top: 10% !important;
+}
+
+.add-subject-div .select-dropdown {
+		font-family: 'Roboto';
+		font-weight: 500;
+		color: white;
+		text-align: center;
+}
+
+.caret {
+	display: none;
+}
+
+.diagram-import {
+		height: 15%;
+		margin: 0px !important;
+		padding: 0px !important;
+		padding-top: 5% !important;
+}
+
+.tab-option-btn, .tab-option-btn2, .tab-option-btn3 {
+		height: 10%;
+		padding: 0px !important;
+		padding-top: 2.5% !important;
+}
+
+.tab-option-btn3 {
+		padding-top: 0 !important;
+}
+
+.diagram-info {
+		height: 100%;
+		margin: 0px !important;
+}
+
+.curriculum-coursecode, .curriculum-coursetitle, .curriculum-degree, .info-div label, .info-div span
+, .comment-div label, .comment-div span {
+		font-family: 'Bree Serif';
+}
+
+.info-div {
+		text-align: justify;
+		margin-top: 5%;
+}
+
+.info-div label {
+		font-size: 16px;
+}
+
+.info-div span, .comment-div label {
+		font-size: 14px;
+}
+
+.comment-div span {
+		font-size: 12px;
+}
+
+.subject-comment {
+		margin-top: 10%;
+}
+
+.curriculum-comment-div {
+		height: 100%;
+		margin-bottom: 0px;
+}
+
+.curriculum-degree {
+		height: 10%;
+		padding: 0;
+		margin: 0;
+}
+
+.tab-comment-div {
+		height: 80%;
+		margin-bottom: 0 !important;
+}
+
+.tab-comment-div-inside {
+		height: 90%;
+		margin-bottom: 0 !important;
+		overflow: auto;
+}
+
+.comment-area-div {
+		height: 10%;
+		margin: 0px !important;
+		padding: 0px !important;
+		overflow: hidden;
+}
+
+#comment-area {
+		padding: 0px !important;
+		padding-left: 1% !important;
+		padding-right: 1% !important;
+		padding-bottom: 2.5% !important;
+}
+
+/* ----------------- ADMIN CSS ----------------- */
+.admin-tab {
+	height: 100%;
+}
+
+.admin-tab ul {
+		height: 100%;
+}
+
+.admin-tab ul li {
+		height: 100% !important;
+}
+
+.admin-tab ul li a {
+		height: 100% !important;
+		padding-top: 3%;
+		font-size: 16px;
+}
+
+.admin-tab ul .indicator {
+		background-color: white !important;
+}
+
+.admin-div, #admin-subject-div {
+		height: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+}
+
+#admin-subject-div div {
+		height: 100%;
+}
+
+.admin-current-subjects {
+		margin-top: 2.5%;
+		height: 80% !important;
+		overflow-x: auto;
+}
+
+.collapsible-header {
+		font-family: 'Bree Serif';
+		color: #42a5f5;
+}
+
+.collapsible-body li {
+		margin-bottom: 0 !important;
+		width: 100%;
+}
+
+.collapsible-body li a {
+		font-family: 'Bree Serif';
+}
+
+.admin-import-csv {
+		height: 10% !important;
+}
+
+.admin-import-csv div {
+		padding-top: 1% !important;
+		border-radius: 3px;
+}
+
+.admin-import-csv span {
+		font-family: 'Bree Serif';
+}
+
+.admin-add-subjects {
+		margin-top: 2% !important;
+		height: 97.5% !important;
+}
+
+@media only screen and (max-width : 992px) {
+	.admin-add-subjects div {
+			height: 100% !important;
+	}
+	.admin-add-subjects div form {
+			height: 100% !important;
+	}
+	.admin-add-subjects div form div{
+			height: 10% !important;
+			margin-bottom: 10% !important;
+	}
+}
+
+.admin-add-subjects div {
+		height: 100% !important;
+}
+
+.admin-add-subjects div form {
+		height: 100% !important;
+}
+
+.admin-add-subjects div form div{
+		margin: 0 !important;
+		height: 14% !important;
+}
+
+.sem-offered-div, .sem-offered {
+	height: 100% !important;
+	padding: 0 !important;
+}
+
+.sem-offered-span {
+		padding: 0 !important;
+		font-family: Nunito;
+		font-weight: bold;
+}
+
+@media only screen and (max-width : 992px) {
+	.sem-option label {
+			padding-left: 25px;
+	}
+}
+
+@media only screen and (min-width : 992px) {
+	.sem-option {
+			padding: 0 !important;
+	}
+}
+
+.admin-add-new {
+		margin-top: 5% !important;
+}
+
+
+/* ----------------- MODAL CSS ----------------- */
+
+.login-modal {
+		margin-top: 5%;
+		height: 50%;
+		border-radius: 7px;
+		padding: 0px !important;
+}
+
+.login-tab {
+		padding: 0px !important;
+		margin: 0px !important;
+}
+
+.login-tab div {
+		padding: 0px !important;
+}
+
+#login-tab-div {
+		margin: 0px !important;
+}
+
+.login-icon {
+		position: relative;
+		top: 10%;
+		left: 1%;
+		color: #42a5f5;
+}
+
+.tabs {
+		overflow: hidden;
+}
+
+.tabs li a, .view-comments-div h5, .view-comments-div h6 {
+		font-family: 'Bree Serif';
+}
+
+.indicator { /* TAB LINE INDICATOR  */
+		background-color: #42a5f5 !important;
+}
+
+.modal-footer {
+		height: 42px !important;
+}
+
+.modal-footer h6 {
+		width: 100%;
+}
+
+.curriculum-modal {
+		margin-top: 5%;
+		border-radius: 7px;
+		padding: 0px !important;
+}
+
+.curriculum-modal nav, .add-course-modal nav, .edit-course-modal nav {
+		font-family: 'Bree Serif';
+		height: 32px;
+		margin: 0px;
+}
+
+.add-course-modal {
+		margin-top: 2.5%;
+		height: 65%;
+		border-radius: 7px;
+		padding: 0px !important;
+}
+
+.view-comments-modal {
+		height: 80%;
+		width: 35%;
+		padding-top: 1%;
+		border-radius: 7px;
+}
+
+.view-comments-div {
+		height: 100%;
+		margin-bottom: 0 !important;
+}
+
+@media only screen and (max-width : 992px) {
+	.view-comments-area {
+			height: 60% !important;
+			margin: 0px !important;
+			overflow: auto;
+	}
+}
+
+@media only screen and (min-width : 992px) {
+	.view-comments-area {
+			height: 65% !important;
+			margin: 0px !important;
+			overflow: auto;
+	}
+}
+
+.view-comments-area label {
+		font-family: 'Bree Serif';
+		font-size: 14px;
+}
+
+.view-comments-area span {
+		font-family: 'Bree Serif';
+		font-size: 12px;
+}
+
+.view-comments-input {
+		height: 10%;
+		margin: 0px !important;
+		margin-top: 7.2% !important;
+		padding: 0px !important;
+		overflow: hidden;
+}
+
+#view-comments-textarea {
+		padding: 0px !important;
+		padding-left: 1% !important;
+		padding-right: 1% !important;
+		padding-bottom: 2.5% !important;
+}
+
+.edit-course-modal {
+		margin-top: 2.5%;
+		height: 60%;
+		padding: 0px !important;
 }

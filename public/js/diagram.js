@@ -93,23 +93,26 @@ $(document).on('keyup',function(e){ //deletes selected subject
 });
 $(document).ready(function() {
     $('select').material_select();
+    if(curr_id) {
+	    $.ajax({
+		        url: '/curriculum/list/' + curr_id,
+		        type: 'get',
+		        success: function(data) {
+		        	loaded_curriculum = data;
+		        	showComments('curriculum');
+		        	document.getElementById("curriculum-title").innerHTML = loaded_curriculum.title;
+		        	csv = loaded_curriculum.csv;
+		        	importCSV();
+		        	var dept = document.getElementById("dept_opts");
+		        	dept.value = loaded_curriculum.department;
 
-    $.ajax({
-	        url: '/curriculum/list/' + curr_id,
-	        type: 'get',
-	        success: function(data) {
-	        	loaded_curriculum = data;
-	        	showComments('curriculum');
-	        	document.getElementById("curriculum-title").innerHTML = loaded_curriculum.title;
-	        	csv = loaded_curriculum.csv;
-	        	importCSV();
-	        	var dept = document.getElementById("dept_opts");
-	        	dept.value = loaded_curriculum.department;
-	        },
-	        error: function(e) {
-	            console.log(e.message);
-	        }
-	    });
+
+	 	        },
+		        error: function(e) {
+		            console.log(e.message);
+		        }
+		    });
+	}
  });
 function removeSubject(){
 	if(selectedSubject != null){
@@ -159,6 +162,30 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 	}
 	selectedSubject = evt.model;
 	evt.model.attr({ rect: { stroke: 'black', 'stroke-width': 3 } });
+	$.get("/courses/find/" + evt.model.id,
+		        function(data) {
+		        	document.getElementById("coursecode").innerHTML = data[0].code;
+		        	document.getElementById("coursecode-comment").innerHTML = data[0].code;
+		        	document.getElementById("coursetitle").innerHTML = data[0].title;
+		        	document.getElementById("coursetitle-comment").innerHTML = data[0].title;
+
+		       		var stack = [];
+    				var tokens = data[0].prerequisite.split("+");
+    				var output = "";
+
+    				for(var token = tokens.length-1; token > -1; token--)
+        				stack.push(tokens[token])
+
+        			output = convert(stack);
+					document.getElementById("prereq").innerHTML = output;
+
+        			var term = [];
+		        	for(var i=0; i<data[0].term.length; i++)
+		        		term.push(data[0].term[i]);
+
+		        	document.getElementById("courseterm").innerHTML = term.join();
+		        }
+		);
 });
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
 		$.get("/courses/find/" + evt.model.id,
@@ -197,6 +224,7 @@ paper.on('cell:pointerup', function(evt, x, y){ //if link connection target/sour
 //					curriculum[temp.source.id].splice(curriculum[temp.source.id].indexOf(linkTarget), 1);
 //				} else {
 					curriculum[linkSource].splice(curriculum[linkSource].indexOf(linkTarget), 1);
+
 				linkSource = null;
 				linkTarget = null;
 				changeLink = false;
@@ -205,6 +233,15 @@ paper.on('cell:pointerup', function(evt, x, y){ //if link connection target/sour
 		if (evt.model.attributes.source.id && evt.model.attributes.target.id && !removing) {
 			var sourceId = evt.model.attributes.source.id;
 			var targetId = evt.model.attributes.target.id;
+
+			$.get("/courses/find/" + targetId,
+		        function(data) {
+		        	var prereqs = data[0].prerequisite.replace(/OR/g, "").replace(/AND/g, "").split("+");
+		        	if(!contains.call(prereqs,sourceId))
+		        		Materialize.toast(sourceId + " is not a prerequisite of "+ targetId, 4000);
+		        }
+			);
+
 			if(curriculum[sourceId] == null){
 					curriculum[sourceId] = [];
 					curriculum[sourceId].push(targetId);
@@ -212,6 +249,23 @@ paper.on('cell:pointerup', function(evt, x, y){ //if link connection target/sour
 					if(jQuery.inArray(targetId , curriculum[sourceId]) == -1) curriculum[sourceId].push(targetId);
 			}
 		}
+	} else {
+		$.get("/courses/find/" + evt.model.id,
+		        function(data) {
+		        	var offered = getSemester(evt.model);
+
+		        	var sched;
+
+		        	if(offered == '1') sched = "First Semester";
+		        	else if(offered == '2') sched = "Second Semester";
+		        	else if(offered == 'S') sched = "Midyear";
+
+
+	       			if(data[0].term.indexOf(offered) === -1 && offered) {
+	       				Materialize.toast(data[0].code +" is not usually offered during " + sched, 4000);
+	       			}
+		        }
+		);
 	}
 });
 
@@ -427,6 +481,29 @@ function addSubject(course, year, sem){
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	}
+
+	//convert post-fix to infix
+	$.ajax({
+		        url: '/courses/find/' + courseName,
+		        type: 'get',
+		        success: function(data) {
+	    			var stack = [];
+    				var tokens = data[0].prerequisite.split("+");
+    				var output = "";
+
+    				for(var token = tokens.length-1; token > -1; token--)
+        				stack.push(tokens[token])
+
+        			output = convert(stack);
+        			Materialize.toast(courseName +" prerequisites : " +output, 4000);
+
+	 	        },
+
+		        error: function(e) {
+		            console.log(e.message);
+		        }
+		    });
+
 	var shapeHeight = gridWidth/4;
 	var initX = 0;
 	var initY = 0;
@@ -506,6 +583,17 @@ function addSubject(course, year, sem){
 	}
 }
 
+function convert(input) {
+	var stack = [];
+
+    var tokens = input.split("+");
+
+    for(var token = tokens.length-1; token > -1; tokens--)
+        stack.push(tokens[token]);
+
+    console.log(stack);
+
+}
 
 //file IO
 var upload = document.getElementById('import-csv');
@@ -576,5 +664,16 @@ function showComments(type) {
 	            console.log(JSON.stringify(e));
 	        }
 	    });
+	}
+}
+
+function getSemester(subject){
+	for(i=0; i<yearCount*2; i++){ //traverse through subject array
+		if(subject.attributes.position.x == gridWidth*i){ //if x coordinate matches sem column
+			if(i%2 == 0) return '1' //first sem starts at index 0
+			else return '2';
+		} else if(i%2 == 1 && subject.attributes.position.x == gridWidth*i + gridWidth/2){
+			return 'S';
+		}
 	}
 }

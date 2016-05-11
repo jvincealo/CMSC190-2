@@ -82,13 +82,16 @@ exports.create = function(req, res) {
 }
 
 exports.list = function(req, res) {
+    var keyword = req.params.search_terms.replace("%20"," ");
+
     var curriculumMap = {};
     var ident = "not logged in";
 
     Curriculum.find({
-        author: req.params.user_id
+        title: new RegExp(keyword, "i")
         },
         function(err, curriculums) {
+            console.log(JSON.stringify(curriculums))
             if(req.isAuthenticated()) {
                 User.findById(req.user.id
                     , function(err, user) {

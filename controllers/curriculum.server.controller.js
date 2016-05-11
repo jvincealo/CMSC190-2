@@ -33,6 +33,7 @@ exports.list = function(req, res, next) {
 };
 
 exports.show = function(req, res) {
+
     Curriculum.find({
             author: req.params.curr_id
         },

@@ -59,7 +59,7 @@ function hideSearch(){
 }
 
 function searchCourse(query){
-		alert("Searched for: '"+query+"'");
+    window.location.href = ""+query;
 }
 
 function addComent(comment, type){

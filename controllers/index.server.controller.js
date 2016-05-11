@@ -25,16 +25,9 @@ exports.entry = function(req, res) {
                     author: req.user.id
                     },
                     function(err, curriculums) {
-                        var curr_map = [];
-                        var current = {};
-                        curriculums.forEach(function(curr) {
-                            current.id = curr._id;
-                            current.title = curr.title;
-                            curr_map.push(current);
-                        });
                         res.render('home', {
                             ident: ident,
-                            curr_map: curr_map
+                            curr_map: curriculums
                         });
                     }
                 )
@@ -60,13 +53,67 @@ exports.authCallback = function() {
 };
 
 exports.create = function(req, res) {
-    Course.find({})
-    .sort([['code', 'ascending']])
-    .lean()
-    .exec(function(err, courses) {
-        if(err)
-            res.send(err)
-        else {
+    if(req.isAuthenticated()) {
+        User.findById(req.user.id)
+        .lean()
+        .exec(function(err, user) {
+            var id = req.user.id;
+            var ident;
+            if(user.username)
+                ident = user.username
+            else
+                ident = user.google.email
+
+            res.render('canvas', {
+                ident: ident,
+                curriculum: "",
+                user_id: id,
+                code : ''
+            });
+        });
+    } else {
+        res.render('canvas', {
+                ident: 'not logged in',
+                curriculum: "",
+                user_id: '',
+                code : ''
+            });
+    }
+}
+
+exports.list = function(req, res) {
+    var curriculumMap = {};
+    var ident = "not logged in";
+
+    Curriculum.find({
+        author: req.params.user_id
+        },
+        function(err, curriculums) {
+            if(req.isAuthenticated()) {
+                User.findById(req.user.id
+                    , function(err, user) {
+                    if(user.username)
+                        ident = user.username
+                    else
+                        ident = user.google.email
+                    res.render('home', {
+                        ident: ident,
+                        curr_map: curriculums
+                    });
+                });
+            } else {
+                res.render('home', {
+                    ident: ident,
+                    curr_map: curriculums
+                });
+            }
+        }
+    )
+}
+
+exports.load = function(req, res) {
+    Curriculum.findById(req.body.data.code)
+        .exec(function(err, curriculum) {
             if(req.isAuthenticated()) {
                 User.findById(req.user.id)
                 .lean()
@@ -80,57 +127,19 @@ exports.create = function(req, res) {
 
                     res.render('canvas', {
                         ident: ident,
-                        courses: courses,
+                        code: curriculum._id,
                         user_id: id
                     });
                 });
             } else {
                 res.render('canvas', {
-                        courses: courses,
                         ident: 'not logged in',
+                        code: curriculum._id,
                         user_id: ''
                     });
             }
         }
-    });
-}
-
-exports.list = function(req, res) {
-    var curriculumMap = {};
-    var ident = "not logged in";
-
-    Curriculum.find({
-        author: req.params.user_id
-        },
-        function(err, curriculums) {
-            var curr_map = [];
-            var current = {};
-            curriculums.forEach(function(curr) {
-                current.id = curr._id;
-                current.title = curr.title;
-                curr_map.push(current);
-            });
-
-            if(req.isAuthenticated()) {
-                User.findById(req.user.id
-                    , function(err, user) {
-                    if(user.username)
-                        ident = user.username
-                    else
-                        ident = user.google.email
-                    res.render('home', {
-                        ident: ident,
-                        curr_map: curr_map
-                    });
-                });
-            } else {
-                res.render('home', {
-                    ident: ident,
-                    curr_map: curr_map
-                });
-            }
-        }
-    )
+    );
 }
 
 exports.logout = function(req, res) {

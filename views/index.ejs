@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>RESPONSIVE NA TO</title>
+  <title>CourseLink</title>
 
   <!-- CSS  -->
 	<link href="font/google-material/material-icons.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
 <div class="navbar-fixed">
   <nav class="grey lighten-3" role="navigation">
     <div class="nav-wrapper container">
-      <a href="index.html" class="brand-logo blue-text text-lighten-1">Logo</a>
+      <a href="/" class="brand-logo blue-text text-lighten-1">Logo</a>
 			<div class="right search-container hide-on-med-and-down">
 				<ul class="row">
 					<li class="search-area">
@@ -52,7 +52,7 @@
 				<div class="intro-info col s12 m12 l10 offset-s1 valign">
 					<h3 class="white-text">Unravel the best routes.</h3>
 					<h5 class="white-text">Design, Acquire Feedback, Evaluate.</h5>
-					<a class="waves-effect waves-light btn-large grey lighten-3 blue-text col s12 m8 l6 center-align modal-trigger" href="#modal-curriculum">Start Drawing</a>
+					<a class="waves-effect waves-light btn-large grey lighten-3 blue-text col s12 m8 l6 center-align modal-trigger" href="/new">Start Drawing</a>
 				</div>
 			</div>
 
@@ -103,7 +103,7 @@
 <br>
 <div class="bottom-div row">
 		<h3 class="center-align grey-text text-darken-3">Make Your Own</h3>
-		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s10 m4 l2 offset-s1 offset-m4 offset-l5 modal-trigger" href="#modal-curriculum"><font color="white">Start Drawing</font></a>
+		<a class="start-draw-other waves-effect waves-light btn-large blue lighten-1 grey-text text-lighten-2 col s10 m4 l2 offset-s1 offset-m4 offset-l5 modal-trigger" href="/new"><font color="white">Start Drawing</font></a>
 </div>
 
 <footer>
@@ -123,19 +123,19 @@
 		</div>
 			<div id="login-tab-div" class="row col s12 m12 l12"> <!--	LOGIN TAB		-->
 				<div class="row container">
-					<form action="landing.html row col s12 m12 l12">
+					<form action="/login" class="row col s12 m12 l12" method="post">
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">email</i>
-							<input id="email" type="email" class="validate">
-							<label for="email">Username</label>
+							<input id="username" type="text" name="username">
+							<label for="username">Username</label>
 						</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">lock</i>
-							<input id="password" type="password" class="validate">
+							<input id="password" type="password" name="password" class="validate">
 							<label for="password">Password</label>
 						</div>
 						<div class="input-field row col s12 m12 l12">
-							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Login
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit">Login
 							<i class="material-icons right">send</i></button>
 						</div>
 					</form>
@@ -149,21 +149,21 @@
 					<form action="landing.html row col s12 m12 l12">
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">email</i>
-							<input id="email" type="email" class="validate">
-							<label for="email">Username</label>
+							<input id="username-register" type="text" class="validate">
+							<label for="username-register">Username</label>
 						</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">lock</i>
-							<input id="password" type="password" class="validate">
-							<label for="password">Password</label>
+							<input id="password-register" type="password" class="validate">
+							<label for="password-register">Password</label>
 						</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">lock</i>
-							<input id="password" type="password" class="validate">
-							<label for="password">Confirm Password</label>
+							<input id="re-password" type="password" class="validate">
+							<label for="re-password">Confirm Password</label>
 						</div>
 						<div class="input-field row col s12 m12 l12">
-							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">Register
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action" id="register-button">Register
 							<i class="material-icons right">send</i></button>
 						</div>
 					</form>
@@ -217,6 +217,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/index.js"></script>
 	<script>
 		$(document).ready(function(){
 			$('ul.tabs').tabs('select_tab', 'login-tab-div');

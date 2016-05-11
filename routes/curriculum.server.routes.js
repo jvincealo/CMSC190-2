@@ -7,4 +7,7 @@ module.exports = function(app) {
 
     app.route('/curriculum/:curr_id')
         .get(curriculum.show);
+
+    app.route('/curriculum/list/:curr_id')
+        .get(curriculum.read);
 }

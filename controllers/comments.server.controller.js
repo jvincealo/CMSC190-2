@@ -15,31 +15,24 @@ exports.createOrUpdate = function(req, res) {
 exports.listByCurriculum = function(req, res) {
     var curr_id = req.params.curr_id;
 
-    Comment.find({
+    Comment.find( {
         type: 'curriculum',
         target: curr_id
-        },
+    })
+    .lean()
+    .exec(
         function(err, comments) {
-            var comments_map = [];
-            var current = {};
-
-            comments.forEach(function(curr) {
-                current.id = curr._id;
-                current.text = curr.text;
-                current.author = users.userById(curr.author)
-                comments_map.push(current);
-            });
-            res.json(comments_map);
+            res.json(comments);
         }
-    )
+    );
 };
 
 exports.listByCourse = function(req, res) {
-    var course_id = req.params.course_id;
+    var course_code = req.params.course_id;
 
     Comment.find( {
         type: 'course',
-        target: course_id
+        target: course_code
     })
     .lean()
     .exec(

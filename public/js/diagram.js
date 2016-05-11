@@ -1,5 +1,11 @@
-var csv =
-		"1-1,PE 1,MATH 17,ENG 1(AH),GE(SSP),GE(MST),GE(SSP)\n1-2,PE 2,CMSC 2,CMSC 11,CMSC 56,MATH 26,ENG 2(AH),GE(MST)\n2-1,NSTP 1,PE 2,CMSC 21,CMSC 57,MATH 27,STAT 1,GE(AH),GE(MST)\n2-2,NSTP 2,PE 2,CMSC 22,CMSC 123,CMSC 130,MATH 28,GE(MST),GE(SSP)\n3-1,CMSC 100,CMSC 124,CMSC 127,CMSC 131,SPCM 1(AH),ELECTIVE\n3-2,CMSC 125,CMSC 128,CMSC 132,CMSC 170,ENG 10,ELECTIVE\n3-3,CMSC 198\n4-1,CMSC 137,CMSC 141,CMSC 150,CMSC 190-1,CMSC 199,GE(SSP),ELECTIVE\n4-2,CMSC 142,CMSC 190-2,PI 10(SSP),GE(MST),GE(AH),ELECTIVE\n\nMATH17,CMSC56\nMATH17,CMSC11\nMATH17,STAT1\nMATH26,MATH27\nMATH26,CMSC150\nMATH27,MATH28\nCMSC56,CMSC57\nCMSC57,CMSC130\nCMSC57,CMSC123\nCMSC21,CMSC123\nCMSC21,CMSC131\nCMSC11,CMSC21\nCMSC11,CMSC22\nCMSC11,CMSC130\nCMSC2,CMSC100\nCMSC22,CMSC100\nCMSC123,CMSC127\nCMSC123,CMSC170\nCMSC123,CMSC124\nCMSC123,CMSC125\nCMSC123,CMSC128\nCMSC123,CMSC141\nCMSC123,CMSC142\nCMSC123,CMSC150\nCMSC125,CMSC137\nCMSC131,CMSC132";
+var csv = "";
+var loaded_curriculum = {
+	code: '',
+	title: '',
+	department: '',
+	csv: '',
+	author: ''
+};
 
 var curriculum = {}; //json for the curriculum
 var subjectArr = []; //save positions
@@ -87,7 +93,24 @@ $(document).on('keyup',function(e){ //deletes selected subject
 });
 $(document).ready(function() {
     $('select').material_select();
-  });
+
+    $.ajax({
+	        url: '/curriculum/list/' + curr_id,
+	        type: 'get',
+	        success: function(data) {
+	        	loaded_curriculum = data;
+	        	showComments('curriculum');
+	        	document.getElementById("curriculum-title").innerHTML = loaded_curriculum.title;
+	        	csv = loaded_curriculum.csv;
+	        	importCSV();
+	        	var dept = document.getElementById("dept_opts");
+	        	dept.value = loaded_curriculum.department;
+	        },
+	        error: function(e) {
+	            console.log(e.message);
+	        }
+	    });
+ });
 function removeSubject(){
 	if(selectedSubject != null){
 		for(i=0; i<subjectArr.length; i++) if(subjectArr[i].attr('.label/text') == selectedSubject.attr('.label/text')) subjectArr.splice(i,1);
@@ -138,11 +161,21 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 	evt.model.attr({ rect: { stroke: 'black', 'stroke-width': 3 } });
 });
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
-//     $(document).ready(function(){
-//			$('ul.tabs').tabs('select_tab', 'tab-info');
-//		});
-//		console.log(evt.model.id);
-	console.log(subjectArr[0].attributes.position.x+","+subjectArr[0].attributes.position.y);
+		$.get("/courses/find/" + evt.model.id,
+		        function(data) {
+		        	document.getElementById("coursecode").innerHTML = data[0].code;
+		        	document.getElementById("coursecode-comment").innerHTML = data[0].code;
+		        	document.getElementById("coursetitle").innerHTML = data[0].title;
+		        	document.getElementById("coursetitle-comment").innerHTML = data[0].title;
+
+		        	var term = [];
+		        	for(var i=0; i<data[0].term.length; i++)
+		        		term.push(data[0].term[i]);
+
+		        	document.getElementById("courseterm").innerHTML = term.join();
+		        }
+		);
+		$('ul.tabs').tabs('select_tab', 'tab-info');
 });
 paper.on('cell:pointerdown', function(evt, x, y){
 	if(evt.model.isLink()){
@@ -278,10 +311,19 @@ function clearCanvas(){
 	graph.addCell(subjectContainer);
 }
 function exportCSV(){
+	var dept_opts = document.getElementById("dept_opts");
+    var department = dept_opts.options[dept_opts.selectedIndex].value;
+
+	var exp = "";
 	var temp = "";
 	var year = 1;
 	var tempX, tempY;
 	var subjExist = false;
+
+	exp += department + "\r\n";
+	exp += document.getElementById("edit-tab-degree").value + "\r\n";
+	exp += document.getElementById("edit-tab-curriculum-code").value + "\r\n";
+
 	for(j=0; j<yearCount*2; j++){ //print per column
 		subjExist = false;
 		tempX = gridWidth * j;
@@ -295,7 +337,7 @@ function exportCSV(){
 					break;
 				}
 			}
-			if(i == 19 && subjExist) console.log(temp);
+			if(i == 19 && subjExist) exp+=temp + "\r\n";
 		}
 		if(((j%2)+1) == 2){ //check for midyear subjects
 			subjExist = false;
@@ -310,23 +352,32 @@ function exportCSV(){
 						break;
 					}
 				}
-				if(i == 19 && subjExist) console.log(temp);
+				if(i == 19 && subjExist) exp+=temp+"\r\n"
 			}
 			year++; //after 2 sems, increment year
 		}
 	}
 
-	console.log("\nPREREQUISITES:");
+	exp+="\r\n"
 	for(course in curriculum){
-		for(target in curriculum[course]) console.log(course+","+curriculum[course][target]);
+		for(target in curriculum[course]) exp+= course.replace(" ","")+","+(curriculum[course][target]).replace(" ","")+"\r\n";
 	}
+	return exp;
 }
-function importCSV(){
-	var importString = csv.split("\n\n");
 
+function importCSV(){
+    clearCanvas();
+    console.log(csv)
+	var importString = csv.split("\r\n\r\n");
+    console.log(importString);
 	//ADD THE SUBJECTS IN THE DIAGRAM
-	var sems = importString[0].split("\n");
-	for(m=0; m<sems.length; m++){
+	var sems = importString[0].split("\r\n");
+	// document.getElementById('edit-tab-department').value = sems[0];
+	document.getElementById('edit-tab-degree').value = sems[1];
+	document.getElementById('edit-tab-curriculum-code').value = sems[2];
+	code = sems[2];
+
+	for(m=3; m<sems.length; m++){
 		var subjects = sems[m].split(",");
 		var year_sem = subjects[0].split("-");
 		for(n=1; n<subjects.length; n++){
@@ -335,13 +386,13 @@ function importCSV(){
 	}
 
 	//CONNECT THE PREREQUISITES
-	var dependencies = importString[1].split("\n");
+	var dependencies = importString[1].split("\r\n");
 	for(i=0; i<dependencies.length; i++){
 		var temp = dependencies[i].split(","); //[0] is source, [1] is target
 		var sourceLink;
 		var targetLink;
-		for(j=0; j<subjectArr.length; j++) if(temp[0] == subjectArr[j].id) sourceLink = subjectArr[j].id;
-		for(j=0; j<subjectArr.length; j++) if(temp[1] == subjectArr[j].id) targetLink = subjectArr[j].id;
+		for(j=0; j<subjectArr.length; j++) if(temp[0] == subjectArr[j].id.replace(" ","")) sourceLink = subjectArr[j].id;
+		for(j=0; j<subjectArr.length; j++) if(temp[1] == subjectArr[j].id.replace(" ","")) targetLink = subjectArr[j].id;
 		var link =  new joint.dia.Link({
 			source: { id: sourceLink, port: 'out' },
 			target: { id: targetLink, port: 'in' },
@@ -363,10 +414,8 @@ function importCSV(){
 		curriculum[sourceLink].push(targetLink);
 	}
 
-
-
-
 }
+
 function addSubject(course, year, sem){
 	if(year != null && course != null){
 		var courseName = course;
@@ -437,7 +486,7 @@ function addSubject(course, year, sem){
 	});
 	var tempId = courseName.split("(");
 	var tempId2 = courseName.split(" ");
-	if(tempId[0] != "GE" && tempId2[0] != "PE") subject.set({ id: courseName.replace(" ","") });
+	if(tempId[0] != "GE" && tempId2[0] != "PE") subject.set({ id: courseName });
 	var existing = false;
 	for(i=0; i<subjectArr.length; i++){
 		if(subjectArr[i].id == courseName.replace(" ","")) existing = true;
@@ -454,5 +503,78 @@ function addSubject(course, year, sem){
 	if(colCount%6 == 0){
 		rowCount += 1;
 		colCount = 0;
+	}
+}
+
+
+//file IO
+var upload = document.getElementById('import-csv');
+upload.addEventListener('change', fileSelect, false);
+
+function fileSelect(evt) {
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+  		// Great success! All the File APIs are supported.
+	} else {
+  		alert('The File APIs are not fully supported in this browser.');
+	}
+
+	var files = document.getElementById('import-csv').files;
+	var file = files[0];
+
+	var reader = new FileReader();
+
+	reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+      	var data = evt.target.result;
+
+      	csv = data;
+        importCSV();
+      	}
+    };
+    reader.readAsText(file);
+}
+
+function showComments(type) {
+    var commentsMap = {};
+    if(type === 'course') {
+	    var target = "view-comments-area";
+	    var container = document.getElementById(target);
+	    container.innerHTML = "";
+
+	    $.ajax({
+	        url: '/comments/course/' + selectedSubject.id,
+	        type: 'get',
+	        success: function(data) {
+	            for(var key in data) {
+	                var content =  "<div class='comment-div col s12'>";
+	                content+= "<label class='comment-email blue-text text-lighten-1'>"+ data[key].author + "</label>: " + data[key].text +"</div>";
+	                container.innerHTML = container.innerHTML + content;
+	            }
+	        },
+	        error: function(e) {
+	            console.log(e.message);
+	        }
+	    });
+	} else {
+		var target = "tab-comment-div-inside";
+	    var container = document.getElementById(target);
+	    container.innerHTML = "";
+
+	    $.ajax({
+	        url: '/comments/curriculum/' + loaded_curriculum.code,
+	        type: 'get',
+	        success: function(data) {
+	            for(var key in data) {
+	                var content = '<div class="comment-div col s12">';
+					content += '<label class="blue-text text-lighten-1">'+data[key].author+'</label>';
+					content += '<span>: '+data[key].text+'</span>';
+					content += '</div>';
+					container.innerHTML = container.innerHTML + content;
+	            }
+	        },
+	        error: function(e) {
+	            console.log(JSON.stringify(e));
+	        }
+	    });
 	}
 }

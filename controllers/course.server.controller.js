@@ -71,7 +71,10 @@ exports.delete = function(req, res) {
 
 //gets single department by id
 exports.read = function(req, res) {
-    Course.findById(req.params.course_id)
+    var code = req.params.course_code.replace("%20"," ");
+    Course.find({
+            code : code
+    })
         .lean()
         .exec(
                 function(err, course) {

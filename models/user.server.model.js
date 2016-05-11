@@ -28,7 +28,7 @@ var UserSchema = new Schema({
 UserSchema.pre('save', function(next) {
     if(this.local.password) {
         var md5 = crypto.createHash('md5');
-        this.local.password = md5.update(this.password).digest('hex');
+        this.local.password = md5.update(this.local.password).digest('hex');
     }
     next();
 });

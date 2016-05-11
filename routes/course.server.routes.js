@@ -8,9 +8,11 @@ module.exports = function(app) {
         .get(courses.list);
 
     app.route('/courses/:course_id')
-        .get(courses.read)
         .put(courses.update)
         .delete(courses.delete);
+
+    app.route('/courses/find/:course_code')
+        .get(courses.read)
 
     app.route('/courses/department/:dept_id')
         .get(courses.bydept);

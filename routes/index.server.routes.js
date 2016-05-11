@@ -18,4 +18,7 @@ module.exports = function(app) {
             }
         )
     );
+
+    app.post('/new', index.load);
+
 };

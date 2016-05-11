@@ -1,4 +1,5 @@
 var Curriculum = require('mongoose').model('Curriculum')
+var User = require('mongoose').model('User')
 
 exports.createOrUpdate = function(req, res, next) {
     var code = req.body.code;
@@ -41,6 +42,21 @@ exports.show = function(req, res) {
             }
             else {
                 res.json(curriculums);
+            }
+        }
+    );
+};
+
+exports.read = function(req, res) {
+    Curriculum.findById(req.params.curr_id)
+    .lean()
+    .exec(
+        function(err, curriculum) {
+            if (err) {
+                   res.send(err);
+            }
+            else {
+                res.json(curriculum);
             }
         }
     );

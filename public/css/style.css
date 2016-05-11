@@ -55,6 +55,10 @@ footer.page-footer {
 		height: 100%;
 }
 
+.brand-logo, .brand-logo img {
+		height: 100% !important;
+}
+
 nav ul a, nav .brand-logo, .side-nav li a
 {
     color: #42a5f5;

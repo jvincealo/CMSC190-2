@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>RESPONSIVE NA TO</title>
+  <title>CourseLink</title>
 
   <!-- CSS  -->
 	<link href="font/google-material/material-icons.css" rel="stylesheet" />
@@ -18,7 +18,7 @@
 <div class="navbar-fixed">
   <nav class="blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
-      <a href="index.html" class="brand-logo grey-text text-lighten-3">Logo</a>
+      <a href="index.html" class="brand-logo"><img class="responsive-image" src="images/logo.png"></a>
 			<div class="right search-container hide-on-med-and-down">
 				<ul class="row">
 					<li class="search-area">
@@ -78,27 +78,24 @@
 		<!--	TAB-OPTIONS DIV	-->
 		<div class="tab-div col s12 m12 l12 row grey lighten-2" id="tab-option">
 				<div class="tab-edit-info input-field col s10 offset-s1">
-					<select onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required="required" id="dept_opts">
+					<select onfocus='this.size=3;' onblur='this.size=1;' onchange='populateSubjects();' required="required" id="dept_opts">
 					    <option value="">Choose department</option>
 					</select>
 			    	<label>Department</label>
 				</div>
 				<div class="tab-edit-info input-field col s10 offset-s1">
 					<i class="login-icon material-icons prefix blue-text text-lighten-1">school</i>
-					<input id="edit-tab-degree" type="text" class="validate" value="BS Computer Science">
+					<input id="edit-tab-degree" type="text" class="validate" value="New Curriculum">
 					<label for="edit-tab-degree">Degree Program</label>
 				</div>
 				<div class="tab-edit-info input-field col s10 offset-s1">
 					<i class="login-icon material-icons prefix blue-text text-lighten-1">school</i>
-					<input id="edit-tab-curriculum-code" type="text" class="validate" value="BSCS-2016">
+					<input id="edit-tab-curriculum-code" type="text" class="validate" value="New Curriculum">
 					<label for="edit-tab-curriculum-code">Curriculum Code</label>
 				</div>
 				<div class="add-subject-div col s8 offset-s2">
-					<select onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur();' id="add-subject-drop" class="blue lighten-1 z-depth-1 white-text center-align" onchange="addSubject()">
+					<select id="add-subject-drop" class="blue lighten-1 z-depth-1 white-text center-align" onchange="addSubject()">
 						<option value="" disabled selected>ADD SUBJECT</option>
-						<option>CMSC 11</option>
-						<option>CMSC 21</option>
-						<option>CMSC 123</option>
 					</select>
 				</div>
 				<div class="tab-option-btn col s12">
@@ -107,11 +104,11 @@
 				<div class="diagram-import col s12 file-field input-field">
 					<div class="import-btn waves-effect waves-light btn blue lighten-1 col s8 offset-s2">
 						<span>Import CSV</span>
-						<input type="file" id="import-csv" onchange="importCSV()">
+						<input type="file" id="import-csv">
 					</div>
 				</div>
 				<div class="tab-option-btn2 col s12 ">
-					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="save-btn">Save to account</a>
+					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="save-btn" onclick="saveToAccount();">Save to account</a>
 				</div>
 				<div class="tab-option-btn3 col s12 ">
 					<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="clear-btn" onclick="clearCanvas()">Clear Canvas</a>
@@ -119,134 +116,33 @@
 		</div>
 		<div class="tab-div col s12 m12 l12 grey lighten-2" id="tab-info">
 				<div class="diagram-info row container col s12 m12 l12">
-					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12">CMSC 170</h5>
-					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12">Introduction to Artificial Intelligence</h6>
+					<h5 class="curriculum-coursecode blue-text text-lighten-1 col s12" id="coursecode">No Course Selected</h5>
+					<h6 class="curriculum-coursetitle blue-text text-lighten-1 col s12" id="coursetitle"></h6>
 					<div class="info-holder-div col s12">
 						<div class="info-div">
-							<label class="blue-text text-lighten-1">Prerequisite:</label>
-							<span> CMSC 123 and CMSC 69</span>
+							<!-- <label class="blue-text text-lighten-1">Prerequisite:</label> -->
+							<span></span>
 						</div>
-						<div class="info-div">
+						<!-- <div class="info-div">
 							<label class="blue-text text-lighten-1">Units:</label>
 							<span> 3.0</span>
-						</div>
+						</div> -->
 						<div class="info-div">
 							<label class="blue-text text-lighten-1">Semester Offered:</label>
-							<span>1, 2, Summer</span>
+							<span id="courseterm"></span>
 						</div>
 
 					</div>
-					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments"><i class="material-icons">comment</i></a></div>
+					<div class="col s12"><a class="subject-comment tooltipped waves-effect waves-light btn blue lighten-1 modal-trigger" data-position="right" data-delay="1" data-tooltip="View Subject Comments" href="#modal-view-comments" onclick="showComments('course');"><i class="material-icons">comment</i></a></div>
 				</div>
 
 		</div>
 		<div class="tab-div col s12 m12 l12 grey lighten-2" id="tab-comment">
 			<div class="curriculum-comment-div row">
-				<div class="curriculum-degree valign-wrapper"><h5 class="center-align blue-text text-lighten-1 col s12">BS Computer Science</h5></div>
+				<div class="curriculum-degree valign-wrapper"><h5 class="center-align blue-text text-lighten-1 col s12" id="curriculum-title">New Curriculum</h5></div>
 				<div class="tab-comment-div col s12 row">
-						<div class="tab-comment-div-inside row">
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: manyakis po ako</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: manyakis po ako</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: manyakis po ako</span>
-							</div><div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: manyakis po ako</span>
-							</div><div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: ang ganda po nung curriculum</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-								<span>: BEST SP TANG INA!</span>
-							</div>
-							<div class="comment-div col s12">
-								<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-								<span>: manyakis po ako</span>
-							</div>
+						<div class="tab-comment-div-inside row" id="tab-comment-div-inside">
+
 						</div>
 				</div>
 				<div class="input-field comment-area-div col s12">
@@ -260,7 +156,14 @@
 
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout-drop" class="dropdown-content col m12 l12">
-	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
+	<li class="valign-wrapper"><label class="center-align">
+			<script type="text/javascript">
+                var ident = '<%= ident %>';
+            	user_id = '<%= user_id %>';
+            	var curr_id = '<%= code %>';
+            </script>
+			<%= ident %>
+	</label></li>
 	<li class="divider"></li>
 	<li><a href="#!" class="center-align">Logout</a></li>
 </ul>
@@ -329,74 +232,11 @@
 <div id="modal-view-comments" class="view-comments-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
 	<div class="row container view-comments-div col s12 m12 l12">
 		<div class="view-comments-subject col s12 m12 l12">
-			<h5 class="center-align blue-text text-lighten-1">CMSC 170</h5>
-			<h6 class="blue-text text-lighten-1 center-align">Introduction to Artificial Intelligence</h6>
+			<h5 class="center-align blue-text text-lighten-1" id="coursecode-comment">No Course Selected</h5>
+			<h6 class="blue-text text-lighten-1 center-align" id="coursetitle-comment"></h6>
 		</div>
-		<div class="view-comments-area row col s12 m12 l12">
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: ang ganda po nung curriculum</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: galing naman po</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-				<span>: si emman na gagawa ng lahat</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">bronzeraf@up.edu.ph</label>
-				<span>: 1v1 bob0h</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: hehe</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: ang hirap po ng mga exer</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: dapat madali project kasi po tang ina niyo</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: pero sana po mas maunti yung GE kasi po pogi ako masyado</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-				<span>: ty sir TJ nag best SP kami</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: ang ganda po nung curriculum</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: 8===D</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: shit</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">bestSP2016@up.edu.ph</label>
-				<span>: ang laki nung akin</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: pota</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: wew</span>
-			</div>
-			<div class="col s12 m12 l12">
-				<label class="blue-text text-lighten-1">emmanyakol@up.edu.ph</label>
-				<span>: gagoo</span>
-			</div>
+		<div class="view-comments-area row col s12 m12 l12" id="view-comments-area">
+
 		</div>
 				<div class="input-field view-comments-input col s12 m12 l12">
 				<textarea id="view-comments-textarea" class="materialize-textarea grey lighten-2" placeholder="Comments"></textarea>
@@ -405,7 +245,7 @@
 
 </div>
   <!-- jQuery is required by Materialize to function -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
 	<script src="js/init.js"></script>
 	<script>
@@ -417,5 +257,6 @@
 	<script type="text/javascript" src="js/backbone-min.js"></script>
 	<script type="text/javascript" src="js/joint.min.js"></script>
   <script type="text/javascript" src="js/diagram.js"></script>
+  <script type="text/javascript" src="js/canvas.js"></script>
 </body>
 </html>

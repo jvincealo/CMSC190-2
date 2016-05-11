@@ -106,7 +106,10 @@ $(document).ready(function() {
 		        	var dept = document.getElementById("dept_opts");
 		        	dept.value = loaded_curriculum.department;
 
+		        	if(loaded_curriculum.author == user_id)
 
+		        	var div = document.getElementById("save-button");
+		        		div.innerHTML = '<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="save-btn" onclick="saveToAccount();">Save to account</a>';
 	 	        },
 		        error: function(e) {
 		            console.log(e.message);

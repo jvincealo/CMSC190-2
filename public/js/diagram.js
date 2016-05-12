@@ -98,7 +98,7 @@ for(i=0; i<yearCount*2; i++){
 	V(paper.viewport).append(sem);
 	V(paper.viewport).append(semText);
 }
-paper.setOrigin((xMax-gridWidth*yearCount)/2,(semDivider/4));
+paper.setOrigin((xMax-gridWidth*yearCount)/2,(gridWidth/4+semDivider/4));
 zoomPaper(-0.5);
 //grid columns for years and semesters
 for (i = 0; i <= yearCount*2; i++) {
@@ -459,6 +459,7 @@ function exportCSV(){
 }
 
 function importCSV(){
+	import_flag = true;
     clearCanvas();
     console.log(csv)
 	var importString = csv.split("\r\n\r\n");
@@ -508,6 +509,7 @@ function importCSV(){
 		if(curriculum[sourceLink] == null) curriculum[sourceLink] = [];
 		curriculum[sourceLink].push(targetLink);
 	}
+	import_flag = false;
 }
 
 function addSubject(course, year, sem){
@@ -521,7 +523,7 @@ function addSubject(course, year, sem){
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	}
-
+	var not_import = import_flag;
 	//convert post-fix to infix
 	$.ajax({
 		        url: '/courses/find/' + courseName,
@@ -535,8 +537,8 @@ function addSubject(course, year, sem){
         				stack.push(tokens[token])
 
         			output = convert(stack);
-        			if(import_flag == false)
-        				Materialize.toast(courseName +" prerequisites : " +output, 4000);
+        			if(!not_import)
+        				Materialize.toast(courseName +" prerequisites : " +output, 5000);
 	 	        },
 		        error: function(e) {
 		            console.log(e.message);

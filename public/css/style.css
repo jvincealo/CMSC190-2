@@ -495,8 +495,8 @@ nav ul a, nav .brand-logo, .side-nav li a
 }
 
 .add-course-modal {
-		margin-top: 2.5%;
-		height: 65%;
+		margin-top: 5%;
+		height: 45%;
 		border-radius: 7px;
 		padding: 0px !important;
 }

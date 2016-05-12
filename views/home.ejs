@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>CourseLink</title>
+  <title>C-Link</title>
 
   <!-- CSS  -->
 	<link href="font/google-material/material-icons.css" rel="stylesheet" />
@@ -55,7 +55,11 @@
         <div class="col s12 m6 l3 row">
             <div class="blue lighten-1 card col s10 offset-s1">
             <div class="card-image">
-                <img src="images/cara5.jpg">
+            <script>
+                var asd = Math.floor(Math.random() * 3) + 1;
+                var pic = '<img src="images/filler'+asd+'.png">';
+                document.write(pic);
+            </script>
             </div>
             <div class="card-content valign-wrapper">
                 <a class="grey-text text-lighten-3 center-align loader" href="/new" id="<%=curr_map[i].id %>"><%= curr_map[i].title %></a>
@@ -112,7 +116,7 @@
 	</div>
 </div>
   <!-- jQuery is required by Materialize to function -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/home.js"></script>

@@ -7,6 +7,8 @@ var loaded_curriculum = {
 	author: ''
 };
 
+var import_flag = false;
+
 var curriculum = {}; //json for the curriculum
 var subjectArr = []; //save positions
 var colCount = 0;
@@ -36,7 +38,7 @@ var paper = new joint.dia.Paper({
     		connector: { name: 'rounded' },
 				attrs: {
 					'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
-					'.connection': { 'stroke-width': 4 }
+					'.connection': { 'stroke-width': 2 }
 				}
 		}),
 		validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
@@ -106,15 +108,19 @@ $(document).ready(function() {
 		        	var dept = document.getElementById("dept_opts");
 		        	dept.value = loaded_curriculum.department;
 
-		        	if(loaded_curriculum.author == user_id)
-
-		        	var div = document.getElementById("save-button");
-		        		div.innerHTML = '<a class="waves-effect waves-light btn blue lighten-1 col s8 offset-s2" id="save-btn" onclick="saveToAccount();">Save to account</a>';
+		        	if(loaded_curriculum.author != user_id) {
+		        		var div = document.getElementById("save-button");
+		        		div.innerHTML = "";
+		        	}
 	 	        },
 		        error: function(e) {
 		            console.log(e.message);
 		        }
 		    });
+	}
+	if(!user_id) {
+		var div = document.getElementById("save-button");
+		div.innerHTML = "";
 	}
  });
 function removeSubject(){
@@ -160,7 +166,7 @@ paper.on('blank:pointerclick', function(evt, x, y){ //removes selected/highlight
 
 paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights clicked subject
 	if(selectedSubject != null){
-		selectedSubject.attr({ rect: { 'stroke-width': 1 } });
+		selectedSubject.attr({ rect: { 'stroke-width': 0 } });
 		selectedSubject = null;
 	}
 	selectedSubject = evt.model;
@@ -432,6 +438,8 @@ function importCSV(){
 	// document.getElementById('edit-tab-department').value = sems[0];
 	document.getElementById('edit-tab-degree').value = sems[1];
 	document.getElementById('edit-tab-curriculum-code').value = sems[2];
+	document.getElementById('dept_opts').value = sems[0];
+
 	code = sems[2];
 
 	for(m=3; m<sems.length; m++){
@@ -457,7 +465,7 @@ function importCSV(){
 			connector: { name: 'rounded' },
 			attrs: {
 				'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
-				'.connection': { 'stroke-width': 4 }
+				'.connection': { 'stroke-width': 2 }
 			}
 		});
 
@@ -470,7 +478,6 @@ function importCSV(){
 		if(curriculum[sourceLink] == null) curriculum[sourceLink] = [];
 		curriculum[sourceLink].push(targetLink);
 	}
-
 }
 
 function addSubject(course, year, sem){
@@ -498,10 +505,9 @@ function addSubject(course, year, sem){
         				stack.push(tokens[token])
 
         			output = convert(stack);
-        			Materialize.toast(courseName +" prerequisites : " +output, 4000);
-
+        			if(import_flag == false)
+        				Materialize.toast(courseName +" prerequisites : " +output, 4000);
 	 	        },
-
 		        error: function(e) {
 		            console.log(e.message);
 		        }
@@ -522,8 +528,10 @@ function addSubject(course, year, sem){
 	if(subjectArr.length > 0){
 		for(j=0; j<yearCount*2; j++){ //check for available positions
 			for(i=0; i<20; i++){
+				var temp = courseName.split("(");
 				if(year == null) initX = gridWidth * j;
-				if(sem == 3) initY = gridWidth/2 * 10;
+				if(sem == 3) initY = gridWidth/2 * (i+8);
+				else if(temp[0] == "GE") initY = gridWidth/2 * (i+10);
 				else initY = gridWidth/2 * i;
 				for(k=0; k<subjectArr.length; k++){
 					if(subjectArr[k].attributes.position.x == initX && subjectArr[k].attributes.position.y == initY) break;
@@ -566,7 +574,11 @@ function addSubject(course, year, sem){
 	});
 	var tempId = courseName.split("(");
 	var tempId2 = courseName.split(" ");
-	if(tempId[0] != "GE" && tempId2[0] != "PE") subject.set({ id: courseName });
+	if(tempId[0] != "GE" && tempId2[0] != "PE" && courseName.trim() != "SPECIALIZED" && courseName.trim() != "MAJOR" && courseName.trim() != "ELECTIVE")
+		subject.set({ id: courseName });
+	else
+		subject.attr({'.inPorts circle': { r:0 }, '.outPorts circle': { r: 0, magnet: 'passive' } })
+
 	var existing = false;
 	for(i=0; i<subjectArr.length; i++){
 		if(subjectArr[i].id == courseName.replace(" ","")) existing = true;
@@ -618,9 +630,9 @@ function fileSelect(evt) {
       if (evt.target.readyState == FileReader.DONE) { // DONE == 2
       	var data = evt.target.result;
 
-      	csv = data;
+      	csv = data.replace(/%0A/g,"\r\n").replace(/%20/g," ");
         importCSV();
-      	}
+      }
     };
     reader.readAsText(file);
 }
@@ -679,4 +691,17 @@ function getSemester(subject){
 			return 'S';
 		}
 	}
+}
+
+function downloadCSV() {
+	csv_file = exportCSV().replace(/\n/g,"%0A");
+	csv_file = csv_file.replace(/ /g,"%20");
+
+	var a         = document.createElement('a');
+    a.href        = 'data:attachment/csv,' +  csv_file;
+    a.target      = '_blank';
+    a.download    = code + '.csv';
+
+    document.body.appendChild(a);
+    a.click();
 }

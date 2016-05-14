@@ -228,17 +228,17 @@ nav ul a, nav .brand-logo, .side-nav li a
 		height: 12.5%;
 		margin: 0px !important;
 		padding: 0px !important;
-		padding-top: 2.5% !important;
+		padding-top: 5% !important;
 }
 
 .tab-option-btn, .tab-option-btn2, .tab-option-btn3 {
-		height: 10%;
+		height: 8%;
 		padding: 0px !important;
 		padding-top: 2.5% !important;
 }
 
 .tab-option-btn3 {
-		padding-top: 0 !important;
+		padding-top: 2.5% !important;
 }
 
 .diagram-info {

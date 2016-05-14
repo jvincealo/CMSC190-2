@@ -24,9 +24,7 @@ exports.update = function(req, res) {
                 Course.title = req.body.title;
                 Course.term = req.body.term;
                 Course.prerequisite = req.body.prerequisite;
-                Course.corequisite = req.body.corequisite;
-                Course.concurrent = req.body.concurrent;
-                Course.conprereq  = req.body.conprereq;
+                Course.units = req.body.units;
 
                 Course.save(
                         function(err, Course) {
@@ -90,6 +88,7 @@ exports.bydept = function(req, res) {
     Course.find({
         department : req.params.dept_id
     })
+        .sort({code : 1})
         .lean()
         .exec(
                 function(err, courses) {

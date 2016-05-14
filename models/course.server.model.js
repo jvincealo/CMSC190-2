@@ -6,6 +6,7 @@ var CourseSchema = new Schema({
                     type: String,
                 },
     department: String,
+    units: Number,
     title: String,
     term : String,
     prerequisite: String,

@@ -1,13 +1,64 @@
+var selected_subject;
+
 var upload_dept = document.getElementById('upload_dept');
 upload_dept.addEventListener('change', importDept, false);
 
 $(function() {
   $("a.loader").on("click",function(e) {
     e.preventDefault(); // cancel the link itself
-    // console.log($(this).attr('id'));
     $("<form action='/new' method='post'><input type='hidden' name='data[code]' value="+$(this).attr('id')+" /></form>").submit();
     });
 });
+
+$(function() {
+  $("#edit-submit").on("click",function(e) {
+    e.preventDefault(); // cancel the link itself
+        var course = {
+            department : document.getElementById("dept_opts_edit").value,
+            code : document.getElementById("edit-courseCode").value,
+            title : document.getElementById("edit-courseTitle").value,
+            prerequisite : document.getElementById("edit-prerequisites").value,
+            units : document.getElementById("edit-units").value,
+            term : document.getElementById("edit-term").value
+       };
+
+       $.ajax({
+            url: '/courses/' + selected_subject,
+            type: 'PUT',
+            data : course,
+            success: function(result) {
+                Materialize.toast("Course successfully updated!", 4000)
+            }
+        });
+    });
+});
+
+function deleteSubject(id) {
+    $.ajax({
+        url: '/courses/' + id,
+        type: 'DELETE',
+        success: function(result) {
+            Materialize.toast("Course successfully deleted!", 4000)
+        }
+    });
+}
+
+function editModal(code) {
+    $.get("/courses/find/"+code,
+        function(data) {
+            document.getElementById('dept_opts_edit').value = "\"" + data[0].department + "\"";
+            document.getElementById('edit-courseCode').value = data[0].code;
+            document.getElementById('edit-courseTitle').value = data[0].title
+            document.getElementById('edit-prerequisites').value = data[0].prerequisite;
+            document.getElementById('edit-units').value = data[0].units;
+            document.getElementById('edit-term').value = data[0].term;
+
+            selected_subject = data[0]._id;
+
+            Materialize.updateTextFields();
+        }
+    );
+}
 
 $(document).ready(function() {
     $("#courseSubmit").click(function(e) {
@@ -16,14 +67,20 @@ $(document).ready(function() {
             department : document.getElementById("dept_opts").value,
             code : document.getElementById("courseCode").value,
             title : document.getElementById("courseTitle").value,
-            prerequsite : document.getElementById("coursePrerequisite"),
-            units : document.getElementById("units"),
-            corequisite : document.getElementById("courseCorequisite"),
-            concurrent : document.getElementById("courseConcurrent"),
-            conprereq : document.getElementById("courseConPrereq"),
+            prerequisite : document.getElementById("prereq").value,
+            corequisite : document.getElementById("coreq").value,
+            units : document.getElementById("units").value,
+            term : document.getElementById("term").value
        };
 
-       alert(course);
+       $.ajax({
+            url: '/courses',
+            type: 'POST',
+            data : course,
+            success: function(result) {
+                Materialize.toast("Course successfully created!", 4000)
+            }
+        });
     });
 });
 
@@ -36,14 +93,22 @@ function populateSubjects(id) {
             contents += '<ul>';
 
                 for(var key in data) {
-                    contents += '<li class="row"><a class="modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course">'+ data[key].title +'</a>';
-                    contents += '<a class="col s5 m4 l2 offset-m1 offset-l1 black-text">Delete</a>';
+                    contents += '<li class="row"><a class="course modal-trigger valign-wrapper col s6 m6 l8 offset-s1 offset-m1 offset-l1" href="#modal-edit-course" onclick="editModal(\''+data[key].code+'\');">'+ data[key].title +'</a>';
+                    contents += '<a href="#" class="delete col s5 m4 l2 offset-m1 offset-l1 black-text" data-id=\''+data[key]._id+'\'>Delete</a>';
                     contents += '</li>';
                 }
 
             contents += '</ul>';
             dept.innerHTML = contents;
             $('.modal-trigger').leanModal();
+
+              $("a.delete").on("click",function(e) {
+                e.preventDefault(); // cancel the link itself'))
+
+                var answer = confirm("Are you sure?")
+                if(answer)
+                    deleteSubject($(this).attr('data-id'))
+            });
         }
     );
 }
@@ -51,6 +116,7 @@ function populateSubjects(id) {
 function populateDepartments() {
     var ul = document.getElementById("departments");
     var opts = document.getElementById("dept_opts")
+    var edit = document.getElementById("dept_opts_edit")
 
     var contents = "";
     $.get("/departments/list",
@@ -64,9 +130,14 @@ function populateDepartments() {
                 ul.appendChild(list);
 
                 var opt = document.createElement('option');
-                opt.value = data[key]._id;
+                opt.value = data[key].code;
                 opt.innerHTML = data[key].name;
                 opts.appendChild(opt);
+
+                var opt2 = document.createElement('option');
+                opt2.value = data[key].code;
+                opt2.innerHTML = data[key].name;
+                edit.appendChild(opt2);
 
                 contents = "";
             }

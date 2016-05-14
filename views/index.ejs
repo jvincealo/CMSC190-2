@@ -10,7 +10,7 @@
 	<link type="text/css" rel="stylesheet" href="font/font.css">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="css/modal.css">
+
 </head>
 <body class="row">
 <div class="navbar-fixed">
@@ -116,35 +116,24 @@
 <div id="modal-login" class="login-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
 	<div class="login-tab row col s12 m12 l12 ">
 		<div class="col s12 m12 l12 ">
-			<ul class="tabs grey lighten-2">
-				<li class="tab col s12 m6 l6"><a class="active blue-text text-lighten-1" href="#login-tab-div">Login</a></li>
-				<li class="tab col s12 m6 l6"><a class="blue-text text-lighten-1" href="#register-tab-div">REGISTER</a></li>
-			</ul>
+
+		<h6 class="center-align blue-text text-darken-1">This site uses UP mail for authentication</h6>
 		</div>
 			<div id="login-tab-div" class="row col s12 m12 l12"> <!--	LOGIN TAB		-->
-				<div class="row container">
-					<form action="/login" class="row col s12 m12 l12" method="post">
-						<div class="input-field col s12 m12 l12">
-							<i class="login-icon material-icons prefix">email</i>
-							<input id="username" type="text" name="username">
-							<label for="username">Username</label>
-						</div>
-						<div class="input-field col s12 m12 l12">
-							<i class="login-icon material-icons prefix">lock</i>
-							<input id="password" type="password" name="password" class="validate">
-							<label for="password">Password</label>
-						</div>
-						<div class="input-field row col s12 m12 l12">
-							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit">Login
-							<i class="material-icons right">send</i></button>
-						</div>
-					</form>
+				<div class="input-field row col s12 m12 l12">
+				<br>
+				<br>
+					<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" onclick="document.location.href='/auth/google';">Login with eUP
+					<i class="material-icons right">send</i></button>
 				</div>
-				<div class="modal-footer grey lighten-2 col s12 m12 l12 valign-wrapper">
-						<h6 class="center-align grey-text text-darken-1">Login with e-UP <a href="/auth/google">here</a></h6>
-				</div>
+				<br>
+				<br>
+				<br>
 			</div>
-			<div id="register-tab-div" class="col s12"> <!--	REGISTER TAB		-->
+			<div class="modal-footer grey lighten-2 col s12 m12 l12 valign-wrapper">
+						<h6 class="center-align grey-text text-darken-1">Find out how to get your e-UP account <a href="https://www.uplbosa.org">here</a></h6>
+				</div>
+			 <!-- <div id="register-tab-div" class="col s12"> 	REGISTER TAB
 				<div class="row container">
 					<form action="landing.html row col s12 m12 l12">
 						<div class="input-field col s12 m12 l12">
@@ -170,7 +159,7 @@
 				</div>
 				<div class="modal-footer grey lighten-2 col s12 m12 l12 valign-wrapper">
 						<h6 class="center-align grey-text text-darken-1">Find out how to get your e-UP account <a href="https://www.uplbosa.org">here</a></h6>
-				</div>
+				 </div> -->
 			</div>
 	</div>
 </div>

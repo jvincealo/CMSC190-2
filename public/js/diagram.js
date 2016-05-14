@@ -61,45 +61,44 @@ var paper = new joint.dia.Paper({
 
 
 var containerHeight = gridWidth * 10;
-
 var subjectContainer = new joint.shapes.basic.Rect({
     position: { x: 0-(semDivider/4), y: 0-semDivider/4 },
     size: { width: gridWidth*yearCount*2, height: containerHeight+semDivider/4 },
     attrs: { rect: { style: {'pointer-events': 'none'}, 'stroke-width': 0, fill: 'none'} }
 });
 graph.addCell(subjectContainer);
+
 for(i=0; i<yearCount; i++){
 	var yearPrefix;
-	if(i+1 == 1) yearPrefix = "   1st"
-	else if(i+1 == 2) yearPrefix = "   2nd";
-	else if(i+1 == 3) yearPrefix = "   3rd";
-	else yearPrefix = "   "+(i+1)+ "th";
+	if(i+1 == 1) yearPrefix = " 1st"
+	else if(i+1 == 2) yearPrefix = " 2nd";
+	else if(i+1 == 3) yearPrefix = " 3rd";
+	else yearPrefix = " "+(i+1)+ "th";
 
-	var year = V('rect', {x: i*(gridWidth*2)-semDivider/4, y: 0-gridWidth/2-semDivider/4, width: gridWidth*2, height: gridWidth/4, fill:'none',
+	var yearLabel = V('rect', {x: i*(gridWidth*2)-semDivider/4, y: 0-gridWidth/2-semDivider/4, width: gridWidth*2, height: gridWidth/4, fill:'none',
 											 stroke: 'black', 'stroke-width': 3});
-	var yearText = V('text', {x: i*(gridWidth*2)-semDivider/4, y: 0-(3*gridWidth/2-semDivider/2)/2+15, fill: 'black'})
+	var yearText = V('text', {x: i*(gridWidth*2)-semDivider/4, y: 0-(3*gridWidth/2-semDivider/2)/2+10, fill: 'black'})
 	yearText.text(yearPrefix+' Year', { lineHeight: 'auto', annotations: [
-    { start: 0, end: 50, attrs: {'font-size': 30 } },]});
+    { start: 0, end: 50, attrs: {'font-size': 20 } },]});
 
-	V(paper.viewport).append(year);
+	V(paper.viewport).append(yearLabel);
 	V(paper.viewport).append(yearText);
 }
 for(i=0; i<yearCount*2; i++){
 	var semLabel;
-	if(i%2 == 0) semLabel = "   1st Sem";
-	else semLabel = "   2nd Sem";
+	if(i%2 == 0) semLabel = " 1st Sem";
+	else semLabel = " 2nd Sem";
 
 	var sem = V('rect', {x: i*(gridWidth)-semDivider/4, y: 0-gridWidth/4-semDivider/4, width: gridWidth, height: gridWidth/4, fill:'none',
 											 stroke: 'black', 'stroke-width': 3});
-	var semText = V('text', {x: i*(gridWidth)-semDivider/4, y: 0-(3*gridWidth/4-semDivider/4)/2+15, fill: 'black'})
+	var semText = V('text', {x: i*(gridWidth)-semDivider/4, y: 0-(3*gridWidth/4-semDivider/4)/2+10, fill: 'black'})
 	semText.text(semLabel, { lineHeight: 'auto', annotations: [
-    { start: 0, end: 50, attrs: {'font-size': 30 } },]});
+    { start: 0, end: 50, attrs: {'font-size': 20 } },]});
 
 	V(paper.viewport).append(sem);
 	V(paper.viewport).append(semText);
 }
-paper.setOrigin((xMax-gridWidth*yearCount)/2,(gridWidth/4+semDivider/4));
-zoomPaper(-0.5);
+
 //grid columns for years and semesters
 for (i = 0; i <= yearCount*2; i++) {
 	var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*i-(semDivider/4), y2: containerHeight, stroke: 'black', 'stroke-width': 3 });
@@ -109,6 +108,10 @@ var line = V('line', { x1: 0-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*8
 var line2 = V('line', { x1: 0-(semDivider/4), y1: containerHeight+semDivider/4-semDivider/4, x2: gridWidth*8-(semDivider/4), y2: containerHeight+semDivider/4-semDivider/4, stroke: 'black', 'stroke-width': 3 });
 V(paper.viewport).append(line);
 V(paper.viewport).append(line2);
+paper.setOrigin((xMax-gridWidth*yearCount)/2,(gridWidth/4+semDivider/4));
+zoomPaper(-0.5);
+
+
 
 $('#diagram-container').bind('mousewheel', function(event) {
 		event.preventDefault(); //disable scroll through mousewheel
@@ -189,7 +192,7 @@ paper.on('blank:pointerup', function(evt, x, y){ //stop drag paper after press
 });
 paper.on('blank:pointerclick', function(evt, x, y){ //removes selected/highlighten subject on paper click
 	if(selectedSubject != null){
-		selectedSubject.attr({ rect: { 'stroke-width': 1 } });
+		selectedSubject.attr({ rect: { 'stroke-width': 0 } });
 		selectedSubject = null;
 	}
 });
@@ -207,6 +210,7 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 		        	document.getElementById("coursecode-comment").innerHTML = data[0].code;
 		        	document.getElementById("coursetitle").innerHTML = data[0].title;
 		        	document.getElementById("coursetitle-comment").innerHTML = data[0].title;
+		        	document.getElementById("units-subj").innerHTML = data[0].units;
 
 		       		var stack = [];
     				var tokens = data[0].prerequisite.split("+");
@@ -229,6 +233,18 @@ paper.on('cell:pointerclick', function(evt, x, y) { //selects and highlights cli
 paper.on('cell:pointerdblclick', function(evt, x, y) { // CHANGE TO INFO TAB - dbclick subject event handler
 		$.get("/courses/find/" + evt.model.id,
 		        function(data) {
+
+		        	if(data.length == 0) {
+		        		document.getElementById("coursecode").innerHTML = evt.model.attr('.label/text');
+			        	document.getElementById("coursecode-comment").innerHTML = evt.model.attr('.label/text');
+			        	document.getElementById("coursetitle").innerHTML = "";
+			        	document.getElementById("coursetitle-comment").innerHTML = "course not in database";
+			        	document.getElementById("units-subj").innerHTML ="";
+						document.getElementById("prereq").innerHTML = "";
+			        	document.getElementById("courseterm").innerHTML = "";
+			        	return
+		        	}
+
 		        	document.getElementById("coursecode").innerHTML = data[0].code;
 		        	document.getElementById("coursecode-comment").innerHTML = data[0].code;
 		        	document.getElementById("coursetitle").innerHTML = data[0].title;
@@ -397,6 +413,73 @@ graph.on('remove', function(cell, collection, opt) {
 	}
 });
 
+function changeYear(year){
+	var choice = confirm("Canvas will be cleared! Are you sure?");
+
+	if(!choice)
+		return
+
+	yearCount = year;
+	clearCanvas(); //remove elements
+	graph.clear(); //remove bounding rectangle since rect width will be adjusted
+	subjectContainer = new joint.shapes.basic.Rect({
+	    position: { x: 0-(semDivider/4), y: 0-semDivider/4 },
+	    size: { width: gridWidth*yearCount*2, height: containerHeight+semDivider/4 },
+	    attrs: { rect: { style: {'pointer-events': 'none'}, 'stroke-width': 0, fill: 'none'} }
+	});
+	graph.addCell(subjectContainer);
+	var temp = V(paper.viewport).find('text');
+	for(j=0; j<temp.length; j++) temp[j].remove();
+	temp = V(paper.viewport).find('line');
+	for(j=0; j<temp.length; j++) temp[j].remove();
+	temp = V(paper.viewport).find('rect');
+	for(j=0; j<temp.length; j++) temp[j].remove();
+
+	for(i=0; i<yearCount; i++){
+		var yearPrefix;
+		if(i+1 == 1) yearPrefix = " 1st"
+		else if(i+1 == 2) yearPrefix = " 2nd";
+		else if(i+1 == 3) yearPrefix = "3rd";
+		else yearPrefix = "   "+(i+1)+ "th";
+
+		var yearLabel = V('rect', {x: i*(gridWidth*2)-semDivider/4, y: 0-gridWidth/2-semDivider/4, width: gridWidth*2, height: gridWidth/4, fill:'none',
+												 stroke: 'black', 'stroke-width': 3});
+		var yearText = V('text', {x: i*(gridWidth*2)-semDivider/4, y: 0-(3*gridWidth/2-semDivider/2)/2+10, fill: 'black'})
+		yearText.text(yearPrefix+' Year', { lineHeight: 'auto', annotations: [
+	    { start: 0, end: 50, attrs: {'font-size': 20 } },]});
+
+		V(paper.viewport).append(yearLabel);
+		V(paper.viewport).append(yearText);
+	}
+	for(i=0; i<yearCount*2; i++){
+		var semLabel;
+		if(i%2 == 0) semLabel = "1st Sem";
+		else semLabel = "2nd Sem";
+
+		var sem = V('rect', {x: i*(gridWidth)-semDivider/4, y: 0-gridWidth/4-semDivider/4, width: gridWidth, height: gridWidth/4, fill:'none',
+												 stroke: 'black', 'stroke-width': 3});
+		var semText = V('text', {x: i*(gridWidth)-semDivider/4, y: 0-(3*gridWidth/4-semDivider/4)/2+10, fill: 'black'})
+		semText.text(semLabel, { lineHeight: 'auto', annotations: [
+	    { start: 0, end: 50, attrs: {'font-size': 20 } },]});
+
+		V(paper.viewport).append(sem);
+		V(paper.viewport).append(semText);
+	}
+
+	//grid columns for years and semesters
+	for (i = 0; i <= yearCount*2; i++) {
+		var line = V('line', { x1: gridWidth*i-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*i-(semDivider/4), y2: containerHeight, stroke: 'black', 'stroke-width': 3 });
+		V(paper.viewport).append(line);
+	}
+	var line = V('line', { x1: 0-(semDivider/4), y1: 0-semDivider/4, x2: gridWidth*8-(semDivider/4), y2: 0-semDivider/4, stroke: 'black', 'stroke-width': 3 });
+	var line2 = V('line', { x1: 0-(semDivider/4), y1: containerHeight+semDivider/4-semDivider/4, x2: gridWidth*yearCount*2-(semDivider/4), y2: containerHeight+semDivider/4-semDivider/4, stroke: 'black', 'stroke-width': 3 });
+	V(paper.viewport).append(line);
+	V(paper.viewport).append(line2);
+	console.log(paper.viewport);
+	// paper.setOrigin((xMax-gridWidth*yearCount)/2,(gridWidth/4+semDivider/4));
+	zoomPaper(0);
+}
+
 function clearCanvas(){
 	graph.clear();
 	curriculum = {};
@@ -465,8 +548,17 @@ function importCSV(){
     csv = csv.replace(/\r\n/g,"\n");
 	var importString = csv.split("\n\n");
     console.log(importString);
+
 	//ADD THE SUBJECTS IN THE DIAGRAM
 	var sems = importString[0].split("\n");
+
+    //MATCH YEARS IN DIAGRAM WITH IMPORTED CURRICULUM
+    var temp = sems[sems.length-1].split(","); //last semester in the imported curriculum
+    temp = temp[0].split("-");
+
+    if(temp[0] != yearCount) changeYear(temp[0]);
+
+
 	// document.getElementById('edit-tab-department').value = sems[0];
 	document.getElementById('edit-tab-degree').value = sems[1];
 	document.getElementById('edit-tab-curriculum-code').value = sems[2];
@@ -538,11 +630,9 @@ function addSubject(course, year, sem){
         				stack.push(tokens[token])
 
         			output = convert(stack);
-        			if(!not_import) {
+        			if(!not_import){
         				Materialize.toast(courseName +" prerequisites : " +output, 5000);
-
-        				if(data[0].corequisite != "NONE")
-        					Materialize.toast(courseName +" corequisite : " +data[0].corequisite, 5000);
+        				if(data[0].corequisite != "NONE") Materialize.toast(courseName +" corequisite : " +data[0].corequisite, 5000);
         			}
 	 	        },
 		        error: function(e) {
@@ -616,9 +706,15 @@ function addSubject(course, year, sem){
 	else
 		subject.attr({'.inPorts circle': { r:0 }, '.outPorts circle': { r: 0, magnet: 'passive' } })
 
+	if(tempId[0] == "GE" || tempId2[0] == "GE") subject.attr({rect: { fill: '#ffcc80'}});
+	else if(tempId2[0] == "PE") subject.attr({rect: { fill: '#b39ddb'}});
+	else if(tempId2[0] == "NSTP") subject.attr({rect: { fill: '#ff8a80'}});
+	else if(courseName.trim() == "SPECIALIZED") subject.attr({rect: { fill: '#b2ff59'}});
+	else if(courseName.trim() == "ELECTIVE") subject.attr({rect: { fill: '#fff176'}});
+
 	var existing = false;
 	for(i=0; i<subjectArr.length; i++){
-		if(subjectArr[i].id == courseName.replace(" ","")) existing = true;
+		if(subjectArr[i].id == courseName) existing = true;
 	}
 
 	if(!existing){

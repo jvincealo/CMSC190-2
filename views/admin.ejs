@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>RESPONSIVE NA TO</title>
+  <title>C-Link</title>
 
   <!-- CSS  -->
 	<link href="font/google-material/material-icons.css" rel="stylesheet" />
@@ -71,9 +71,9 @@
 					<div>
 						<form class="col s10 offset-s1">
 							<div class="row">
-								<div class="input-field col s12 blue lighten-1">
-									<i class="login-icon material-icons prefix">location_city</i>
-									<select onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="blue lighten-1" required="required" id="dept_opts">
+								<i class="login-icon material-icons prefix col s1">location_city</i>
+								<div class="input-field col s11">
+									<select onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="" required="required" id="dept_opts">
 									    <option value="">Department</option>
 									</select>
 								    <label>Department</label>
@@ -89,47 +89,56 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<i class="login-icon material-icons prefix">description</i>
-									<input id="icon_prefix" type="text" class="validate">
-									<label for="icon_prefix">Course Title</label>
+									<input id="courseTitle" type="text" class="validate">
+									<label for="courseTitle">Course Title</label>
 								</div>
 							</div>
 							<div class="row">
-								<div class="input-field col s12">
+								<div class="input-field col s6">
 									<i class="login-icon material-icons prefix">directions</i>
-									<input id="icon_prefix" type="text" class="validate">
-									<label for="icon_prefix">Prerequisite</label>
+									<input id="prereq" type="text" class="validate">
+									<label for="prereq">Prerequisite</label>
+								</div>
+								<div class="input-field col s6">
+									<i class="login-icon material-icons prefix">swap_vert</i>
+									<input id="coreq" type="text" class="validate" value="NONE">
+									<label for="coreq">Corequisite</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
 									<i class="login-icon material-icons prefix">filter_3</i>
-									<input id="icon_prefix" type="number" class="validate">
-									<label for="icon_prefix">Units</label>
+									<input id="units" type="number" class="validate">
+									<label for="units">Units</label>
 								</div>
 							</div>
 							<div class="row">
-								<div class="sem-offered-div input-field col s12 row">
+								<!-- <div class="sem-offered-div input-field col s12 row">
 									<div class="sem-offered col s2">
 										<span class="sem-offered-span blue-text text-lighten-1">Semester Offered</span>
 									</div>
 									<div class="col s10">
 										<div class="sem-option col s4 m4 l4">
-											<input type="checkbox" id="firstsem" />
+											<input class="opt_sem" type="checkbox" id="firstsem" />
       								<label for="firstsem">First</label>
 										</div>
 										<div class="sem-option col s4 m5 l4">
-											<input type="checkbox" id="secondsem" />
+											<input class="opt_sem" type="checkbox" id="secondsem" />
       								<label for="secondsem">Second</label>
 										</div>
 										<div class="sem-option col s4 m3 l4">
-											<input type="checkbox" id="midyear" />
+											<input class="opt_sem" type="checkbox" id="midyear" />
       								<label for="midyear">Midyear</label>
 										</div>
 									</div>
+								</div> -->
+								<div class="input-field col s12">
+									<input id="term" type="text" class="validate">
+									<label for="term">Sem Offered (12S)</label>
 								</div>
 							</div>
 							<div class="input-field row">
-								<button class="admin-add-new blue lighten-1 large btn waves-effect waves-light center-align col s6 offset-s3" type="submit" name="action">ADD NEW SUBJECT
+								<button class="admin-add-new blue lighten-1 large btn waves-effect waves-light center-align col s6 offset-s3" type="submit" name="action" id="courseSubmit">ADD NEW SUBJECT
 								<i class="material-icons right">send</i></button>
 							</div>
 						</form>
@@ -139,36 +148,18 @@
 			</div>
 		</div>
 		<div id="admin-curriculum-div" class="col s12 m12 l12 row">
-			<div class="base-div2 row">
-				<% for(var i=0; i<curr_map.length;i++) { %>
-					<script>
-			            var dummy = JSON.stringify("<%=curr_map[i].code %>");
-			        </script>
-			        <div class="col s12 m6 l3 row">
-			            <div class="blue lighten-1 card col s10 offset-s1">
-			            <div class="card-image">
-			            <script>
-			                var asd = Math.floor(Math.random() * 2) + 1;
-			                var pic = '<img src="images/filler'+asd+'.png">';
-			                document.write(pic);
-			            </script>
-			            </div>
-			            <div class="card-content valign-wrapper">
-			                <a class="grey-text text-lighten-3 center-align loader" href="/new" id="<%=curr_map[i].id %>"><%= curr_map[i].title %></a>
-			            </div>
-			        	</div>
-			        </div>
-			    <% }; %>
-		</div>
+			<div class="base-div2 row"><!-- -->
+			</div>
 		</div>
 	</div>
 </div>
 
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout-drop" class="dropdown-content col m12 l12">
-	<li class="valign-wrapper"><label class="center-align">bestSP2016@up.edu.ph</label></li>
+	<li class="valign-wrapper"><label class="center-align">as</label></li>
 	<li class="divider"></li>
-	<li><a href="#!" class="center-align">Logout</a></li>
+	<li><a href="/logout" class="center-align">Logout</a></li>
+
 </ul>
 <!--	EDIT COURSE MODAL -->
 <div id="modal-edit-course" class="edit-course-modal modal grey lighten-3 row col s10 m4 l4 offset-s1 offset-m4 offset-l4">
@@ -178,53 +169,59 @@
 	<div class="login-tab row col s12 m12 l12 ">
 			<div id="login-tab-div" class="row col s12 m12 l12">
 				<div class="row container">
-					<form action="landing.html">
-						<div class="input-field col s12 m12 l12">
-							<i class="login-icon material-icons prefix">location_city</i>
-							<input id="department" type="text" class="validate">
-							<label for="department">Department</label>
-						</div>
+					<form action="#">
+							<i class="login-icon material-icons prefix col s1">location_city</i>
+								<div class="input-field col s11">
+									<select onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="" required="required" id="dept_opts_edit">
+									    <option value="">Department</option>
+									</select>
+								</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">description</i>
-							<input id="courseCode" type="text" class="validate">
+							<input id="edit-courseCode" type="text" class="validate">
 							<label for="courseCode">Course Code</label>
 						</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">description</i>
-							<input id="courseTitle" type="text" class="validate">
+							<input id="edit-courseTitle" type="text" class="validate">
 							<label for="courseTitle">Course Title</label>
 						</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">directions</i>
-							<input id="prerequisites" type="text" class="validate">
-							<label for="prerequisites">Prerequisite</label>
+							<input id="edit-prerequisites" type="text" class="validate">
+							<label for="edit-prerequisites">Prerequisite</label>
 						</div>
 						<div class="input-field col s12 m12 l12">
 							<i class="login-icon material-icons prefix">filter_3</i>
-							<input id="units" type="number" class="validate">
-							<label for="units">Units</label>
+							<input id="edit-units" type="number" class="validate">
+							<label for="edit-units">Units</label>
 						</div>
-						<div class="sem-offered-div input-field col s12 row">
+						<!-- <div class="sem-offered-div input-field col s12 row">
 							<div class="sem-offered col s12">
 								<span class="sem-offered-span blue-text text-lighten-1">Semester Offered</span>
 							</div>
 							<div class="col s12">
 								<div class="sem-option col s4 m6 l4">
-									<input type="checkbox" id="firstsem" />
-									<label for="firstsem">First</label>
+									<input type="checkbox" id="firstsem_edit" />
+									<label for="firstsem_edit">First</label>
 								</div>
 								<div class="sem-option col s4 m6 l4">
-									<input type="checkbox" id="secondsem" />
-									<label for="secondsem">Second</label>
+									<input type="checkbox" id="secondsem_edit" />
+									<label for="secondsem_edit">Second</label>
 								</div>
 								<div class="sem-option col s4 m6 l4">
-									<input type="checkbox" id="midyear" />
-									<label for="midyear">Midyear</label>
+									<input type="checkbox" id="midyear_edit" />
+									<label for="midyear_edit">Midyear</label>
 								</div>
 							</div>
+						</div> -->
+						<div class="input-field col s12 m12 l12">
+							<span class="sem-offered-span blue-text text-lighten-1">Semester Offered</span>
+							<input id="edit-term" type="text" class="validate">
+							<!-- <label for="edit-term">Sem Offered</label> -->
 						</div>
 						<div class="input-field row col s12 m12 l12">
-							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action">EDIT
+							<button class="blue lighten-1 large btn waves-effect waves-light center-align col s8 offset-s2" type="submit" name="action" id="edit-submit">EDIT
 							<i class="material-icons right">send</i></button>
 						</div>
 					</form>
@@ -233,7 +230,7 @@
 	</div>
 </div>
   <!-- jQuery is required by Materialize to function -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
   <script src="js/init.js"></script>

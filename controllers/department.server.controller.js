@@ -38,6 +38,7 @@ exports.update = function(req, res) {
 //list departments
 exports.list = function(req, res) {
     Department.find({})
+        .sort({name : 1})
         .lean()
         .exec(
                 function(err, departments) {

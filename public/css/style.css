@@ -204,13 +204,13 @@ nav ul a, nav .brand-logo, .side-nav li a
 }
 
 .tab-edit-info {
-		height: 10%;
+		height: 8%;
 }
 
 .add-subject-div {
-		height: 15% !important;
+		height: 12.5% !important;
 		padding: 0 !important;
-		padding-top: 10% !important;
+		padding-top: 7.5% !important;
 }
 
 .add-subject-div .select-dropdown {
@@ -225,20 +225,20 @@ nav ul a, nav .brand-logo, .side-nav li a
 }
 
 .diagram-import {
-		height: 15%;
+		height: 12.5%;
 		margin: 0px !important;
 		padding: 0px !important;
 		padding-top: 5% !important;
 }
 
 .tab-option-btn, .tab-option-btn2, .tab-option-btn3 {
-		height: 10%;
+		height: 8%;
 		padding: 0px !important;
 		padding-top: 2.5% !important;
 }
 
 .tab-option-btn3 {
-		padding-top: 0 !important;
+		padding-top: 2.5% !important;
 }
 
 .diagram-info {

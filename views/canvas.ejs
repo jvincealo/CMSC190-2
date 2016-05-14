@@ -93,6 +93,11 @@
 					<input id="edit-tab-curriculum-code" type="text" class="validate" value="New Curriculum">
 					<label for="edit-tab-curriculum-code">Curriculum Code</label>
 				</div>
+				<div class="tab-edit-info input-field col s10 offset-s1">
+					<i class="login-icon material-icons prefix blue-text text-lighten-1">access_time</i>
+					<input id="edit-tab-curriculum-year" type="number" class="validate" min="4" value="4" onchange="changeYear(value)">
+					<label for="edit-tab-curriculum-year">Number of Years</label>
+				</div>
 				<div class="add-subject-div col s8 offset-s2">
 					<select id="add-subject-drop" class="blue lighten-1 z-depth-1 white-text center-align" onchange="addSubject()">
 						<option value="" disabled selected>ADD SUBJECT</option>

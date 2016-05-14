@@ -44,7 +44,7 @@
         <li><a id="search-toggle"><i class="material-icons">search</i></a></li>
 				<a class="active grey-text text-lighten-3" href="#admin-subject-div">Subject</a>
 				<a class=" grey-text text-lighten-3" href="#admin-curriculum-div">Curriculum</a>
-        <li><a class="valign-wrapper" href="#">Logout</a></li>
+        <li><a class="valign-wrapper" href="/logout">Logout</a></li>
       </ul>
 
     </div>
@@ -140,59 +140,26 @@
 		</div>
 		<div id="admin-curriculum-div" class="col s12 m12 l12 row">
 			<div class="base-div2 row">
-				<div class="col s12 m6 l3 row">
-					<div class="blue lighten-1 card col s10 offset-s1 row">
-						<div class="card-image">
-							<img src="images/cara.jpg">
-						</div>
-						<div class="card-content valign-wrapper">
-							<a class="grey-text text-lighten-3 center-align" href="#">BS Computer Science</a>
-						</div>
-					</div>
-				</div>
-				<div class="col s12 m6 l3 row">
-					<div class="blue lighten-1 card col s10 offset-s1">
-						<div class="card-image">
-							<img src="images/cara2.jpg">
-							<span class="comment-badge new badge red darken-2">3</span>
-						</div>
-						<div class="card-content valign-wrapper">
-							<a class="grey-text text-lighten-3 center-align" href="#">BS Agricultural and Biosystems Engineering</a>
-						</div>
-					</div>
-				</div>
-				<div class="col s12 m6 l3 row">
-					<div class="blue lighten-1 card col s10 offset-s1">
-						<div class="card-image">
-							<img src="images/cara3.jpg">
-							<span class="comment-badge new badge red darken-2">19</span>
-						</div>
-						<div class="card-content valign-wrapper">
-							<a class="grey-text text-lighten-3 center-align" href="#">BS Development Communication</a>
-						</div>
-					</div>
-				</div>
-				<div class="col s12 m6 l3 row">
-					<div class="blue lighten-1 card col s10 offset-s1">
-						<div class="card-image">
-							<img src="images/cara4.jpg">
-						</div>
-						<div class="card-content valign-wrapper">
-							<a class="grey-text text-lighten-3 center-align" href="#">BS Applied Mathematics</a>
-						</div>
-					</div>
-				</div>
-				<div class="col s12 m6 l3 row">
-					<div class="blue lighten-1 card col s10 offset-s1">
-						<div class="card-image">
-							<img src="images/cara5.jpg">
-						</div>
-						<div class="card-content valign-wrapper">
-							<a class="grey-text text-lighten-3 center-align" href="#">BS Math</a>
-						</div>
-					</div>
-				</div>
-			</div>
+				<% for(var i=0; i<curr_map.length;i++) { %>
+					<script>
+			            var dummy = JSON.stringify("<%=curr_map[i].code %>");
+			        </script>
+			        <div class="col s12 m6 l3 row">
+			            <div class="blue lighten-1 card col s10 offset-s1">
+			            <div class="card-image">
+			            <script>
+			                var asd = Math.floor(Math.random() * 2) + 1;
+			                var pic = '<img src="images/filler'+asd+'.png">';
+			                document.write(pic);
+			            </script>
+			            </div>
+			            <div class="card-content valign-wrapper">
+			                <a class="grey-text text-lighten-3 center-align loader" href="/new" id="<%=curr_map[i].id %>"><%= curr_map[i].title %></a>
+			            </div>
+			        	</div>
+			        </div>
+			    <% }; %>
+		</div>
 		</div>
 	</div>
 </div>

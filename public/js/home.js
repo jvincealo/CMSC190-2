@@ -1,6 +1,3 @@
-// function load(id) {
-//     $.post("/", { code: id } );
-// // }
 $(function() {
   $("a.loader").on("click",function(e) {
     e.preventDefault(); // cancel the link itself

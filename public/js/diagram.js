@@ -68,7 +68,37 @@ var subjectContainer = new joint.shapes.basic.Rect({
     attrs: { rect: { style: {'pointer-events': 'none'}, 'stroke-width': 0, fill: 'none'} }
 });
 graph.addCell(subjectContainer);
-paper.setOrigin((xMax-gridWidth*yearCount)/2,(semDivider/4));
+for(i=0; i<yearCount; i++){
+	var yearPrefix;
+	if(i+1 == 1) yearPrefix = "   1st"
+	else if(i+1 == 2) yearPrefix = "   2nd";
+	else if(i+1 == 3) yearPrefix = "   3rd";
+	else yearPrefix = "   "+(i+1)+ "th";
+
+	var year = V('rect', {x: i*(gridWidth*2)-semDivider/4, y: 0-gridWidth/2-semDivider/4, width: gridWidth*2, height: gridWidth/4, fill:'none',
+											 stroke: 'black', 'stroke-width': 3});
+	var yearText = V('text', {x: i*(gridWidth*2)-semDivider/4, y: 0-(3*gridWidth/2-semDivider/2)/2+15, fill: 'black'})
+	yearText.text(yearPrefix+' Year', { lineHeight: 'auto', annotations: [
+    { start: 0, end: 50, attrs: {'font-size': 30 } },]});
+
+	V(paper.viewport).append(year);
+	V(paper.viewport).append(yearText);
+}
+for(i=0; i<yearCount*2; i++){
+	var semLabel;
+	if(i%2 == 0) semLabel = "   1st Sem";
+	else semLabel = "   2nd Sem";
+
+	var sem = V('rect', {x: i*(gridWidth)-semDivider/4, y: 0-gridWidth/4-semDivider/4, width: gridWidth, height: gridWidth/4, fill:'none',
+											 stroke: 'black', 'stroke-width': 3});
+	var semText = V('text', {x: i*(gridWidth)-semDivider/4, y: 0-(3*gridWidth/4-semDivider/4)/2+15, fill: 'black'})
+	semText.text(semLabel, { lineHeight: 'auto', annotations: [
+    { start: 0, end: 50, attrs: {'font-size': 30 } },]});
+
+	V(paper.viewport).append(sem);
+	V(paper.viewport).append(semText);
+}
+paper.setOrigin((xMax-gridWidth*yearCount)/2,(gridWidth/4+semDivider/4));
 zoomPaper(-0.5);
 //grid columns for years and semesters
 for (i = 0; i <= yearCount*2; i++) {
@@ -429,12 +459,14 @@ function exportCSV(){
 }
 
 function importCSV(){
+	import_flag = true;
     clearCanvas();
     console.log(csv)
-	var importString = csv.split("\r\n\r\n");
+    csv = csv.replace(/\r\n/g,"\n");
+	var importString = csv.split("\n\n");
     console.log(importString);
 	//ADD THE SUBJECTS IN THE DIAGRAM
-	var sems = importString[0].split("\r\n");
+	var sems = importString[0].split("\n");
 	// document.getElementById('edit-tab-department').value = sems[0];
 	document.getElementById('edit-tab-degree').value = sems[1];
 	document.getElementById('edit-tab-curriculum-code').value = sems[2];
@@ -451,7 +483,7 @@ function importCSV(){
 	}
 
 	//CONNECT THE PREREQUISITES
-	var dependencies = importString[1].split("\r\n");
+	var dependencies = importString[1].split("\n");
 	for(i=0; i<dependencies.length; i++){
 		var temp = dependencies[i].split(","); //[0] is source, [1] is target
 		var sourceLink;
@@ -478,6 +510,7 @@ function importCSV(){
 		if(curriculum[sourceLink] == null) curriculum[sourceLink] = [];
 		curriculum[sourceLink].push(targetLink);
 	}
+	import_flag = false;
 }
 
 function addSubject(course, year, sem){
@@ -491,7 +524,7 @@ function addSubject(course, year, sem){
 		var temp = document.getElementById("add-subject-drop")
 		var courseName = temp.options[temp.selectedIndex].innerHTML;
 	}
-
+	var not_import = import_flag;
 	//convert post-fix to infix
 	$.ajax({
 		        url: '/courses/find/' + courseName,
@@ -505,8 +538,12 @@ function addSubject(course, year, sem){
         				stack.push(tokens[token])
 
         			output = convert(stack);
-        			if(import_flag == false)
-        				Materialize.toast(courseName +" prerequisites : " +output, 4000);
+        			if(!not_import) {
+        				Materialize.toast(courseName +" prerequisites : " +output, 5000);
+
+        				if(data[0].corequisite != "NONE")
+        					Materialize.toast(courseName +" corequisite : " +data[0].corequisite, 5000);
+        			}
 	 	        },
 		        error: function(e) {
 		            console.log(e.message);

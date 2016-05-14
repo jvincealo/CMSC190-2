@@ -21,16 +21,30 @@ exports.entry = function(req, res) {
 
                 var curriculumMap = {};
 
-                Curriculum.find({
-                    author: req.user.id
-                    },
-                    function(err, curriculums) {
-                        res.render('home', {
-                            ident: ident,
-                            curr_map: curriculums
-                        });
-                    }
-                )
+                if(user.admin) {
+                    Curriculum.find({
+                        },
+                        function(err, curriculums) {
+                            res.render('admin', {
+                                ident: ident,
+                                curr_map: curriculums
+                            });
+                        }
+                    )
+                } else {
+                    Curriculum.find({
+                        author: req.user.id
+                        },
+                        function(err, curriculums) {
+                            res.render('home', {
+                                ident: ident,
+                                curr_map: curriculums
+                            });
+                        }
+                    )
+                }
+
+
             });
         }
     } else {

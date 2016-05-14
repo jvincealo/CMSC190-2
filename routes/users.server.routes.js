@@ -9,10 +9,11 @@ module.exports  = function(app) {
     app.route('/users/:userId').get(users.userByID).put(users.update).delete(users.delete);
 
     app.route('/login')
-        .post(
+        .post(function(req, res) {
             passport.authenticate('local', {
-                successRedirect: '/',
-                failureRedirect: '/'
-            })
-        );
+                    successRedirect : '/',
+                    failureRedirect : '/'
+                }
+            )
+        })
 };

@@ -2,7 +2,7 @@ var config  = require('../config/config'),
     express = require('express'),
     bodyParser = require('body-parser'),
     passport   = require('passport'),
-    flash      = require('flash'),
+    flash      = require('connect-flash'),
     cookieParser= require('cookie-parser'),
     morgan      = require('morgan'),
     session     = require('express-session');
@@ -30,7 +30,7 @@ module.exports = function() {
         saveUninitialized : true,
         resave : true,
         secret : 'curriculumdbsecret',
-        cookie : {maxAge :  60000}
+        cookie : {maxAge :  600000}
     }));
 
     app.use(flash());

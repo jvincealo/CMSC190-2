@@ -4,7 +4,7 @@ function populateDepartments() {
     var contents = "";
     $.get("/departments/list",
         function(data) {
-            alert(JSON.stringify(data))
+            // alert(JSON.stringify(data))
             for(var key in data) {
                 var opt = document.createElement('option');
                 opt.value = data[key].code;

@@ -7,6 +7,8 @@ var loaded_curriculum = {
 	author: ''
 };
 
+var curr_exist = false;
+
 var import_flag = false;
 
 var curriculum = {}; //json for the curriculum
@@ -137,6 +139,7 @@ $(document).ready(function() {
 		        	showComments('curriculum');
 		        	document.getElementById("curriculum-title").innerHTML = loaded_curriculum.title;
 		        	csv = loaded_curriculum.csv;
+		        	curr_exist = true;
 		        	importCSV();
 		        	var dept = document.getElementById("dept_opts");
 		        	dept.value = loaded_curriculum.department;
@@ -414,11 +417,14 @@ graph.on('remove', function(cell, collection, opt) {
 });
 
 function changeYear(year){
-	var choice = confirm("Canvas will be cleared! Are you sure?");
+	if(!curr_exist){
+		var choice = confirm("Canvas will be cleared! Are you sure?");
 
-	if(!choice)
-		return
+		if(!choice)
+			return
+	}
 
+	document.getElementById('edit-tab-curriculum-year').value = year;
 	yearCount = year;
 	clearCanvas(); //remove elements
 	graph.clear(); //remove bounding rectangle since rect width will be adjusted
@@ -478,6 +484,7 @@ function changeYear(year){
 	console.log(paper.viewport);
 	// paper.setOrigin((xMax-gridWidth*yearCount)/2,(gridWidth/4+semDivider/4));
 	zoomPaper(0);
+	curr_exist = false;
 }
 
 function clearCanvas(){
@@ -556,6 +563,7 @@ function importCSV(){
     var temp = sems[sems.length-1].split(","); //last semester in the imported curriculum
     temp = temp[0].split("-");
 
+    console.log(temp);
     if(temp[0] != yearCount) changeYear(temp[0]);
 
 

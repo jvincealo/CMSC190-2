@@ -434,12 +434,22 @@ nav ul a, nav .brand-logo, .side-nav li a
 
 
 /* ----------------- MODAL CSS ----------------- */
+@media only screen and (max-width : 992px) {
+	.login-modal {
+			margin-top: 5%;
+			height: 40%;
+			border-radius: 7px;
+			padding: 0px !important;
+	}
+}
 
-.login-modal {
-		margin-top: 5%;
-		height: 50%;
-		border-radius: 7px;
-		padding: 0px !important;
+@media only screen and (min-width : 992px) {
+	.login-modal {
+			margin-top: 5%;
+			height: 30%;
+			border-radius: 7px;
+			padding: 0px !important;
+	}
 }
 
 .login-tab {
@@ -453,6 +463,10 @@ nav ul a, nav .brand-logo, .side-nav li a
 
 #login-tab-div {
 		margin: 0px !important;
+}
+
+.login-modal-footer {
+	margin: 0px !important;
 }
 
 .login-icon {
@@ -475,7 +489,7 @@ nav ul a, nav .brand-logo, .side-nav li a
 }
 
 .modal-footer {
-		height: 42px !important;
+		height: 45px !important;
 }
 
 .modal-footer h6 {
@@ -488,7 +502,7 @@ nav ul a, nav .brand-logo, .side-nav li a
 		padding: 0px !important;
 }
 
-.curriculum-modal nav, .add-course-modal nav, .edit-course-modal nav {
+.login-modal nav, .curriculum-modal nav, .add-course-modal nav, .edit-course-modal nav {
 		font-family: 'Bree Serif';
 		height: 32px;
 		margin: 0px;

@@ -79,11 +79,11 @@ function addComent(comment, type){
             	request,
             	function(data, status){
                 	console.log("comment submitted");
+                    document.getElementById('view-comments-textarea').value = "";
+                    showComments('course');
             	}
         	);
 
-   		document.getElementById('view-comments-textarea').value = "";
-   		showComments('course');
 	} else {
         var author = ident;
         if(ident === "not logged in")
@@ -99,11 +99,10 @@ function addComent(comment, type){
                 request,
                 function(data, status){
                     console.log("comment submitted");
+                    document.getElementById('comment-area').value = "";
+                    showComments('curriculum');
                 }
             );
-
-        document.getElementById('comment-area').value = "";
-        showComments('curriculum');
 	}
 }
 

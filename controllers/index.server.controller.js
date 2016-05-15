@@ -166,6 +166,11 @@ exports.logout = function(req, res) {
 }
 
 exports.admin = function(req, res) {
-
-    res.render('admin');
+    Curriculum.find({},
+        function(err, curriculums) {
+                res.render('admin', {
+                    curr_map: curriculums
+                });
+            }
+    )
 }

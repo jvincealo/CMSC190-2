@@ -149,6 +149,25 @@
 		</div>
 		<div id="admin-curriculum-div" class="col s12 m12 l12 row">
 			<div class="base-div2 row"><!-- -->
+                <% for(var i=0; i<curr_map.length;i++) { %>
+                    <script>
+                        var dummy = JSON.stringify("<%=curr_map[i].code %>");
+                    </script>
+                    <div class="col s12 m6 l3 row">
+                        <div class="blue lighten-1 card col s10 offset-s1">
+                        <div class="card-image">
+                        <script>
+                            var asd = Math.floor(Math.random() * 2) + 1;
+                            var pic = '<img src="images/filler'+asd+'.png">';
+                            document.write(pic);
+                        </script>
+                        </div>
+                        <div class="card-content valign-wrapper">
+                            <a class="grey-text text-lighten-3 center-align loader" href="/new" id="<%=curr_map[i].id %>"><%= curr_map[i].title %></a>
+                        </div>
+                        </div>
+                    </div>
+                <% }; %>
 			</div>
 		</div>
 	</div>
@@ -156,7 +175,7 @@
 
 <!--	LOGOUT DROPDOWN -->
 <ul id="logout-drop" class="dropdown-content col m12 l12">
-	<li class="valign-wrapper"><label class="center-align">as</label></li>
+	<li class="valign-wrapper"><label class="center-align">admin</label></li>
 	<li class="divider"></li>
 	<li><a href="/logout" class="center-align">Logout</a></li>
 

@@ -59,7 +59,7 @@ function hideSearch(){
 }
 
 function searchCourse(query){
-    window.location.href = ""+query;
+    window.location.href = "/query="+query;
 }
 
 function addComent(comment, type){

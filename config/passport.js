@@ -7,20 +7,20 @@ module.exports = function(passport) {
     require('./strategies/google.js')();
 
     passport.serializeUser(function(user, done) {
-        // var sessionUser = {
-        //     id : user.id,
-        //     email : user.email,
-        //     username: user.username
-        // }
-        // done(null, sessionUser);
-        done(null, user.id)
+        var sessionUser = {
+            id : user.id,
+            email : user.email,
+            username: user.username
+        }
+        done(null, sessionUser);
+        // done(null, user.id)
     });
 
-    passport.deserializeUser(function(id, done) {
-        // done(null, sessionUser);
-        User.findById(id, function(err, user) {
-            done(err, user);
-        })
+    passport.deserializeUser(function(sessionUser, done) {
+        done(null, sessionUser);
+        // User.findById(id, function(err, user) {
+        //     done(err, user);
+        // })
     });
 
 };

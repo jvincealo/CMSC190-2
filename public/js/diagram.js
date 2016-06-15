@@ -329,7 +329,7 @@ paper.on('cell:pointerup', function(evt, x, y){ //if link connection target/sour
 
 graph.on('change:source change:target', function(link) { // CONNECTING SUBJECT - linking event handler
     if (link.get('source').id && link.get('target').id) { //if 2 subjects are connected
-			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+			if(link.getSourceElement().attributes.position.x > link.getTargetElement().attributes.position.x){
 				link.attr({
 					'.connection': { stroke: 'red' },
 					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
@@ -348,7 +348,7 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 	var inSubj = graph.getConnectedLinks(cell, { inbound: true });
 	outSubj.forEach(function(link) { //CONFLICT CHECKING FOR OUTWARD LINKS
 		if(link.getTargetElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
-			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+			if(link.getSourceElement().attributes.position.x > link.getTargetElement().attributes.position.x){
 				link.attr({
 					'.connection': { stroke: 'red' },
 					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
@@ -368,7 +368,7 @@ graph.on('change:position', function(cell) { //constantly checks for conflicts b
 });
 	inSubj.forEach(function(link) { //CONFLICT CHECKING FOR INWARD LINKS
 		if(link.getSourceElement() != null){ //SETS RED LINKS IF TARGET PORTS HAVE LOWER X VALUE
-			if(link.getSourceElement().attributes.position.x >= link.getTargetElement().attributes.position.x){
+			if(link.getSourceElement().attributes.position.x > link.getTargetElement().attributes.position.x){
 				link.attr({
 					'.connection': { stroke: 'red' },
 					'.marker-target': { fill: 'red', d: 'M 10 0 L 0 5 L 10 10 z' }
@@ -564,7 +564,7 @@ function importCSV(){
     temp = temp[0].split("-");
 
     console.log(temp);
-    if(temp[0] != yearCount) changeYear(temp[0]);
+    if(temp[0] != yearCount && temp[0] >= 4) changeYear(temp[0]);
 
 
 	// document.getElementById('edit-tab-department').value = sems[0];
@@ -835,6 +835,7 @@ function getSemester(subject){
 }
 
 function downloadCSV() {
+	code = document.getElementById('edit-tab-curriculum-code').value;
 	csv_file = exportCSV().replace(/\n/g,"%0A");
 	csv_file = csv_file.replace(/ /g,"%20");
 

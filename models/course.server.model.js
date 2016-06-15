@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 var CourseSchema = new Schema({
     code: {
                     type: String,
-                },
+                    unique: true
+            },
     department: String,
     units: Number,
     title: String,

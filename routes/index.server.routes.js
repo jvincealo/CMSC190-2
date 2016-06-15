@@ -6,8 +6,8 @@ module.exports = function(app) {
 
     app.post('/new', index.load);
 
-    app.route('/admin')
-        .get(index.admin);
+    // app.route('/admin')
+    //     .get(index.admin);
 
     app.route('/')
         .get(index.entry);
@@ -18,7 +18,7 @@ module.exports = function(app) {
     app.route('/logout')
         .get(index.logout);
 
-    app.route('/:search_terms')
+    app.route('/query=:search_terms')
         .get(index.list);
 
     app.route('/auth/google')

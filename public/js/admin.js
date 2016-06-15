@@ -3,6 +3,9 @@ var selected_subject;
 var upload_dept = document.getElementById('upload_dept');
 upload_dept.addEventListener('change', importDept, false);
 
+var upload_course = document.getElementById('upload_course');
+upload_course.addEventListener('change', importCourse, false);
+
 $(function() {
   $("a.loader").on("click",function(e) {
     e.preventDefault(); // cancel the link itself
@@ -182,6 +185,57 @@ function importDept(evt) {
 
                 $.post("/departments",
                     department,
+                    function(data, status){
+                    }
+                );
+            }
+        }
+      }
+    };
+    reader.readAsText(file);
+}
+
+function importCourse(evt) {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        // Great success! All the File APIs are supported.
+    } else {
+        alert('The File APIs are not fully supported in this browser.');
+    }
+
+    var files = document.getElementById('upload_course').files;
+    var file = files[0];
+
+    var reader = new FileReader();
+
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) {
+        var data = evt.target.result;
+        var lines = data.split('\n');
+
+        var tokens,
+            course;
+
+        for(var line = 0; line < lines.length ; line++) {
+            tokens = lines[line].split(',');
+            for(var token = 0; token < tokens.length; token+=16) {
+                //check if the line is a comment
+                if(tokens[token][0] === "#")
+                    break;
+
+                course = {
+                    code : tokens[token] + "",
+                    department : tokens[token+1] + "",
+                    units: tokens[token+2],
+                    title: tokens[token+15] + "",
+                    term : tokens[token+3],
+                    prerequisite: tokens[token+11] + "",
+                    corequisite: tokens[token+12] + "",
+                    concurrent: tokens[token+13] + "",
+                    conprereq: tokens[token+14] + ""
+                };
+
+                $.post("/courses",
+                    course,
                     function(data, status){
                     }
                 );
